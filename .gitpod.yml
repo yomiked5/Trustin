@@ -1,0 +1,12 @@
+tasks:
+  - name: dev
+    init: |
+      npm i -g pnpm
+      pnpm create vite@latest app -- --template react
+      cd app && pnpm i
+    command: |
+      cd app && pnpm dev -- --host
+ports:
+  - port: 5173
+    onOpen: open-preview
+    visibility: public
