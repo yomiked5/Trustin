@@ -1,6 +1,6 @@
 # TrustinJr website bible
 
-Version 1.0 · 12 October 2026 · owner: Mike · implementation brief and editorial source of truth
+Version 1.1 · 12 October 2026 (Pacific; implementation 13 October UTC) · owner: Mike · implementation brief and editorial source of truth
 
 ## The job
 
@@ -26,11 +26,11 @@ Source: `yomiked5/trustinjr-native`, main `34557847ad424bd0fdac7419b44563737cb49
 
 ## Positioning and voice
 
-Headline: **Little questions. Big discoveries.**
+Headline: **For every little why.**
 
-Supporting promise: a gentle place for a child's questions, stories and early learning, with parents in the picture.
+Category eyebrow: **Audio-first learning · Ages 4–5**. Supporting promise: **Big curiosity. A little help along the way.** Questions, stories, and early math for curious children—with parents setting the boundaries. Immediately explain the Watch experience for the child and iPhone Parent Dock for the parent, alongside visible in-development status.
 
-Anchor lines: **Their curiosity. Your boundaries.** / **No ads. No endless feed. Room to wonder.**
+Anchor lines: **Their side. And yours.** / **Your child's attention is not ad space.** Primary action: **Try a discovery**; secondary action: **Why we're building it**. The hero shows an actual prepared Moon answer and user-initiated narration, not an idle product illustration. The hero sample stays synchronized with the Parent Dock's Moon preference.
 
 Use concrete language: ask, notice, try, listen, count, explore, together. Be warm, useful and candid. Avoid AI superlatives, guilt about screen time, fear-based persuasion, invented proof, developmental diagnoses and emotional-companion framing. Trustin is a learning character/tool, not a substitute friend, parent, teacher or therapist. No secrets, emotional exclusivity or guilt about leaving.
 
@@ -54,13 +54,13 @@ Research accessed 12 October 2026. Comparable observations concern public conten
 
 ## Visual system
 
-Warm editorial design for adults surrounding a playful, accurate product vocabulary. Main field is cream `#FFF8EF`; ink `#2A2B2E`; muted copy dark olive-gray; action teal `#285C57`; borders oat `#E8E1D6`; supporting sea-glass `#6FA9A6`, sage `#8DA67B`, terracotta `#D36A4C`, ochre `#E0B647`, lavender `#9E7FA7`. Large color fields are quiet, not competing. Text uses dark ink on pale surfaces or cream on deep teal.
+Warm editorial design for adults surrounding a playful, accurate product vocabulary. Main field is cream `#FFF8EF`; ink `#293C38`; muted copy `#59675E`; action teal `#285C57`; lines `#D9D5C9`; supporting pale sage `#E4EADC`, peach `#F2D6C4`, lavender `#E8DFF0`, clay `#A44732` and ochre `#E0B647`. Richer colors remain in original illustrations. Large color fields are quiet, not competing. Text uses dark ink on pale surfaces or cream on deep teal.
 
 Marketing display type may use a warm editorial serif; product surfaces use a rounded system sans consistent with native Nunito intent. All fonts are local system fonts: no third-party font requests. Type scales responsively rather than shrinking the complete desktop layout.
 
 Keep the original matte Trustin portrait. Native October 8 color correction governs controls: cream microphone/lens/play interiors, dark definition, peach/sage/lavender button surfaces, cream-on-teal forward action. Math uses +, − and 1 blocks, never dice. No talking mouth, gloss, harsh gradients or rapid motion. No mandatory animation or moving hit targets.
 
-Layout: 1200px maximum reading canvas; spacious sections; a dominant asymmetrical hero; a pale sage paired-demo region; editorial learning-step section; story artwork; dark teal philosophy panel; compact FAQ. Avoid a generic grid of six identical feature cards. At 760px and below, stack the demo and dock; never hide the parent's role.
+Layout: 1200px maximum reading canvas; a product-led asymmetrical hero; pale sage paired-demo region; a concrete seed-to-idea-to-world learning sequence; peach no-advertising manifesto; dark teal philosophy panel; six-question FAQ. Avoid a generic grid of six identical feature cards. At 680px and below, stack the demo and Dock; the Dock includes an immediate child-response preview so a parent does not need to scroll back to understand a setting change. Keep navigation links visible on mobile. Adapt the hero Watch into a readable sample card on small screens instead of scaling the whole desktop mockup.
 
 ## Visitor journey
 
@@ -75,17 +75,19 @@ Layout: 1200px maximum reading canvas; spacious sections; a dominant asymmetrica
 
 The preview is scripted and adapted for a browser, visibly labeled throughout. No microphone permission, open-ended chat, AI requests, login or real child data. The sample profile is fictional. State is memory-only and resets on reload. Hosting infrastructure may process ordinary request data.
 
-Curiosity: sample questions about Moon, seeds and butterflies. Reuse exact source text and prerecorded Cedar audio. Read at your own pace by default; narration is user-initiated, with Pause/Replay and visible text. Explicit Next and explicit ending; no automatic progression. Two actual pages per discovery, followed by an optional observation with a grown-up.
+Curiosity: open directly on the prepared Moon discovery. Offer other questions about Moon, seeds and butterflies. Reuse exact source text and prerecorded Cedar audio. Read at your own pace by default; narration is user-initiated, with Listen/Pause/Resume/Replay, elapsed progress and complete visible text. Explicit More/Finish and explicit ending; no automatic progression. Two actual pages per discovery, followed by an optional observation with a grown-up. The hero Hear action brings the active playback control into view. Playback failures show visible retry guidance as well as a polite announcement; canceling playback must not produce a stale error on another activity.
 
-Story: *Trustin and the Curled Leaf*, complete source introduction and seven pages, matching images and recordings; manually advance from cover and into The end. Original word timing may highlight the current word while narrating, without hiding the whole transcript.
+Story: *Trustin and the Curled Leaf*, complete source introduction and seven pages, matching images and recordings; manually advance from cover and into The end. Full transcript text stays visible, without an inner scrolling text box. Source word-timing files are retained, but this preview does not claim synchronized word highlighting.
 
 Math: a short, deterministic three-question garden project, useful incorrect-answer hints, visible +/− blocks, no punitive response or streak. This is a web sample, not a representation of backend adaptive placement.
 
-Parent Dock: controls change sample Moon topic availability and playback pace, with essential protections shown as fixed. Setting a topic to Together cancels currently playing related audio and shows a parent handoff. Clearing the demo restores a genuinely empty activity log. Log only completed demo activities, no fabricated starting metrics. Finish with a real-world prompt, not another automatically queued activity.
+Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. A one-click parent-boundary example is available above the demo.
+
+Switching activities preserves each activity's independent place while the page is open. Completed Story/Math samples have an explicit restart action that retains family settings and the completed-only activity log. Reset clears all settings, saved progress and log entries, then opens the default Moon example. Log only completed demo activities, no fabricated starting metrics or implied assessment. Finish with a real-world prompt, not another automatically queued activity. Math feedback is announced through a persistent live region; focus returns to the chosen answer for an incorrect attempt or the next control for a correct answer.
 
 ## Whitepaper
 
-Title: **Curiosity, with care.** Subtitle: the TrustinJr learning philosophy. Dated, versioned, readable on mobile and printable; no email gate. Eight principles: child curiosity; manageable steps; learning beyond the device; involved parents; family choices above a safety baseline; AI transparency; no advertising to children; evidence and candor. Include a concrete seed example, evidence limits, product status, references and revision history. Research citations are context, not institutional endorsement.
+Title: **Curiosity, with care.** Subtitle: the TrustinJr learning philosophy. Dated, versioned, readable on mobile and printable; no email gate. Begin with a three-part plain-language summary. Eight principles: child curiosity; manageable steps; learning beyond the device; involved parents; family choices with essential protections intact; AI transparency; no advertising to children; evidence and candor. Include a concrete seed example, evidence limits, product status, references and revision history. Research citations are context, not institutional endorsement.
 
 ## Accessibility, quality and performance
 
@@ -96,6 +98,25 @@ References: [WAI contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-
 Static HTML/CSS/JS, no runtime dependencies. Reserve image dimensions, do not lazy-load the hero, lazy-load lower images, preload no audio. Targets from [Web Vitals](https://web.dev/articles/vitals): LCP ≤2.5s, INP ≤200ms, CLS ≤0.1 at the real-user 75th percentile. These are targets, not measured results. No tracking scripts, cookies, third-party embeds or paid SaaS required.
 
 Check genuine functional risks: navigation, page transitions, state reset, audio stop on topic/mode change, blocked-topic behavior, Math retries/completion, story ending, links/assets, metadata and deployment packaging. Browser/device checks must be reported honestly if the supported preview environment is unavailable.
+
+## Marketing and UX review — revision 1.1
+
+Owner direction: review and modify the messaging, design, UI and UX to aim for a best-in-class parent-facing experience. This is an implementation goal, not a verified market ranking or conversion claim. The website and scripted browser demo changed; the native application did not.
+
+| Source-observed weakness in v1 | Revision |
+|---|---|
+| Hero led with generic warmth; category/device roles came late. | Explicit audio-first/age/category framing, device roles, current status, concrete answer and direct narration. |
+| Demo required a sequence of guesses before showing value. | Open on an actual answer; descriptive activity buttons; direct discovery links; one-step boundary example. |
+| Mobile parent setting and child consequence were separated. | Immediate child-response preview inside the Dock, with an explicit inspect action. |
+| Parent positioning was vague and ad policy small. | Plain no-ads manifesto, specific parent authority, human-relationship and finite-activity commitments. |
+| Repeated disclaimers and abstract feature prose diluted the story. | Compact persistent demo disclosure; concrete learning sequence; six focused FAQ entries; honest availability action. |
+| Switching modes reset work; stale Moon state could hijack another activity. | Independent memory-only progress; scoped policy effects; dedicated regression tests. |
+| Playback state and failures were unclear; math focus was lost. | Resume/Replay/Retry, visible error/progress, canceled-request handling, intentional focus, persistent announcements. |
+| Mobile navigation disappeared and Watch text scrolled inside a small box. | Visible compact navigation; larger adult labels; full text flow; no nested reading scroll. |
+
+The bounded source critique was useful for defects and hierarchy, not a visual audit. Current follow-up research rechecked [Pok Pok's public presentation](https://playpokpok.com/), [WAI target-size guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) and [focus visibility guidance](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html). These inform choices; they do not certify this site.
+
+Acceptance: see `VALIDATION.md`. No conversion lift, browser rendering result, Lighthouse score, screen-reader result or product efficacy result is claimed. Next useful design validation is a real-device parent walkthrough: ask what the product is, have the parent hear an answer and change a boundary, then ask what they believe is available today. Do not collect child identities or sensitive child information for this test.
 
 ## Hosting and ownership
 

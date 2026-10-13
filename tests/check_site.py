@@ -41,5 +41,17 @@ for d in json.loads((root/'assets/discoveries.json').read_text()):
 js=(root/'app.js').read_text()
 for forbidden in ['getUserMedia','localStorage','sessionStorage','speechSynthesis','api.openai.com']:
  if forbidden in js:errors.append('Unexpected privacy or narration API '+forbidden)
+css=(root/'styles.css').read_text()
+palette=dict(re.findall(r'--([a-z]+):\s*(#[0-9a-fA-F]{6})',css))
+def luminance(color):
+ rgb=[int(color[i:i+2],16)/255 for i in (1,3,5)]
+ rgb=[v/12.92 if v<=0.04045 else ((v+0.055)/1.055)**2.4 for v in rgb]
+ return sum(v*w for v,w in zip(rgb,[0.2126,0.7152,0.0722]))
+contrast_pairs=[('ink','cream'),('ink','paper'),('muted','cream'),('muted','sage'),('teal','cream'),('teal','sage'),('ink','lavender'),('ink','peach'),('clay','cream')]
+for fg,bg in contrast_pairs:
+ light,dark=sorted([luminance(palette[fg]),luminance(palette[bg])],reverse=True)
+ ratio=(light+0.05)/(dark+0.05)
+ if ratio<4.5:errors.append(f'Text palette contrast {fg}/{bg}: {ratio:.2f}')
 assert not errors,'\n'.join(errors)
 print(f'Passed: {len(docs)} pages; internal links, anchors, image dimensions, content/audio references, and demo privacy API checks.')
+print(f'Passed: {len(contrast_pairs)} core text color pairings exceed 4.5:1 (not a rendered accessibility audit).')
