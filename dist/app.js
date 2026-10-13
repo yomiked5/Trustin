@@ -10,7 +10,15 @@ const observations = {
   seed:'With a grown-up, look at a seed and a plant. What do you notice?',
   butterfly:'If you spot a butterfly with a grown-up, watch where it lands. Give it plenty of space.'
 };
+const parentPrompts = {
+  moon: 'Ask, “What do you notice about the bright part of the Moon?”',
+  seed: 'Ask, “What do you think a seed needs to start growing?”',
+  butterfly: 'Ask, “What could we watch for if we see a butterfly outside?”',
+  story: 'Ask, “What did Trustin notice before deciding how to help the plant?”',
+  math: 'Find four objects together. Ask, “How could we split them into two groups?”'
+};
 let state = initialState();
+let lastReaderKey = '';
 let data, story, playing = false, playIntent = 0, audioError = '';
 const player = content ? new Audio() : null;
 if (player) player.preload = 'none';
@@ -113,6 +121,7 @@ function controls(back = true, next = 'Next') {
   return `<div class="reader-controls"><button data-action="back" aria-label="Previous page" ${back ? '' : 'disabled'}>${icon('back')}<span>Back</span></button><button data-action="listen" aria-label="Listen to recorded Trustin narration">${icon('play')}<span>Listen</span></button><button data-action="next">${icon('next')}<span>${next}</span></button></div><div class="audio-line"><progress id="audio-progress" value="0" max="1" aria-label="Narration progress"></progress><span id="audio-time" aria-hidden="true">0:00 / 0:00</span></div><p class="reader-foot" id="audio-note">Sound only when you choose · Complete text above</p>`;
 }
 function renderDock() {
+  document.querySelector('#parent-prompt').textContent = parentPrompts[state.mode === 'ask' ? state.topic || 'moon' : state.mode];
   const log = document.querySelector('#activity-log');
   log.innerHTML = state.log.length
     ? '<ul>' + state.log.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul><p class="footnote">Completed samples, not measured learning.</p>'
@@ -125,19 +134,13 @@ function renderDock() {
     ? '“Let’s ask your grown-up.” The Moon answer is replaced by a conversation with you.'
     : '“The Moon stays round like a ball.” The prepared answer is available to explore.';
   if (result.textContent !== message) result.textContent = message;
-  const together = state.moonPolicy === 'together';
-  document.querySelector('#hero-policy').innerHTML = (together ? 'With a grown-up ' : 'Explore ') + icon('check');
-  document.querySelector('#hero-answer').innerHTML = together
-    ? icon('parents') + '<p>“Let’s ask your grown-up.” You chose to explore this topic together.</p>'
-    : icon('moon') + '<p>“The Moon stays round like a ball. Sunlight lights up half of it.”</p>';
-  document.querySelector('[data-hear]').innerHTML = icon(together ? 'parents' : 'play') + (together ? ' See parent boundary' : ' Hear this answer');
   document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode)));
   document.querySelector('#demo-next').hidden = !state.log.length;
 }
 function render() {
   if (!data || !story || !content) return;
   let html = '';
-  if (state.view === 'home') html = `<p class="demo-kicker">Ask Trustin</p><img class="demo-avatar" src="/assets/trustin.png" alt="Trustin, a small teal learning character" width="297" height="349"><h3 class="watch-title">What do you wonder?</h3><div class="topic-shelf">${topicButton('seed')}${topicButton('moon')}${topicButton('butterfly')}</div><button class="mic-button" data-action="questions" aria-label="Choose a prepared question; no microphone recording">${icon('mic')} Choose a question</button><p class="demo-hint">Prepared questions. Nothing is recorded.</p>`;
+  if (state.view === 'home') html = `<p class="demo-kicker">Ask Trustin</p><img class="demo-avatar" src="/assets/trustin.png" alt="Trustin, a small teal learning character" width="300" height="353"><h3 class="watch-title">What do you wonder?</h3><div class="topic-shelf">${topicButton('seed')}${topicButton('moon')}${topicButton('butterfly')}</div><button class="mic-button" data-action="questions" aria-label="Choose a prepared question; no microphone recording">${icon('mic')} Choose a question</button><p class="demo-hint">Prepared questions. Nothing is recorded.</p>`;
   if (state.view === 'questions') html = `<p class="demo-kicker">Ask Trustin</p><h3 class="watch-title">Start with a little why.</h3><div class="question-choices">${['moon','seed','butterfly'].map(topic => '<button class="question-choice" data-topic="' + topic + '">' + esc(data.find(item => item.illustration === topic).question) + '</button>').join('')}</div><p class="demo-hint">Choose an example to hear Trustin.</p><button class="reset" data-action="home">Back to topics</button>`;
   if (state.view === 'discovery') {
     const topic = data.find(item => item.illustration === state.topic);
@@ -162,14 +165,20 @@ function render() {
   content.setAttribute('aria-busy', 'false');
   renderDock();
   updateAudioButton();
+  const key = [state.mode, state.view, state.topic, state.page, state.storyPage, state.mathPage].join(':');
+  if (key !== lastReaderKey) window.TrustinMotion?.reader(content);
+  lastReaderKey = key;
+}
+function scrollBehavior() {
+  return window.TrustinMotion?.behavior() || (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
 }
 function focusContent(scroll = false) {
   const target = content.querySelector('h3') || content;
   target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll:scroll });
-  if (scroll) content.closest('.child-side').scrollIntoView({ block:'start', behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  if (scroll) content.closest('.child-side').scrollIntoView({ block:'start', behavior:scrollBehavior() });
 }
-function openSample(value, hear = false) {
+function openSample(value) {
   if (!data) return;
   stopAudio();
   if (value === 'story' || value === 'math') chooseMode(state, value);
@@ -177,17 +186,12 @@ function openSample(value, hear = false) {
   render();
   focusContent(true);
   announce(state.view === 'boundary' ? 'This topic is set to explore with a grown-up. Change the sample Parent Dock setting to make its answer available.' : 'Sample opened. Use Listen to hear recorded narration where available.');
-  if (hear && audioSource()) {
-    toggleAudio();
-    const listen = content.querySelector('[data-action="listen"]');
-    listen.focus({ preventScroll:true });
-    listen.scrollIntoView({ block:'center', behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  }
 }
 function setPolicy(value) {
   const affected = changePolicy(state, value);
   if (affected) { stopAudio(); render(); }
   else renderDock();
+  window.TrustinMotion?.boundary();
   announce(state.moonPolicy === 'together' ? 'Moon questions now invite a conversation with a grown-up. Other topics are unchanged.' : 'The prepared Moon answer is available again.');
 }
 content?.addEventListener('click', event => {
@@ -200,6 +204,7 @@ content?.addEventListener('click', event => {
     const number = button.dataset.number;
     render();
     announce(state.mathFeedback);
+    window.TrustinMotion?.feedback(content.querySelector('#math-feedback'));
     const next = correct ? content.querySelector('[data-action="nextMath"]') : content.querySelector('[data-number="' + number + '"]');
     next?.focus({ preventScroll:true });
     return;
@@ -244,16 +249,6 @@ document.querySelectorAll('[data-start]').forEach(link => link.addEventListener(
   event.preventDefault();
   openSample(link.dataset.start);
 }));
-document.querySelectorAll('[data-hear]').forEach(button => button.addEventListener('click', () => openSample(button.dataset.hear, true)));
-document.querySelector('[data-boundary]')?.addEventListener('click', () => {
-  if (!data) return;
-  stopAudio();
-  changePolicy(state, 'together');
-  chooseTopic(state, 'moon');
-  render();
-  focusContent(true);
-  announce('Parent boundary applied: Moon questions are now explored with a grown-up. Your Parent Dock shows the same choice.');
-});
 document.querySelector('[data-inspect-moon]')?.addEventListener('click', () => openSample('moon'));
 document.querySelector('#topic-policy')?.addEventListener('change', event => { if (data) setPolicy(event.target.value); });
 document.querySelector('#narration-pace')?.addEventListener('change', event => {
@@ -282,7 +277,7 @@ async function loadDemo() {
     data = discoveries; story = book;
     chooseTopic(state, 'moon');
     render();
-    document.querySelectorAll('[data-mode],[data-hear],[data-boundary],[data-inspect-moon],#topic-policy,#narration-pace,#reset-demo').forEach(button => button.disabled = false);
+    document.querySelectorAll('[data-mode],[data-inspect-moon],#topic-policy,#narration-pace,#reset-demo').forEach(button => button.disabled = false);
   } catch {
     content.setAttribute('aria-busy', 'false');
     content.innerHTML = '<h3 class="watch-title">Let’s try that again.</h3><p class="ending">The prepared sample could not load. The rest of the website is still available.</p><button class="button watch-cta" data-action="retry">Retry the demo</button>';

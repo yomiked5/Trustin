@@ -20,7 +20,14 @@ No build, paid SaaS, API keys, database or runtime dependency is required. Run `
 
 Three discoveries (Moon, seeds, butterflies), a complete narrated story (*Trustin and the Curled Leaf*), a three-question garden math sample, and a sample Parent Dock. Topic policy changes affect the sample immediately; narration speed changes recorded playback. State is memory-only. The demo does not record a microphone or call an AI provider. No fabricated analytics, waitlist, pricing or App Store release claims.
 
-Revision 1.1 sharpens the parent-facing positioning to **For every little why.**, opens the demo on a real prepared answer, and adds an immediate child-response preview in the Dock. Activity progress is preserved across mode switches; completed activities can explicitly restart. Narration has visible progress, pause/resume/replay/retry, and the current parent boundary also updates the hero. The whitepaper has a concise three-principle summary. See the bible for the audit and rationale.
+Revision 1.3 keeps **parent-guided AI discovery**, **For every little why.** and **A world of wonder. Guided by you.**, with a substantially simpler introduction. The homepage now has five sections and one complete child/parent demo. Original art/recordings and all activities remain; motion uses brief 160–240ms fades/state changes. Deeper philosophy, parent guide, privacy and honest availability remain on their dedicated pages.
+
+- `docs/MESSAGING.md`: approved mission, copy/CTA hierarchy and claim rules.
+- `docs/RESEARCH_DECISIONS.md`: current evidence, populations/limits and ten specialist perspectives.
+- `docs/INDEPENDENT_REVIEW.md`: source-based post-implementation critical review.
+- `/parents/ai-and-young-children/`: original five-question parent guide.
+
+Current validation is source/model/event-contract based. Actual browser layout, mobile Safari, media playback, screen-reader and performance measurements remain to be completed before public domain launch.
 
 Original Trustin art and existing Cedar recordings are reused from the owner's native application, source revision `34557847ad424bd0fdac7419b44563737cb499cf`. Source bytes were verified with Git blob hashes before copying. The native code and release pipeline are separate and unchanged.
 

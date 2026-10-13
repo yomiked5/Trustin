@@ -1,22 +1,22 @@
 # Deployment and domain handoff
 
-Prepared 12 October 2026. Production target: `https://trustinjr.com`.
+Updated 13 October 2026 · simplified revision 1.3. Production target: `https://trustinjr.com`.
 
 ## Current state
 
 The original marketing Site is retained at `https://trustin-jr.yomiked.chatgpt.site`, with its owner-private audience. The independent static website lives in `dist/`. The prior July scaffold is preserved in Git history. The native app and Family Playground remain separate.
 
-Cloudflare dashboard was reached in the current session and requires sign-in. No Cloudflare account configuration, Namecheap nameserver changes or DNS writes have been performed. `trustinjr.com` ownership is owner-reported; current zone and email records have not been audited. Do not claim the public custom domain is connected.
+In the earlier setup session, the Cloudflare dashboard required sign-in; authenticated owner access has not yet been established for this launch. No Cloudflare account configuration, Namecheap nameserver changes or DNS writes have been performed. `trustinjr.com` ownership is owner-reported; current zone and email records have not been audited. Do not claim the public custom domain is connected.
 
-The existing starter-only `yomiked5/Trustin` repository is used as the independent public marketing source, avoiding a native-app deployment dependency. Do not add secrets to this repository. The private preview's `.openai` identity is excluded from the GitHub export.
+`yomiked5/Trustin` is the independent marketing source repository, avoiding a native-app deployment dependency. Do not add secrets to this repository. The private preview's `.openai` identity is excluded from the GitHub export.
 
 ## Cloudflare Pages configuration
 
 1. In the owner's Cloudflare account, create a Pages project connected to GitHub `yomiked5/Trustin`. Restrict the Cloudflare GitHub app to this repository rather than all private repositories.
-2. Production branch: `main`. Framework preset: None. Build command: blank (or `exit 0` if the interface requires one). Build output directory: `dist`. Repository root: `/`. No environment variables or secrets are required. Do not add a GitHub Actions deployment workflow.
-3. Deploy the exact source commit and record the actual returned `pages.dev` URL. Check the home page, `/philosophy/`, `/privacy/`, `/availability/`, `/404.html`, audio files and custom 404 behavior.
+2. Merge the reviewed website PR into `main` first; at the last verified checkpoint main still held v1.1. Production branch: `main`. Framework preset: None. Build command: blank (or `exit 0` if the interface requires one). Build output directory: `dist`. Repository root: `/`. No environment variables or secrets are required. Do not add a GitHub Actions deployment workflow.
+3. Deploy the exact source commit and record the actual returned `pages.dev` URL. Check the home page, `/philosophy/`, `/privacy/`, `/availability/`, `/parents/ai-and-young-children/`, `/404.html`, audio files and custom 404 behavior.
 4. Add `trustinjr.com` in Pages → Custom domains. Use the exact zone instructions and DNS values returned by Cloudflare; never guess a Pages target or nameservers.
-5. If moving apex nameservers from Namecheap to Cloudflare, inventory all existing records first: A/AAAA/CNAME, MX, SPF, DKIM, DMARC, verification TXT, CAA and relevant subdomains. Recreate them in Cloudflare, then change only the authoritative nameservers at Namecheap. Keep registrar renewal/ownership at Namecheap. Do not lose `hello@trustinjr.com` email routing.
+5. For a Pages apex domain, Cloudflare requires the zone and its authoritative nameservers in the same Cloudflare account as Pages. If the current DNS is elsewhere, inventory all existing records first: A/AAAA/CNAME, MX, SPF, DKIM, DMARC, verification TXT, CAA and relevant subdomains. Recreate them in Cloudflare, then change only the authoritative nameservers at Namecheap. Keep registrar renewal/ownership at Namecheap. Do not lose `hello@trustinjr.com` email routing.
 6. Add `www.trustinjr.com` and choose one canonical origin. Configure `www` → apex and `pages.dev` → canonical redirects only after the canonical origin serves successfully; do not create redirect loops.
 7. Verify issued TLS, apex and www behavior, all static routes, recordings and email delivery. Confirm parent inquiry email reaches the owner; the current CTA intentionally opens an email client rather than faking a form submission.
 
@@ -24,7 +24,7 @@ The existing starter-only `yomiked5/Trustin` repository is used as the independe
 
 - Replace `<meta name="robots" content="noindex,nofollow">` on normal pages with `index,follow`. Keep the 404 page noindex.
 - Replace `robots.txt` with `User-agent: *`, `Allow: /`, and `Sitemap: https://trustinjr.com/sitemap.xml`.
-- Canonical/OG URLs already point to the intended domain. Do not advertise that domain as live until it is verified. The OG artwork reuses the existing story cover.
+- Canonical/OG URLs already point to the intended domain. Do not advertise that domain as live until it is verified. The OG graphic is the dedicated original-character 1200×630 social card.
 - Verify legal/operator contact details and website privacy wording against the selected host and operational practice. The native app needs its own separate privacy and release work.
 - Run mobile Safari and desktop keyboard acceptance, including a 320px viewport and reduced motion. Verify pause/replay, full story ending, every Math retry, immediate topic-boundary behavior, and reset.
 
@@ -37,3 +37,20 @@ Edit `dist/` and relevant docs, run `npm test`, commit/push to GitHub, and let P
 Static delivery, local demo state and existing narration avoid per-visitor AI cost. There is no database, email SaaS subscription, analytics pixel or third-party font. Hosting usage and plan limits still apply; this is not an unlimited-free-service promise. Logs are handled by the hosting provider, so do not claim zero data processing.
 
 Official setup references: [GitHub integration](https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/), [custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/).
+
+
+## Current handoff
+
+This revision retains the existing owner-private review Site. Source includes six pages, the improved scripted child/parent demonstration, original media, a parent guide and a dedicated 1200×630 social card. GitHub PR delivery does not change DNS, production Cloudflare, the native application or public indexing.
+
+Before public launch, change **all three** preview controls deliberately: HTML robots metadata, `_headers` X-Robots-Tag and `robots.txt`. Test live behavior after deployment; source files alone do not prove header enforcement. Private authentication/access policy is the privacy boundary, not noindex. `trustinjr.com` canonical and social URLs remain target-domain configuration until domain verification.
+
+Review [validation](VALIDATION.md), [independent critique](INDEPENDENT_REVIEW.md), [research decisions](RESEARCH_DECISIONS.md) and [messaging rules](MESSAGING.md). Actual browser/Safari and contact-delivery acceptance are still required. For rollback to v1.2, retain Sites source `4e637df93a1833538cb839ecb6047b0b9a369f8a` and marketing commit `bc738e2d2cc92c1cc0e02e9aafa503605599c636`; do not use a rollback to change the audience.
+
+## October 13 domain clarification
+
+The chosen route remains GitHub → owner Cloudflare Pages → trustinjr.com. Registration/renewal stays at Namecheap; no registrar transfer or application backend is needed for this static website. Account sign-in and authorization to change authoritative DNS are the owner-dependent steps. This follow-up explains the cutover and publishes only the existing private preview; it does not authorize or perform public launch.
+
+Before changing nameservers, inventory and reproduce the actual DNS records, especially email, verification and DNSSEC settings. Coordinate any existing DNSSEC/DS record with the actual providers rather than guessing. Save rollback values. Then attach apex/www in Pages using its returned records, verify TLS and redirects, exercise the demo and contact delivery, and remove public indexing blocks only on explicit launch authorization. Nameserver propagation is not instantaneous; allow for provider/ISP caching.
+
+Verified official references: [Cloudflare Pages custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/), [Namecheap nameserver changes](https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-to-change-dns-for-a-domain/). No actual DNS inventory or account state was inferred from these general instructions.

@@ -1,46 +1,58 @@
 # Validation evidence
 
-Revision 1.1 · 12 October 2026 Pacific / 13 October UTC. This evidence describes the website, not a native app release.
+Revision 1.3 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
 
-## Passed
+## Executed and passed
 
-- JavaScript syntax checks for `dist/app.js` and `dist/demo-model.mjs`; `git diff --check`.
-- **23 automated Node tests:** 13 pure model/content tests and 10 runtime event-contract tests executing the shipped `app.js` with small DOM/Audio doubles. They are not a real browser.
-- Model coverage: related boundaries and reopen behavior; cross-mode/stale-Moon regression; unrelated and unchanged policies; independent activity progress; same-mode preservation; guarded finite math completion; per-activity restart; full reset; honest deduplicated logs; invalid actions; playback labels; complete linear story.
-- Runtime contract coverage: prepared first answer without autoplay; pause/resume/replay and progress; related-audio cancellation; synchronized hero/Dock boundary; explicit Hear control brought into view; uninterrupted unrelated story audio; preserved story position; deliberate math focus and live feedback; story restart; visible recoverable audio failures; ignored stale audio rejections; failed-content retry; full-session reset.
-- Static integrity across five HTML pages: page title/description/single H1, internal links and anchors, image alt text and reserved dimensions, every discovery recording and story text/image/audio reference.
-- Nine core CSS text-palette pairings exceed 4.5:1 by luminance calculation. This does not certify every rendered element or WCAG conformance.
-- Source check confirms no microphone capture, browser TTS substitution, browser persistence or OpenAI API endpoint in the demo runtime.
-- Original avatar, discovery recordings and story assets remain unchanged from the v1 Git-blob-verified copies of native main `34557847ad424bd0fdac7419b44563737cb499cf`.
-- Static directory occupies approximately **1.40 MB before hosting compression**, including the existing on-demand audio. This is a payload count, not a measured Core Web Vitals result. No dependency, build step, database, new provider usage or native release pipeline was added.
+- `npm test`: syntax validation of all **5 shipped JS/MJS files**, **38 Node tests**, and static integrity across **6 HTML pages**. No skipped or failing tests at the final integration checkpoint.
+- **13 model tests:** family preference behavior, affected/unrelated activities, independent progress, finite Math completion, required correct answers, per-activity restart, full reset, honest deduplicated logs, invalid actions, playback labels and complete linear story.
+- **16 runtime event-contract tests:** execute shipped `app.js` with small DOM/Audio doubles. Cover prepared initial answer without autoplay; narration pause/resume/replay/retry/progress; affected audio cancellation; Dock/child synchronization; primary preview action focus without autoplay; unrelated story audio; retained story position; Math hints/focus; story restart; stale audio rejections; failed-content retry; all three discovery choices and recording routing; preference restoration; context-specific parent prompts; pace changes and full reset.
+- **9 motion tests:** unsupported/disabled/static behavior; replacement and cancellation; stale-animation completion; finite effects/no persistent fill; bounded reading progress; device reduced-motion changes; manual choice through URL and internal links; no storage/network use by policy; navigation transition suppression and history failure fallback.
+- Static checks: every page title/description/single H1, unique IDs, local links/anchors, SVG symbols, reserved image dimensions, discovery/story text/image/audio references, exact canonical/OG URLs, preview meta/header/robots noindex, sitemap route set and social image presence/1200×630 metadata.
+- All shipped scripts scanned for a narrow set of microphone, live-AI, browser-storage, browser-TTS and cookie APIs. No advertising/analytics/third-party font code is introduced. This is a source check, not network observation of the hosting/authentication platform.
+- **9 core text-palette pairs** exceed 4.5:1 by luminance calculation. This is not a rendered contrast or full WCAG audit.
+- **28 original asset/content files** match their existing GitHub blob hashes exactly. The source-native provenance remains `34557847ad424bd0fdac7419b44563737cb499cf`. No original artwork, story text or recordings were regenerated.
+- **13 audio files decoded successfully** with FFmpeg, without decode errors; aggregate duration approximately 113.8 seconds. This verifies file integrity, not listening quality, real browser playback or Safari gesture handling.
+- `git diff --check` passed. The prior independent v1.2 source review is retained in [INDEPENDENT_REVIEW.md](INDEPENDENT_REVIEW.md); the v1.3 reduction received a focused source/diff review, not a new independent browser audit.
+- The new 1200×630 social graphic was visually inspected as an image. That is not a website screenshot review.
 
-## Design provisions implemented
+## Revision 1.3 reduction check
 
-- Product category, ages, Watch/iPhone roles and development stage visible in the hero.
-- Original character and cream-first role-based palette preserved.
-- Visible mobile navigation; adapted readable hero card; responsive 320px+ CSS.
-- Parent setting and child-response preview contiguous inside the Dock.
-- Complete reader text, without an inner scrolling transcript; explicit activity position.
-- Native buttons/selects/details, skip link, visible focus, full text equivalents, user-initiated audio and reduced-motion rules.
-- Child-surface primary, answer, topic, question-picker, return and restart controls have at least 64px heights; adult main controls at least 44px. Rendered touch geometry still needs verification.
-- Explicit prepared-demo labels, finite endings, activity-not-learning labels, no autoplay chains or fake social proof.
-- Whitepaper executive summary and unambiguous family preferences **in addition to** essential protections.
+- Full `npm test` rerun: 38/38 passing, five scripts parse, all six pages pass static checks.
+- Tests now exercise discovery selection, recordings and parent choices through the single demo; removed hero controls are no longer test targets. Primary hero action opens Moon, focuses the demo and does not autoplay.
+- Motion contract verifies shipped effects are at most 240ms, finite and optional. Cross-page CSS fades are 160ms. No scroll-entry effects remain.
+- Homepage source changed from 11 sections / 1,315 main-body words to 5 sections / 569 words. Counts exclude dynamically rendered activity text.
+- Original assets, model content and the four deeper information pages are unchanged. A focused source review checked retained anchors, navigation, responsive rules, noindex and removed-handler references.
+- No new audio-decode or independent visual pass was necessary for untouched media; earlier integrity evidence remains scoped to those unchanged bytes.
 
-## Not verified in this session
+## Defects found and fixed
 
-The managed Sites environment has no available `control-browser` skill. Its required browser-preview workflow could not run. No substitute browser automation, screenshots, Lighthouse scores, real audio listening, native app build, or screen-reader certification is claimed. DOM/Audio doubles cannot establish actual media/network timing, CSS layout or assistive-technology behavior.
+1. The unfinished hero code contained an extra closing parenthesis, preventing `app.js` from parsing and all runtime tests from running. Repaired before integration; the syntax gate now checks every shipped script.
+2. The guide's reused absolute artwork risked overlapping its longer title. Removed from guide markup; original artwork remains in the philosophy and demonstration.
+3. Family Setup wording differed across pages. Standardized to unresolved/unverified onboarding; no universal compatibility claim.
+4. Paper-art entrance animation discarded the base rotation, risking a snap on completion. Both keyframes retain its rotation.
+5. The demo retained two columns at narrow tablet widths and phone selects used small text. Source now stacks at 850px, increases explanatory microcopy and uses 16px phone select values. Rendered acceptance remains outstanding.
 
-The visual design and responsive rules are implemented but still need real-browser acceptance, especially narrow tablet columns, 320px mobile, short-viewport audio controls and the desktop hero composition. Actual educational effectiveness and conversion improvement have not been measured.
+## Implemented accessibility and performance provisions
 
-The owner's Cloudflare account still requires sign-in; no renewed login attempt was made in this revision. `trustinjr.com`, Namecheap DNS, custom-domain HTTPS and `hello@trustinjr.com` delivery remain unverified. No audience, DNS, native-app, backend or TestFlight change was made.
+Semantic navigation, skip link, real buttons/selects/details, descriptive labels, visible focus, persistent status regions, complete narration transcripts, user-started audio, finite activities, static content fallback and system/manual reduced motion. Adult primary controls target at least 44px and child demo controls 64px. No moving hit areas, autoplay carousel, endless feed or motion required for task completion.
 
-## Real-browser acceptance before domain launch
+The site remains buildless HTML/CSS/JavaScript, with no runtime dependency, AI request, database or new paid infrastructure. System fonts create no third-party request. Original media loads on demand; audio preload is none. The prior v1.2 payload was approximately **1.59 MB**, including media, with approximately **33 KB** summed gzip for homepage HTML/CSS/JS/JSON. The v1.3 pass reduces markup/styles/runtime source while leaving media bytes intact; no new transfer measurement is claimed. These are local payload calculations, not measured browser transfer or Core Web Vitals.
 
-1. Inspect 320/390/680/688/768/1024px and wide layouts; zoom and reflow; reduced motion; all header/footer links and skip navigation.
-2. Hero Hear → visible playback controls; pause, resume, replay; denied/failed media → visible Retry; verify a real retry reloads the recording.
-3. Change Moon to Together during Moon narration: audio stops, child response, Dock and hero agree. Other discoveries and story narration remain uninterrupted.
-4. Switch activities and return: preserve page/problem state, but do not autoplay. Complete a story/math activity, restart it explicitly, and preserve parent preferences/log.
-5. Incorrect math answer → hint and stable focus; correct answer → Next focus; all three correct answers required; no next activity autostarts.
-6. Read the complete introduction and all seven story pages; verify correct image, text and recording pairing; check small/short screens without nested transcript scrolling.
-7. Test every sample completion, completed-only log, explicit reset and reload. Verify polite announcements and focus with a screen reader.
-8. Verify contact email delivery, normal routes/404, apex/www/TLS and public indexing changes only at the actual public launch.
+## Not verified here
+
+The managed Sites environment did not expose the required `control-browser` capability. Per its workflow, no substitute browser, server or automation was used. **No rendered website screenshots, responsive browser matrix, real iPhone/mobile Safari session, real audio listening, keyboard walkthrough, screen-reader session, live header enforcement, Lighthouse or Core Web Vitals result is claimed.** DOM/Audio doubles do not emulate layout, native focus, accessibility trees or media/network timing.
+
+Also unverified: target-domain availability/TLS/redirects, owner Cloudflare/DNS state, `hello@trustinjr.com` delivery, social-crawler access to the target-domain graphic, actual visitor comprehension/conversion and product learning outcomes. Source metadata pointing to trustinjr.com is launch configuration, not proof that domain is serving this revision.
+
+## Before public launch
+
+1. Inspect desktop and 320/390/680/768/850/1024px layouts, long guide title, tables, text zoom, anchors and sticky header. Confirm no horizontal overflow and visible focus.
+2. On actual iPhone Safari, play/pause/resume/replay/retry narration; change pace; choose all three discoveries; change related/unrelated preferences; background/resume; complete all samples and reset.
+3. Run keyboard and assistive-technology checks of names, states, announcements, Math feedback, disclosure controls and reduced-motion changes during an active effect.
+4. Have an unfamiliar adult identify category/age/device/testing status, hear an answer, change a sample preference and explain what is available today. No child identity collection is needed.
+5. Verify authorized Cloudflare setup, custom-domain HTTPS/apex/www/404/redirects, preserved mail records, contact delivery and live headers. Check social preview fetching.
+6. Complete app-specific privacy/consent/retention/provider/deletion and compatibility gates before a public child-facing release. These are not completed by this website work.
+7. Only after explicit public-launch authorization, revise meta/X-Robots-Tag/robots controls together, verify the public canonical and submit the correct sitemap/Search Console property. Keep the owner-private preview private.
+
+Deployment success and GitHub revision are recorded separately in the project handoff/Master Library; publishing a private review version does not clear these public-launch gates.

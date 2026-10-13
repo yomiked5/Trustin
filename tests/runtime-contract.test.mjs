@@ -11,6 +11,7 @@ const markup = readFileSync(new URL('index.html', root), 'utf8');
 const source = readFileSync(new URL('app.js', root), 'utf8').replace(/^import[^\n]+\n/, '');
 const discoveries = JSON.parse(readFileSync(new URL('assets/discoveries.json', root)));
 const book = JSON.parse(readFileSync(new URL('assets/story/book.json', root)));
+const iconIds = new Set([...readFileSync(new URL('assets/icons.svg', root), 'utf8').matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
 function matches(node, selector) {
@@ -28,6 +29,9 @@ function parse(html, document) {
       if (attr[1].startsWith('data-')) node.dataset[attr[1].slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = attr[2] ?? '';
     }
     node.disabled = 'disabled' in node.attrs;
+    if (node.tag === 'use' && node.attrs.href?.startsWith('/assets/icons.svg#')) {
+      assert.ok(iconIds.has(node.attrs.href.split('#')[1]), 'Missing rendered icon: ' + node.attrs.href);
+    }
     const after = html.slice(match.index + match[0].length);
     node.textContent = after.slice(0, after.indexOf('</' + node.tag + '>')).replace(/<[^>]+>/g, '').trim();
     nodes.push(node);
@@ -36,10 +40,16 @@ function parse(html, document) {
 }
 class Element {
   constructor(tag, document) {
-    this.tag = tag; this.document = document; this.attrs = {}; this.dataset = {};
+    this.tag = tag; this.document = document; this.attrs = {};
+    // DOMStringMap reflects data attributes used by the actual page controls.
+    const attribute = key => 'data-' + key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+    this.dataset = new Proxy({}, {
+      get: (_, key) => this.attrs[attribute(key)],
+      set: (_, key, value) => { this.attrs[attribute(key)] = String(value); return true; }
+    });
     this.listeners = {}; this.children = []; this.textContent = ''; this.value = ''; this.hidden = false; this.disabled = false;
   }
-  set innerHTML(value) { this.html = value; if (this.attrs.id === 'watch-content') this.children = parse(value, this.document); }
+  set innerHTML(value) { this.html = value; this.children = parse(value, this.document); }
   get innerHTML() { return this.html || ''; }
   setAttribute(key, value) { this.attrs[key] = value; }
   getAttribute(key) { return this.attrs[key] ?? null; }
@@ -105,7 +115,11 @@ async function setup({ failsToLoad = false } = {}) {
     await settle();
   };
   const policy = async value => { const select = query('#topic-policy'); select.value = value; await select.emit('change'); await settle(); };
-  return { document, audio, controls, context, query, click, policy, state:()=>vm.runInContext('state', context) };
+  const pace = async (value, label) => {
+    const select = query('#narration-pace'); select.value = String(value); select.selectedOptions = [{textContent:label}];
+    await select.emit('change'); await settle();
+  };
+  return { document, audio, controls, context, query, click, policy, pace, state:()=>vm.runInContext('state', context) };
 }
 
 test('runtime opens a prepared Moon answer without autoplay or a real account', async () => {
@@ -138,19 +152,20 @@ test('runtime Moon changes stop affected narration and visibly explain the bound
   assert.equal(app.state().view, 'boundary');
   assert.ok(app.audio.pauseCalls > pauses); assert.equal(app.audio.src, undefined);
   assert.match(app.query('#policy-result').textContent, /grown-up/);
-  assert.match(app.query('#hero-policy').innerHTML, /With a grown-up/);
-  assert.match(app.query('[data-hear="moon"]').innerHTML, /See parent boundary/);
-  assert.match(app.query('#hero-answer').innerHTML, /ask your grown-up/);
-  await app.click('[data-hear="moon"]');
+  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
+  await app.click('[data-inspect-moon]');
   assert.equal(app.state().view, 'boundary'); assert.equal(app.audio.playCalls, 1);
 });
 
-test('runtime explicit Hear action keeps playback controls in view', async () => {
+test('primary preview action focuses the single demo without starting narration', async () => {
   const app = await setup();
-  await app.click('[data-hear="moon"]');
-  assert.equal(app.audio.playCalls, 1);
-  assert.equal(app.document.activeElement.dataset.action, 'listen');
-  assert.equal(app.query('[data-action="listen"]').scrolled, true);
+  await app.click('[data-mode="story"]');
+  await app.click('[data-start="moon"]');
+  assert.equal(app.state().topic, 'moon');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.audio.playCalls, 0);
+  assert.equal(app.document.activeElement.tag, 'h3');
+  assert.equal(app.document.side.scrolled, true);
 });
 
 test('runtime unrelated parent changes leave story narration and progress alone', async () => {
@@ -212,4 +227,119 @@ test('runtime content failure offers a retry and reset clears the sample session
   await app.policy('together'); await app.click('#reset-demo');
   assert.equal(app.state().moonPolicy, 'explore'); assert.equal(app.state().log.length, 0);
   assert.equal(app.state().view, 'discovery'); assert.equal(app.state().topic, 'moon');
+});
+
+test('all three discoveries remain selectable and play their own recording', async () => {
+  const app = await setup();
+  for (const topic of ['seed', 'butterfly', 'moon']) {
+    await app.click('[data-action="questions"]');
+    await app.click(`[data-topic="${topic}"]`);
+    const discovery = discoveries.find(item => item.illustration === topic);
+    const calls = app.audio.playCalls;
+    assert.equal(app.state().topic, topic);
+    assert.equal(app.state().view, 'discovery');
+    assert.ok(app.query('#watch-content').innerHTML.includes(discovery.question));
+    await app.click('[data-action="listen"]');
+    assert.equal(app.audio.src, `/assets/audio/${discovery.id}.v${discovery.version}-answer.m4a`);
+    assert.equal(app.audio.playCalls, calls + 1);
+    assert.equal(app.state().moonPolicy, 'explore');
+  }
+});
+
+test('Dock choice synchronizes the child response and restores the answer without autoplay', async () => {
+  const app = await setup();
+  await app.click('[data-action="listen"]');
+  await app.policy('together');
+  assert.equal(app.state().view, 'boundary');
+  assert.equal(app.query('#topic-policy').value, 'together');
+  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
+  assert.match(app.query('#policy-result').textContent, /grown-up/);
+  assert.equal(app.audio.src, undefined);
+  assert.equal(app.audio.playCalls, 1, 'Changing a preference must not start narration');
+  await app.policy('explore');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.query('#topic-policy').value, 'explore');
+  assert.match(app.query('#policy-result').textContent, /available/);
+  assert.equal(app.audio.playCalls, 1);
+  await app.click('[data-action="listen"]');
+  assert.match(app.audio.src, /discover-moon.*answer\.m4a$/);
+});
+
+test('parent choice preserves unrelated story audio and its conversation prompt', async () => {
+  const app = await setup();
+  await app.click('[data-mode="story"]');
+  await app.click('[data-action="next"]');
+  await app.click('[data-action="listen"]');
+  const src = app.audio.src, pauses = app.audio.pauseCalls;
+  const prompt = app.query('#parent-prompt').textContent;
+  await app.policy('together');
+  assert.equal(app.state().mode, 'story');
+  assert.equal(app.state().storyPage, 1);
+  assert.equal(app.audio.src, src);
+  assert.equal(app.audio.pauseCalls, pauses);
+  assert.equal(app.query('#parent-prompt').textContent, prompt);
+  assert.equal(app.query('#topic-policy').value, 'together');
+});
+
+test('conversation starters follow each discovery, story and Math activity', async () => {
+  const app = await setup();
+  assert.match(app.query('#parent-prompt').textContent, /Moon/);
+  await app.click('[data-action="questions"]');
+  await app.click('[data-topic="butterfly"]');
+  assert.match(app.query('#parent-prompt').textContent, /butterfly/);
+  await app.click('[data-action="questions"]');
+  await app.click('[data-topic="seed"]');
+  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
+  await app.click('[data-mode="story"]');
+  assert.match(app.query('#parent-prompt').textContent, /Trustin notice.*plant/);
+  await app.click('[data-mode="math"]');
+  assert.match(app.query('#parent-prompt').textContent, /four objects.*two groups/);
+  await app.click('[data-mode="ask"]');
+  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
+  assert.equal(app.state().log.length, 0, 'Conversation starters are not invented child activity');
+});
+
+test('narration pace changes current playback and carries into another narrated activity', async () => {
+  const app = await setup();
+  await app.click('[data-action="listen"]');
+  const src = app.audio.src, calls = app.audio.playCalls, pauses = app.audio.pauseCalls;
+  await app.pace(1.1, 'A little quicker');
+  assert.equal(app.audio.playbackRate, 1.1);
+  assert.equal(app.state().pace, 1.1);
+  assert.equal(app.audio.src, src);
+  assert.equal(app.audio.playCalls, calls);
+  assert.equal(app.audio.pauseCalls, pauses);
+  assert.match(app.query('#demo-status').textContent, /A little quicker/);
+  await app.click('[data-mode="story"]');
+  await app.click('[data-action="listen"]');
+  assert.equal(app.audio.playbackRate, 1.1);
+  await app.pace(0.85, 'Calm');
+  assert.equal(app.audio.playbackRate, 0.85);
+  assert.match(app.query('#demo-status').textContent, /Calm/);
+});
+
+test('full reset clears progress and restores the Moon, parent prompt and narration defaults', async () => {
+  const app = await setup();
+  await app.click('[data-mode="story"]');
+  for (let page = 0; page < book.nodes.length; page++) await app.click('[data-action="next"]');
+  await app.policy('together');
+  await app.click('[data-mode="ask"]');
+  await app.click('[data-action="home"]');
+  await app.click('[data-topic="seed"]');
+  await app.click('[data-action="listen"]');
+  await app.pace(1.1, 'A little quicker');
+  await app.click('#reset-demo');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.state().topic, 'moon');
+  assert.equal(app.state().moonPolicy, 'explore');
+  assert.equal(app.state().pace, 0.85);
+  assert.equal(app.state().log.length, 0);
+  assert.equal(Object.keys(app.state().saved).length, 0);
+  assert.match(app.query('#watch-content').innerHTML, /Moon stays round/);
+  assert.match(app.query('#parent-prompt').textContent, /Moon/);
+  assert.equal(app.query('#narration-pace').value, '0.85');
+  assert.equal(app.query('#demo-next').hidden, true);
+  assert.equal(app.audio.src, undefined);
+  await app.click('[data-action="listen"]');
+  assert.equal(app.audio.playbackRate, 0.85);
 });
