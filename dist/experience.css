@@ -90,7 +90,7 @@ h1,h2 { letter-spacing:-.045em }
 @media (min-width:901px) {
   html { scroll-padding-top:116px }
   .site-header { position:sticky; top:0; z-index:30; min-height:86px; isolation:isolate; background:var(--cream); view-transition-name:site-header }
-  .site-header:before { content:''; position:absolute; inset:0; left:50%; transform:translateX(-50%); width:100vw; background:var(--cream); z-index:-1; border-bottom:1px solid #ded7c945 }
+  .site-header:before { content:''; position:absolute; inset:0; background:var(--cream); box-shadow:0 0 0 100vmax var(--cream); clip-path:inset(0 -100vmax); z-index:-1; border-bottom:1px solid #ded7c945 }
   .paper-nav { top:114px }
 }
 @media (max-width:1050px) {
