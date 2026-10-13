@@ -88,8 +88,9 @@ for path in sorted(root.rglob('*.html')):
         errors.append(f'{doc.path}: invalid title, primary heading or description')
     if doc.lang != 'en-US' or 'width=device-width' not in doc.meta.get('viewport', ''):
         errors.append(f'{doc.path}: missing language or responsive viewport')
-    if 'noindex' not in re.split(r'\s*,\s*', doc.meta.get('robots', '').lower()):
-        errors.append(f'{doc.path}: preview noindex missing')
+    expected_robots = 'noindex,nofollow' if path.name == '404.html' else 'index,follow'
+    if doc.meta.get('robots', '').lower() != expected_robots:
+        errors.append(f'{doc.path}: expected robots {expected_robots}')
     expected = canonical_for(path)
     if doc.canonicals != [expected]:
         errors.append(f'{doc.path}: canonical must be {expected}')
@@ -151,11 +152,14 @@ for path, doc in docs.items():
 
 headers = (root / '_headers').read_text()
 global_headers = headers.split('/assets/*', 1)[0]
-if not re.search(r'^\s+X-Robots-Tag:\s*[^\n]*\bnoindex\b', global_headers, re.I | re.M):
-    errors.append('Preview global headers need X-Robots-Tag: noindex')
+if 'X-Robots-Tag' in global_headers:
+    errors.append('Public pages must not inherit a global noindex header')
+for preview_pattern in ['https://:project.pages.dev/*', 'https://:version.:project.pages.dev/*', '/404.html']:
+    if preview_pattern + '\n  X-Robots-Tag: noindex, nofollow' not in headers:
+        errors.append(f'Missing preview/404 noindex rule: {preview_pattern}')
 robots = (root / 'robots.txt').read_text()
-if not re.search(r'^User-agent:\s*\*\s*\nDisallow:\s*/\s*$', robots.strip(), re.I | re.M):
-    errors.append('Preview robots.txt must keep Disallow: / until authorized launch')
+if robots.strip() != 'User-agent: *\nAllow: /\nSitemap: https://trustinjr.com/sitemap.xml':
+    errors.append('Public robots.txt must allow crawling and reference the canonical sitemap')
 
 try:
     sitemap = ET.parse(root / 'sitemap.xml')
@@ -206,6 +210,6 @@ for foreground, background in contrast_pairs:
 
 assert not errors, '\n'.join(errors)
 print(f'Passed: {len(docs)} pages; links, anchors, SVG symbols, reserved image dimensions and content/audio references.')
-print('Passed: preview noindex metadata/headers/robots, canonical routes, staged sitemap and 1200×630 social metadata/image.')
+print('Passed: public indexing, preview/404 noindex headers, canonical routes, sitemap and 1200×630 social metadata/image.')
 print(f'Passed: narrow privacy/narration API scan across all {len(scripts)} shipped scripts; no deployment behavior is inferred.')
 print(f'Passed: {len(contrast_pairs)} core text color pairings exceed 4.5:1 (not a rendered accessibility audit).')

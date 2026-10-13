@@ -1,5 +1,25 @@
 # Deployment and domain handoff
 
+## Current launch record — 13 October 2026
+
+This section supersedes the historical preparation notes below.
+
+- Production: https://trustinjr.com on the owner's Cloudflare Pages **Free** plan, project `trustinjr`, source `yomiked5/Trustin`, branch `main`, no build command, output `dist`, no environment secrets.
+- PR #1 was merged as `1526fffc4be5d006a2459fd4c36c78e09978024c`. The approved desktop overflow fix is `58a4d651291a8f576288105035df386701f7dc9a`.
+- Namecheap remains the registrar. Authoritative DNS is `courtney.ns.cloudflare.com` and `hunts.ns.cloudflare.com`; the prior pair was `dns1.registrar-servers.com` and `dns2.registrar-servers.com`. DNSSEC was off before cutover.
+- The existing MX records were preserved: `smtp.google.com` priority 1 and `alt1.aspmx.l.google.com` priority 5, DNS only. No SPF, DKIM, DMARC, verification TXT or CAA was present in the original provider inventory.
+- Apex and www CNAME records point to the actual project target `trustinjr.pages.dev`. The former apex website target was `tj1-env.eba-bwbwbjnj.us-west-2.elasticbeanstalk.com`; Namecheap's old www redirect was replaced.
+- Apex HTTPS serves the revised v1.3 website. HTTP upgrades to HTTPS. The Cloudflare rule `TrustinJr www to canonical HTTPS` redirects www to the apex with path and query preserved (301).
+- The owner confirmed `hello@trustinjr.com` does not work and supplied **jrtrustin@gmail.com** for the public inquiry address. No mailbox was purchased, no existing MX was changed for this contact update, and no test message was sent.
+- PR #2 switches the five public content pages to `index,follow`, enables public robots.txt and its canonical sitemap, and keeps 404 plus both Pages hostname patterns `noindex,nofollow` through `_headers`. The private review Site retains its existing access and noindex settings.
+- Validation: all 38 behavior tests, JavaScript syntax and static-site checks passed; the staged GitHub files matched the tested local files. Chrome demo boundaries, all math retries, story ending, narration pause/resume, reset, narrow layouts and desktop overflow were checked. Public apex HTTPS, HTTP upgrades, www path/query redirects and preview `X-Robots-Tag` were verified before the indexing release. Physical-device Safari and screen-reader acceptance remain unverified.
+- On Windows, run the Python check with UTF-8 enabled: `python -X utf8 tests/check_site.py`.
+- The native app, private Site audience and paid plans were not changed.
+
+For updates, edit this repository and let Pages deploy `main`. For rollback, use a known-good Pages deployment or revert the relevant Git commit. Do not blindly restore the old nameservers after launch: compare current email records first.
+
+## Historical preparation notes (superseded by the launch record)
+
 Updated 13 October 2026 · simplified revision 1.3. Production target: `https://trustinjr.com`.
 
 ## Current state

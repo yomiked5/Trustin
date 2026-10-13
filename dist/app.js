@@ -287,6 +287,6 @@ async function loadDemo() {
 if (content) loadDemo();
 document.querySelectorAll('[data-print]').forEach(button => button.addEventListener('click', () => window.print()));
 document.querySelectorAll('[data-copy-email]').forEach(button => button.addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText('hello@trustinjr.com'); button.textContent = 'Email address copied'; }
-  catch { button.textContent = 'hello@trustinjr.com'; }
+  try { await navigator.clipboard.writeText('jrtrustin@gmail.com'); button.textContent = 'Email address copied'; }
+  catch { button.textContent = 'jrtrustin@gmail.com'; }
 }));
