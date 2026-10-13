@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "productionAudio": true,
+  "files": {
+    "already-wet.json": {
+      "bytes": 1793,
+      "sha256": "846aa507ebb8cd7264a91589054c4510e1c1f278518f4b40d7afcec91d998b29"
+    },
+    "already-wet.m4a": {
+      "bytes": 66131,
+      "sha256": "6aa73335917c013b5d5c8cf160c3865df6b98097d5181f115f8d9574b83a7168"
+    },
+    "ask-gardener.json": {
+      "bytes": 1829,
+      "sha256": "7e3e301abc41c4dfefe7c0da1335df1501be1fb8bb85ace77580fbf93ffaa9f6"
+    },
+    "ask-gardener.m4a": {
+      "bytes": 74614,
+      "sha256": "489a9bc49703742d09a0d2f7eab6d84d2e74177ec27485dad9ed503509ea5dfe"
+    },
+    "book.json": {
+      "bytes": 2768,
+      "sha256": "a5ee1ea8f9f17857c8d5ce4a542785305d16b710047b0cea83a812aebd06bcf3"
+    },
+    "cover.jpg": {
+      "bytes": 55161,
+      "sha256": "b2fe640360d3478f68fc4905873777534b8ced1e9423300bb9b9531df5972c6f"
+    },
+    "give-it-time.json": {
+      "bytes": 1891,
+      "sha256": "a680094dcc84231d9adc4e91b3870c693c959be5dca1367273468df9a76b04b0"
+    },
+    "give-it-time.m4a": {
+      "bytes": 69675,
+      "sha256": "3ac769c60878df09bf987c64e4217e11104f46735eec57224f7730faa264d230"
+    },
+    "intro.json": {
+      "bytes": 2070,
+      "sha256": "eb683853b92b9a23f72fa072fabbd2d66836d46bd483100d738eb24dc2a17ffb"
+    },
+    "intro.m4a": {
+      "bytes": 73742,
+      "sha256": "04f896c961e35870850c19a20d609910b67662ffc367eb011b1fefb8b830e249"
+    },
+    "later.jpg": {
+      "bytes": 58615,
+      "sha256": "b5a6c67a4f5cd33d2c150d23fe199f1ff8fb0de898e5a63d0ce5c42d50240b26"
+    },
+    "look-first.json": {
+      "bytes": 1732,
+      "sha256": "1275df87b9294fd194c0bb13310da811128909daf95e8f0a4cfcbbc0c91028db"
+    },
+    "look-first.m4a": {
+      "bytes": 69494,
+      "sha256": "9e086a79733ae54f3c7a38edd40796afc64b0e7ba5769fb4efcb45ff0ad26e77"
+    },
+    "more-water.json": {
+      "bytes": 1892,
+      "sha256": "89e09cf1df8785e4beaec8e6a1a586b144f64efd72acbe18cc7d66b907e7532a"
+    },
+    "more-water.m4a": {
+      "bytes": 61866,
+      "sha256": "a1c233408cc055778f908ab6ae6f29d2919c84b1463bb472bc35fb6e646b3136"
+    },
+    "new-pot.json": {
+      "bytes": 1747,
+      "sha256": "4733833184bcd5b8db80d845e98fb595fd64244b539663dfce8b4d01b032dcb4"
+    },
+    "new-pot.m4a": {
+      "bytes": 58679,
+      "sha256": "03963c531a15f4633fad5e234a8869f776ba262bc9f7c855d96115c51ff0e419"
+    },
+    "repot.jpg": {
+      "bytes": 59620,
+      "sha256": "68e50bc3f5a50ee8baf083060bb61a9f85f923560f349d4761d1584426ae2db2"
+    }
+  }
+}

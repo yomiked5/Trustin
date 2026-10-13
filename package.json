@@ -1,0 +1,10 @@
+{
+  "name": "trustinjr-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TrustinJr parent-facing marketing website and scripted product demo",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs && python3 tests/check_site.py"
+  }
+}

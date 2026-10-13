@@ -1,0 +1,107 @@
+{
+  "audioSHA256": "6aa73335917c013b5d5c8cf160c3865df6b98097d5181f115f8d9574b83a7168",
+  "text": "The soil felt very wet. Trustin set down the can. More water did not seem like the right help today.",
+  "duration": 7.7,
+  "words": [
+    {
+      "word": "The",
+      "start": 0.2208,
+      "end": 0.401
+    },
+    {
+      "word": "soil",
+      "start": 0.4214,
+      "end": 0.8222
+    },
+    {
+      "word": "felt",
+      "start": 0.8827,
+      "end": 1.1833
+    },
+    {
+      "word": "very",
+      "start": 1.2638,
+      "end": 1.6248
+    },
+    {
+      "word": "wet.",
+      "start": 1.6249,
+      "end": 1.9255
+    },
+    {
+      "word": "Trustin",
+      "start": 2.5275,
+      "end": 3.0488
+    },
+    {
+      "word": "set",
+      "start": 3.1093,
+      "end": 3.3699
+    },
+    {
+      "word": "down",
+      "start": 3.37,
+      "end": 3.6307
+    },
+    {
+      "word": "the",
+      "start": 3.6308,
+      "end": 3.7511
+    },
+    {
+      "word": "can.",
+      "start": 3.7511,
+      "end": 4.0718
+    },
+    {
+      "word": "More",
+      "start": 4.9146,
+      "end": 5.1952
+    },
+    {
+      "word": "water",
+      "start": 5.1954,
+      "end": 5.5663
+    },
+    {
+      "word": "did",
+      "start": 5.5765,
+      "end": 5.787
+    },
+    {
+      "word": "not",
+      "start": 5.7971,
+      "end": 6.0377
+    },
+    {
+      "word": "seem",
+      "start": 6.0379,
+      "end": 6.3285
+    },
+    {
+      "word": "like",
+      "start": 6.3387,
+      "end": 6.5393
+    },
+    {
+      "word": "the",
+      "start": 6.5393,
+      "end": 6.6696
+    },
+    {
+      "word": "right",
+      "start": 6.6696,
+      "end": 6.9002
+    },
+    {
+      "word": "help",
+      "start": 6.9002,
+      "end": 7.131
+    },
+    {
+      "word": "today.",
+      "start": 7.1411,
+      "end": 7.542
+    }
+  ]
+}

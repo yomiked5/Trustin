@@ -1,0 +1,122 @@
+{
+  "audioSHA256": "04f896c961e35870850c19a20d609910b67662ffc367eb011b1fefb8b830e249",
+  "text": "Trustin and the Curled Leaf. Trustin sees a curled leaf and reaches for water. His friend notices a clue that changes their plan.",
+  "duration": 8.55,
+  "words": [
+    {
+      "word": "Trustin",
+      "start": 0.0001,
+      "end": 0.5609
+    },
+    {
+      "word": "and",
+      "start": 0.8416,
+      "end": 0.9819
+    },
+    {
+      "word": "the",
+      "start": 0.9819,
+      "end": 1.1121
+    },
+    {
+      "word": "Curled",
+      "start": 1.1222,
+      "end": 1.5328
+    },
+    {
+      "word": "Leaf.",
+      "start": 1.5328,
+      "end": 1.8233
+    },
+    {
+      "word": "Trustin",
+      "start": 2.3845,
+      "end": 2.8654
+    },
+    {
+      "word": "sees",
+      "start": 2.8654,
+      "end": 3.1159
+    },
+    {
+      "word": "a",
+      "start": 3.1159,
+      "end": 3.206
+    },
+    {
+      "word": "curled",
+      "start": 3.2061,
+      "end": 3.5667
+    },
+    {
+      "word": "leaf",
+      "start": 3.5667,
+      "end": 3.827
+    },
+    {
+      "word": "and",
+      "start": 4.1478,
+      "end": 4.298
+    },
+    {
+      "word": "reaches",
+      "start": 4.298,
+      "end": 4.5985
+    },
+    {
+      "word": "for",
+      "start": 4.5985,
+      "end": 4.7389
+    },
+    {
+      "word": "water.",
+      "start": 4.7389,
+      "end": 5.0693
+    },
+    {
+      "word": "His",
+      "start": 5.5304,
+      "end": 5.7307
+    },
+    {
+      "word": "friend",
+      "start": 5.7308,
+      "end": 6.0613
+    },
+    {
+      "word": "notices",
+      "start": 6.0714,
+      "end": 6.452
+    },
+    {
+      "word": "a",
+      "start": 6.4521,
+      "end": 6.5422
+    },
+    {
+      "word": "clue",
+      "start": 6.5422,
+      "end": 6.8527
+    },
+    {
+      "word": "that",
+      "start": 7.1935,
+      "end": 7.4038
+    },
+    {
+      "word": "changes",
+      "start": 7.4139,
+      "end": 7.8146
+    },
+    {
+      "word": "their",
+      "start": 7.8146,
+      "end": 8.015
+    },
+    {
+      "word": "plan.",
+      "start": 8.015,
+      "end": 8.3555
+    }
+  ]
+}

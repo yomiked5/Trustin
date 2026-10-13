@@ -1,0 +1,102 @@
+{
+  "audioSHA256": "03963c531a15f4633fad5e234a8869f776ba262bc9f7c855d96115c51ff0e419",
+  "text": "The gardener moved the plant carefully. Extra water could drain into a tray. Trustin helped tidy the loose soil.",
+  "duration": 6.8,
+  "words": [
+    {
+      "word": "The",
+      "start": 0.1402,
+      "end": 0.2702
+    },
+    {
+      "word": "gardener",
+      "start": 0.2702,
+      "end": 0.6806
+    },
+    {
+      "word": "moved",
+      "start": 0.6807,
+      "end": 0.9509
+    },
+    {
+      "word": "the",
+      "start": 0.9509,
+      "end": 1.041
+    },
+    {
+      "word": "plant",
+      "start": 1.041,
+      "end": 1.3013
+    },
+    {
+      "word": "carefully.",
+      "start": 1.3013,
+      "end": 1.7617
+    },
+    {
+      "word": "Extra",
+      "start": 2.4825,
+      "end": 2.7527
+    },
+    {
+      "word": "water",
+      "start": 2.7527,
+      "end": 3.0731
+    },
+    {
+      "word": "could",
+      "start": 3.0831,
+      "end": 3.2632
+    },
+    {
+      "word": "drain",
+      "start": 3.2632,
+      "end": 3.4935
+    },
+    {
+      "word": "into",
+      "start": 3.4935,
+      "end": 3.7037
+    },
+    {
+      "word": "a",
+      "start": 3.7037,
+      "end": 3.7837
+    },
+    {
+      "word": "tray.",
+      "start": 3.7837,
+      "end": 4.104
+    },
+    {
+      "word": "Trustin",
+      "start": 4.7847,
+      "end": 5.2351
+    },
+    {
+      "word": "helped",
+      "start": 5.2351,
+      "end": 5.5454
+    },
+    {
+      "word": "tidy",
+      "start": 5.5655,
+      "end": 5.9158
+    },
+    {
+      "word": "the",
+      "start": 5.9158,
+      "end": 6.0259
+    },
+    {
+      "word": "loose",
+      "start": 6.0259,
+      "end": 6.2761
+    },
+    {
+      "word": "soil.",
+      "start": 6.2761,
+      "end": 6.5864
+    }
+  ]
+}

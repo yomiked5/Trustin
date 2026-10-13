@@ -1,0 +1,112 @@
+{
+  "audioSHA256": "a1c233408cc055778f908ab6ae6f29d2919c84b1463bb472bc35fb6e646b3136",
+  "text": "Trustin wanted the leaf to look better. He lifted the watering can. His friend asked him to check the soil first.",
+  "duration": 7.1,
+  "words": [
+    {
+      "word": "Trustin",
+      "start": 0,
+      "end": 0.5003
+    },
+    {
+      "word": "wanted",
+      "start": 0.7206,
+      "end": 1.0508
+    },
+    {
+      "word": "the",
+      "start": 1.0508,
+      "end": 1.1709
+    },
+    {
+      "word": "leaf",
+      "start": 1.1709,
+      "end": 1.4011
+    },
+    {
+      "word": "to",
+      "start": 1.4011,
+      "end": 1.5412
+    },
+    {
+      "word": "look",
+      "start": 1.5412,
+      "end": 1.7313
+    },
+    {
+      "word": "better.",
+      "start": 1.7313,
+      "end": 2.0415
+    },
+    {
+      "word": "He",
+      "start": 2.8422,
+      "end": 3.0022
+    },
+    {
+      "word": "lifted",
+      "start": 3.0223,
+      "end": 3.3826
+    },
+    {
+      "word": "the",
+      "start": 3.3826,
+      "end": 3.5027
+    },
+    {
+      "word": "watering",
+      "start": 3.5027,
+      "end": 3.8729
+    },
+    {
+      "word": "can.",
+      "start": 3.8729,
+      "end": 4.1631
+    },
+    {
+      "word": "His",
+      "start": 4.8637,
+      "end": 5.0538
+    },
+    {
+      "word": "friend",
+      "start": 5.0538,
+      "end": 5.324
+    },
+    {
+      "word": "asked",
+      "start": 5.3441,
+      "end": 5.5442
+    },
+    {
+      "word": "him",
+      "start": 5.5442,
+      "end": 5.6843
+    },
+    {
+      "word": "to",
+      "start": 5.6843,
+      "end": 5.8144
+    },
+    {
+      "word": "check",
+      "start": 5.8144,
+      "end": 6.0346
+    },
+    {
+      "word": "the",
+      "start": 6.0346,
+      "end": 6.1746
+    },
+    {
+      "word": "soil",
+      "start": 6.1746,
+      "end": 6.4649
+    },
+    {
+      "word": "first.",
+      "start": 6.4649,
+      "end": 6.8051
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "trustin-leaf",
+  "edition": "illustrated-v1",
+  "title": "Trustin and the Curled Leaf",
+  "introduction": "Trustin and the Curled Leaf. Trustin sees a curled leaf and reaches for water. His friend notices a clue that changes their plan.",
+  "entry": "intro",
+  "cover": "cover",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "intro",
+      "text": "Trustin and the Curled Leaf. Trustin sees a curled leaf and reaches for water. His friend notices a clue that changes their plan.",
+      "art": "cover",
+      "audio": "intro.m4a",
+      "cues": "intro.json",
+      "next": "more-water",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "more-water",
+      "kind": "page",
+      "text": "Trustin wanted the leaf to look better. He lifted the watering can. His friend asked him to check the soil first.",
+      "art": "cover",
+      "audio": "more-water.m4a",
+      "cues": "more-water.json",
+      "next": "already-wet",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "already-wet",
+      "kind": "page",
+      "text": "The soil felt very wet. Trustin set down the can. More water did not seem like the right help today.",
+      "art": "cover",
+      "audio": "already-wet.m4a",
+      "cues": "already-wet.json",
+      "next": "ask-gardener",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "ask-gardener",
+      "kind": "page",
+      "text": "They asked the gardener to look. Water was trapped in the pot. The gardener chose another pot with holes underneath.",
+      "art": "repot",
+      "audio": "ask-gardener.m4a",
+      "cues": "ask-gardener.json",
+      "next": "new-pot",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "new-pot",
+      "kind": "page",
+      "text": "The gardener moved the plant carefully. Extra water could drain into a tray. Trustin helped tidy the loose soil.",
+      "art": "repot",
+      "audio": "new-pot.m4a",
+      "cues": "new-pot.json",
+      "next": "give-it-time",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "give-it-time",
+      "kind": "page",
+      "text": "Over the next few days, they checked the plant together. At last, a new leaf began to open. They kept watching.",
+      "art": "later",
+      "audio": "give-it-time.m4a",
+      "cues": "give-it-time.json",
+      "next": "look-first",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "look-first",
+      "kind": "ending",
+      "text": "Trustin left the watering can on its hook. Before helping again, he would look, check, and ask. The end.",
+      "art": "later",
+      "audio": "look-first.m4a",
+      "cues": "look-first.json",
+      "next": null,
+      "choices": [],
+      "legacyPage": null
+    }
+  ]
+}

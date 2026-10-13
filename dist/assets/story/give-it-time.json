@@ -1,0 +1,112 @@
+{
+  "audioSHA256": "3ac769c60878df09bf987c64e4217e11104f46735eec57224f7730faa264d230",
+  "text": "Over the next few days, they checked the plant together. At last, a new leaf began to open. They kept watching.",
+  "duration": 8.05,
+  "words": [
+    {
+      "word": "Over",
+      "start": 0.0603,
+      "end": 0.2808
+    },
+    {
+      "word": "the",
+      "start": 0.281,
+      "end": 0.4513
+    },
+    {
+      "word": "next",
+      "start": 0.4615,
+      "end": 0.7622
+    },
+    {
+      "word": "few",
+      "start": 0.7624,
+      "end": 0.9729
+    },
+    {
+      "word": "days,",
+      "start": 0.9729,
+      "end": 1.3238
+    },
+    {
+      "word": "they",
+      "start": 1.5648,
+      "end": 1.7752
+    },
+    {
+      "word": "checked",
+      "start": 1.7854,
+      "end": 2.1163
+    },
+    {
+      "word": "the",
+      "start": 2.1163,
+      "end": 2.2567
+    },
+    {
+      "word": "plant",
+      "start": 2.2567,
+      "end": 2.5476
+    },
+    {
+      "word": "together.",
+      "start": 2.5476,
+      "end": 2.9687
+    },
+    {
+      "word": "At",
+      "start": 3.6911,
+      "end": 3.8213
+    },
+    {
+      "word": "last,",
+      "start": 3.8315,
+      "end": 4.2324
+    },
+    {
+      "word": "a",
+      "start": 4.6139,
+      "end": 4.7241
+    },
+    {
+      "word": "new",
+      "start": 4.7342,
+      "end": 4.9848
+    },
+    {
+      "word": "leaf",
+      "start": 4.995,
+      "end": 5.2656
+    },
+    {
+      "word": "began",
+      "start": 5.2758,
+      "end": 5.6067
+    },
+    {
+      "word": "to",
+      "start": 5.6067,
+      "end": 5.757
+    },
+    {
+      "word": "open.",
+      "start": 5.7773,
+      "end": 6.0579
+    },
+    {
+      "word": "They",
+      "start": 6.5396,
+      "end": 6.7301
+    },
+    {
+      "word": "kept",
+      "start": 6.7402,
+      "end": 7.031
+    },
+    {
+      "word": "watching.",
+      "start": 7.0411,
+      "end": 7.5021
+    }
+  ]
+}

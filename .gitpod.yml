@@ -1,12 +1,7 @@
 tasks:
-  - name: dev
-    init: |
-      npm i -g pnpm
-      pnpm create vite@latest app -- --template react
-      cd app && pnpm i
-    command: |
-      cd app && pnpm dev -- --host
+  - name: TrustinJr website
+    command: python3 -m http.server 5173 --directory dist
 ports:
   - port: 5173
     onOpen: open-preview
-    visibility: public
+    visibility: private

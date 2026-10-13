@@ -1,0 +1,26 @@
+[
+  {
+    "id": "discover-butterfly",
+    "version": 1,
+    "question": "Can a butterfly taste with its feet?",
+    "explanation": "A butterfly has tiny taste sensors on its feet. When it lands on a plant, those sensors help it learn about the plant. Its feet can notice tastes without taking a bite.",
+    "continuation": "A butterfly uses its feet for tasting as well as standing. Different animals use different body parts to learn about the world.",
+    "illustration": "butterfly"
+  },
+  {
+    "id": "discover-seed",
+    "version": 1,
+    "question": "What is inside a seed?",
+    "explanation": "A seed holds a tiny young plant and a store of food. With the right water, air, and warmth, it can begin to grow. A little root starts reaching out.",
+    "continuation": "The stored food helps the plant get started. Later, its leaves can use light to help make more food.",
+    "illustration": "seed"
+  },
+  {
+    "id": "discover-moon",
+    "version": 1,
+    "question": "Does the Moon change its shape?",
+    "explanation": "The Moon stays round like a ball. Sunlight lights up half of it. As the Moon moves around Earth, we see different amounts of that bright half.",
+    "continuation": "The Moon does not make its own light like the Sun. Moonlight is sunlight bouncing off the Moon.",
+    "illustration": "moon"
+  }
+]

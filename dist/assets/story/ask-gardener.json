@@ -1,0 +1,107 @@
+{
+  "audioSHA256": "489a9bc49703742d09a0d2f7eab6d84d2e74177ec27485dad9ed503509ea5dfe",
+  "text": "They asked the gardener to look. Water was trapped in the pot. The gardener chose another pot with holes underneath.",
+  "duration": 8.65,
+  "words": [
+    {
+      "word": "They",
+      "start": 0.0001,
+      "end": 0.2404
+    },
+    {
+      "word": "asked",
+      "start": 0.4412,
+      "end": 0.7919
+    },
+    {
+      "word": "the",
+      "start": 0.8021,
+      "end": 0.9624
+    },
+    {
+      "word": "gardener",
+      "start": 0.9625,
+      "end": 1.4234
+    },
+    {
+      "word": "to",
+      "start": 1.4437,
+      "end": 1.624
+    },
+    {
+      "word": "look.",
+      "start": 1.6241,
+      "end": 1.9246
+    },
+    {
+      "word": "Water",
+      "start": 2.5865,
+      "end": 3.0073
+    },
+    {
+      "word": "was",
+      "start": 3.0276,
+      "end": 3.2479
+    },
+    {
+      "word": "trapped",
+      "start": 3.3283,
+      "end": 3.8093
+    },
+    {
+      "word": "in",
+      "start": 4.2105,
+      "end": 4.3207
+    },
+    {
+      "word": "the",
+      "start": 4.3207,
+      "end": 4.451
+    },
+    {
+      "word": "pot.",
+      "start": 4.451,
+      "end": 4.7917
+    },
+    {
+      "word": "The",
+      "start": 5.4536,
+      "end": 5.6038
+    },
+    {
+      "word": "gardener",
+      "start": 5.6038,
+      "end": 5.9948
+    },
+    {
+      "word": "chose",
+      "start": 5.9949,
+      "end": 6.3356
+    },
+    {
+      "word": "another",
+      "start": 6.3357,
+      "end": 6.6764
+    },
+    {
+      "word": "pot",
+      "start": 6.6764,
+      "end": 6.9771
+    },
+    {
+      "word": "with",
+      "start": 7.2981,
+      "end": 7.4985
+    },
+    {
+      "word": "holes",
+      "start": 7.4986,
+      "end": 7.8794
+    },
+    {
+      "word": "underneath.",
+      "start": 7.8795,
+      "end": 8.4407
+    }
+  ]
+}
