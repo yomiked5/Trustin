@@ -1,6 +1,6 @@
 # TrustinJr website bible
 
-Version 1.2 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+Version 1.3 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
 
 ## The job
 
@@ -34,7 +34,7 @@ Headline: **For every little why.** Supporting line: **A world of wonder. Guided
 
 The three promises, in order: **a world of discovery for children; meaningful guidance for parents; a childhood that isn’t for sale**. Lead with aspiration, then demonstrate parental agency and earn trust through concrete, verified behavior. “Every child” is the mission’s ambition, not a present universal-access or device-compatibility claim.
 
-Primary action: **Try the experience** → prepared child/parent demo. Hero secondary: **See your side** → sample Dock. The hero lets an adult choose Moon, Seeds or Butterflies, inspect an excerpt, explicitly hear the corresponding recording and toggle a sample Moon preference. Its controls, Dock choice and affected child response remain synchronized.
+Primary action: **Try the preview** → the prepared Moon discovery in the single child/parent demo, without autoplay. The hero is a simple original-character illustration, category/age, headline, supporting line, device roles and one action. All question selection, listening and parent preferences live in the full demo. The introduction no longer duplicates those controls.
 
 Parent guidance means participation as well as preferences. The Dock includes context-specific conversation starters; the child sample ends with an optional real-world activity. The harmless Moon setting is explicitly an example of choosing to discuss a topic together, not a claim that astronomy requires restriction.
 
@@ -66,7 +66,9 @@ Marketing display type may use a warm editorial serif; product surfaces use a ro
 
 Keep the original matte Trustin portrait. Native October 8 color correction governs controls: cream microphone/lens/play interiors, dark definition, peach/sage/lavender button surfaces, cream-on-teal forward action. Math uses +, − and 1 blocks, never dice. No talking mouth, gloss, harsh gradients or rapid motion. No mandatory animation or moving hit targets.
 
-Layout: 1200px maximum reading canvas; a product-led asymmetrical hero; pale sage paired-demo region; a concrete seed-to-idea-to-world learning sequence; peach no-advertising manifesto; dark teal philosophy panel; six-question FAQ. Avoid a generic grid of six identical feature cards. At 850px and below, stack the demo and Dock to protect the narrow-tablet reading width; the Dock includes an immediate child-response preview so a parent does not need to scroll back to understand a setting change. Keep navigation links visible on mobile. The hero is a custom discovery window with the original character, a selectable prepared question and a visible parent-choice bridge. Mobile typography and spacing compress the introduction; explanatory text remains readable. The native-device demo appears below this browser-adapted introduction.
+Layout: 1200px maximum canvas. Five homepage sections: quiet illustrated introduction, paired demo, three concise principles, four collapsed FAQs, compact availability close. Use cream and one pale-sage demo field; remove the repeated promise strip, learning trail, mission bridge, separate parent manifesto, trust grid, dark philosophy band and guide promotion. Philosophy and guide remain linked and complete on their own pages. At 850px and below, stack the demo and Dock; on phones the hero artwork becomes a compact horizontal vignette. Navigation remains visible.
+
+Motion is brief and purposeful: 160ms native cross-page fades and CSS state transitions; 220ms introduction/reader fades with at most 4px displacement; 240ms feedback. No scroll-reveal choreography, drawn paths, underline animation, topic carousel or moving buttons. System/manual reduced motion always wins. Animation is never required to read content, use a control or navigate. These are implementation values, not a browser performance result.
 
 ## Visitor journey
 
@@ -81,13 +83,13 @@ Layout: 1200px maximum reading canvas; a product-led asymmetrical hero; pale sag
 
 The preview is scripted and adapted for a browser, visibly labeled throughout. No microphone permission, open-ended chat, AI requests, login or real child data. The Dock is labeled a temporary sample session; no real child profile is created. State is memory-only and resets on reload. Hosting infrastructure may process ordinary request data.
 
-Curiosity: open directly on the prepared Moon discovery. Offer other questions about Moon, seeds and butterflies. Reuse exact source text and prerecorded Cedar audio. Read at your own pace by default; narration is user-initiated, with Listen/Pause/Resume/Replay, elapsed progress and complete visible text. Explicit More/Finish and explicit ending; no automatic progression. Two actual pages per discovery, followed by an optional observation with a grown-up. The hero Hear action brings the active playback control into view. Playback failures show visible retry guidance as well as a polite announcement; canceling playback must not produce a stale error on another activity.
+Curiosity: open directly on the prepared Moon discovery. Offer other questions about Moon, seeds and butterflies. Reuse exact source text and prerecorded Cedar audio. Read at your own pace by default; narration is user-initiated, with Listen/Pause/Resume/Replay, elapsed progress and complete visible text. Explicit More/Finish and explicit ending; no automatic progression. Two actual pages per discovery, followed by an optional observation with a grown-up. Playback failures show visible retry guidance as well as a polite announcement; canceling playback must not produce a stale error on another activity.
 
 Story: *Trustin and the Curled Leaf*, complete source introduction and seven pages, matching images and recordings; manually advance from cover and into The end. Full transcript text stays visible, without an inner scrolling text box. Source word-timing files are retained, but this preview does not claim synchronized word highlighting.
 
 Math: a short, deterministic three-question garden project, useful incorrect-answer hints, visible +/− blocks, no punitive response or streak. This is a web sample, not a representation of backend adaptive placement.
 
-Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. A one-click parent-choice example is available in the hero and above the demo. Context-specific conversation starters connect all three activity types to parent participation.
+Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. The Moon select in the Dock is the single preference control. Context-specific conversation starters connect all three activity types to parent participation.
 
 Switching activities preserves each activity's independent place while the page is open. Completed Story/Math samples have an explicit restart action that retains family settings and the completed-only activity log. Reset clears all settings, saved progress and log entries, then opens the default Moon example. Log only completed demo activities, no fabricated starting metrics or implied assessment. Finish with a real-world prompt, not another automatically queued activity. Math feedback is announced through a persistent live region; focus returns to the chosen answer for an incorrect attempt or the next control for a correct answer.
 
@@ -124,7 +126,19 @@ The bounded source critique was useful for defects and hierarchy, not a visual a
 
 Acceptance: see `VALIDATION.md`. No conversion lift, browser rendering result, Lighthouse score, screen-reader result or product efficacy result is claimed. Next useful design validation is a real-device parent walkthrough: ask what the product is, have the parent hear an answer and change a boundary, then ask what they believe is available today. Do not collect child identities or sensitive child information for this test.
 
-## Mission-led implementation — revision 1.2
+## Owner-directed simplification — revision 1.3
+
+The owner found v1.2 too much and requested clean, crisp transitions and a reduction. This supersedes the earlier emphasis on a second interactive hero and repeated editorial sections.
+
+- Reduced homepage from 11 sections to 5; static main-body copy from 1,315 to 569 whitespace-counted words (57% less). This excludes dynamically rendered demo text and is a source comparison, not a measured reading time.
+- One original-character hero and one primary action; one complete interactive child/parent demo.
+- Consolidated commitments into three open text columns, with four FAQs and links to the unchanged deeper resources.
+- Shortened the Dock introduction and removed the extra parent-choice shortcut. Kept immediate child response, conversation starters, pace, activity and reset.
+- Removed obsolete hero event handlers and associated motion; adapted existing runtime checks to the real demo controls, with all 38 tests passing.
+- Preserved every original asset and authored activity. No new runtime dependencies, AI calls, data collection or infrastructure.
+- Browser/Safari rendering and actual playback remain unverified because supported browser access is unavailable. Do not call this a rendered visual acceptance pass.
+
+## Mission-led implementation — revision 1.2 (historical; simplified in 1.3)
 
 Ten independently evaluated specialist perspectives were reconciled into one implementation. No measured conversion superiority is claimed. [Independent critical review](INDEPENDENT_REVIEW.md) records the post-implementation source review; [validation](VALIDATION.md) separates executed checks from browser/device work.
 

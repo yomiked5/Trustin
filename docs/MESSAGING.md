@@ -1,6 +1,6 @@
 # TrustinJr messaging guidelines
 
-Version 1.2 · October 13, 2026 · Approved direction: mission-led website redesign.
+Version 1.3 · October 13, 2026 · Mission-led direction with owner-requested reduction.
 
 ## The center
 
@@ -47,19 +47,18 @@ Trustin is a recognizable learning character in a computer tool. Avoid AI-friend
 
 | Placement | Label | Result |
 |---|---|---|
-| Main navigation | Try the demo | Scroll to scripted dual experience |
-| Hero | Try the experience | Open selected prepared discovery |
-| Hero secondary | See your side | Inspect sample Parent Dock |
-| Hero recording | Hear this answer | Open exact selected content and user-started recording |
-| Parent example | Try a parent choice / See a parent choice | Change the Moon sample and show its consequence |
-| After evaluation | See app availability | Read current status and device limits |
-| Philosophy | Read the whitepaper | Open readable, printable evidence and principles |
-| Parent guide | Read the parent guide | Practical five-question evaluation |
+| Main navigation / hero | Try the preview | Open the single scripted dual experience; hero opens Moon without autoplay |
+| Parent Dock | Moon questions: With a grown-up | Immediately show the sample preference’s consequence |
+| After evaluation | Current availability | Read current status and device limits |
+| Approach | Read Curiosity, with care | Open readable, printable evidence and principles |
+| Approach | Five questions for parents | Practical parent evaluation guide |
 | Availability | Email the project | Open an adult email inquiry, not a signup |
 
 No fabricated waitlist, App Store download, price, trial, scarcity, testimonials, award, certification or guaranteed launch. The email address still needs a delivery test before public launch.
 
 ## Editorial discipline
+
+The owner prefers a concise homepage: one introduction, one full demo, three short principles, four FAQs and availability. Keep evidence and the full mission on the deeper pages. Avoid multiple slogan sections, duplicated controls and ornamental animation.
 
 Use plain verbs: ask, notice, think, try, listen, count, explore, together. Explain scaffolding with an actual example. Keep evidence populations visible: studies of adolescents or broad 0–8 parent reports do not establish preschool AI benefits. Never turn a framework into an endorsement.
 

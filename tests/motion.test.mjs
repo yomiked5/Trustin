@@ -200,7 +200,6 @@ function experienceHarness({enabled=true, platformAnimations=true} = {}) {
     location:{pathname:'/'}
   };
   vm.runInNewContext(motionSource, {window, document, createMotionController, readingProgress});
-  window.TrustinMotion.hero();
   window.TrustinMotion.reader({querySelector:nodeFor});
   window.TrustinMotion.feedback(nodeFor('.math-message'));
   window.TrustinMotion.boundary();
@@ -209,9 +208,9 @@ function experienceHarness({enabled=true, platformAnimations=true} = {}) {
 
 test('all shipped decorative interactions are finite and leave no persistent animation fill', () => {
   const app = experienceHarness();
-  assert.ok(app.effects.length >= 8, 'Exercise entry, hero, reader, feedback and boundary motion');
+  assert.ok(app.effects.length >= 8, 'Exercise introduction, reader, feedback and boundary motion');
   for (const effect of app.effects) {
-    assert.ok(Number.isFinite(effect.options.duration) && effect.options.duration > 0 && effect.options.duration <= 1000);
+    assert.ok(Number.isFinite(effect.options.duration) && effect.options.duration > 0 && effect.options.duration <= 240);
     assert.equal(effect.options.iterations, 1);
     assert.equal(effect.options.fill, 'none');
   }

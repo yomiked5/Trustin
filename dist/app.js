@@ -18,7 +18,7 @@ const parentPrompts = {
   math: 'Find four objects together. Ask, “How could we split them into two groups?”'
 };
 let state = initialState();
-let heroTopic = 'moon', lastHeroKey = '', lastReaderKey = '';
+let lastReaderKey = '';
 let data, story, playing = false, playIntent = 0, audioError = '';
 const player = content ? new Audio() : null;
 if (player) player.preload = 'none';
@@ -120,28 +120,6 @@ function progress(current, total, label) {
 function controls(back = true, next = 'Next') {
   return `<div class="reader-controls"><button data-action="back" aria-label="Previous page" ${back ? '' : 'disabled'}>${icon('back')}<span>Back</span></button><button data-action="listen" aria-label="Listen to recorded Trustin narration">${icon('play')}<span>Listen</span></button><button data-action="next">${icon('next')}<span>${next}</span></button></div><div class="audio-line"><progress id="audio-progress" value="0" max="1" aria-label="Narration progress"></progress><span id="audio-time" aria-hidden="true">0:00 / 0:00</span></div><p class="reader-foot" id="audio-note">Sound only when you choose · Complete text above</p>`;
 }
-function renderHero() {
-  if (!data) return;
-  const topic = data.find(item => item.illustration === heroTopic);
-  const blocked = heroTopic === 'moon' && state.moonPolicy === 'together';
-  const key = heroTopic + ':' + blocked;
-  document.querySelector('#hero-preview').setAttribute('data-topic', heroTopic);
-  document.querySelector('#hero-question').textContent = topic.question;
-  document.querySelector('#hero-symbol').innerHTML = icon(blocked ? 'parents' : heroTopic);
-  document.querySelector('#hero-answer').innerHTML = blocked
-    ? '<p>“Let’s ask your grown-up.” You chose to explore this topic together.</p>'
-    : '<p>' + esc((topic.explanation.match(/[^.!?]+[.!?]/g) || [topic.explanation]).slice(0, 2).join('').trim()) + '</p>';
-  document.querySelector('#hero-counter').textContent = '0' + (['moon', 'seed', 'butterfly'].indexOf(heroTopic) + 1) + ' / 03';
-  document.querySelector('#hero-policy').innerHTML = state.moonPolicy === 'together' ? 'With a grown-up' : 'Explore';
-  const hear = document.querySelector('[data-hear]');
-  hear.dataset.hear = heroTopic;
-  hear.innerHTML = icon(blocked ? 'parents' : 'play') + (blocked ? ' See parent boundary' : ' Hear this answer');
-  const boundary = document.querySelector('[data-hero-boundary]');
-  boundary.innerHTML = (state.moonPolicy === 'together' ? 'Show the Moon answer ' : 'Try a parent choice ') + icon('next');
-  document.querySelectorAll('[data-hero-topic]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.heroTopic === heroTopic)));
-  if (key !== lastHeroKey) window.TrustinMotion?.hero();
-  lastHeroKey = key;
-}
 function renderDock() {
   document.querySelector('#parent-prompt').textContent = parentPrompts[state.mode === 'ask' ? state.topic || 'moon' : state.mode];
   const log = document.querySelector('#activity-log');
@@ -156,7 +134,6 @@ function renderDock() {
     ? '“Let’s ask your grown-up.” The Moon answer is replaced by a conversation with you.'
     : '“The Moon stays round like a ball.” The prepared answer is available to explore.';
   if (result.textContent !== message) result.textContent = message;
-  renderHero();
   document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode)));
   document.querySelector('#demo-next').hidden = !state.log.length;
 }
@@ -201,7 +178,7 @@ function focusContent(scroll = false) {
   target.focus({ preventScroll:scroll });
   if (scroll) content.closest('.child-side').scrollIntoView({ block:'start', behavior:scrollBehavior() });
 }
-function openSample(value, hear = false) {
+function openSample(value) {
   if (!data) return;
   stopAudio();
   if (value === 'story' || value === 'math') chooseMode(state, value);
@@ -209,12 +186,6 @@ function openSample(value, hear = false) {
   render();
   focusContent(true);
   announce(state.view === 'boundary' ? 'This topic is set to explore with a grown-up. Change the sample Parent Dock setting to make its answer available.' : 'Sample opened. Use Listen to hear recorded narration where available.');
-  if (hear && audioSource()) {
-    toggleAudio();
-    const listen = content.querySelector('[data-action="listen"]');
-    listen.focus({ preventScroll:true });
-    listen.scrollIntoView({ block:'center', behavior:scrollBehavior() });
-  }
 }
 function setPolicy(value) {
   const affected = changePolicy(state, value);
@@ -276,31 +247,8 @@ document.querySelectorAll('[data-mode]').forEach(button => button.addEventListen
 document.querySelectorAll('[data-start]').forEach(link => link.addEventListener('click', event => {
   if (!data) return;
   event.preventDefault();
-  openSample(link.dataset.start === 'current' ? heroTopic : link.dataset.start);
+  openSample(link.dataset.start);
 }));
-document.querySelectorAll('[data-hero-topic]').forEach(button => button.addEventListener('click', () => {
-  if (!data || button.dataset.heroTopic === heroTopic) return;
-  stopAudio();
-  heroTopic = button.dataset.heroTopic;
-  renderHero();
-  document.querySelector('#hero-status').textContent = labels[heroTopic] + ' selected. ' + document.querySelector('#hero-question').textContent;
-}));
-document.querySelector('[data-hero-boundary]')?.addEventListener('click', () => {
-  if (!data) return;
-  heroTopic = 'moon';
-  setPolicy(state.moonPolicy === 'together' ? 'explore' : 'together');
-  document.querySelector('#hero-status').textContent = state.moonPolicy === 'together' ? 'Moon questions now invite a conversation with a grown-up. The response above has changed.' : 'The prepared Moon answer is available again.';
-});
-document.querySelectorAll('[data-hear]').forEach(button => button.addEventListener('click', () => openSample(button.dataset.hear, true)));
-document.querySelector('[data-boundary]')?.addEventListener('click', () => {
-  if (!data) return;
-  stopAudio();
-  changePolicy(state, 'together');
-  chooseTopic(state, 'moon');
-  render();
-  focusContent(true);
-  announce('Parent boundary applied: Moon questions are now explored with a grown-up. Your Parent Dock shows the same choice.');
-});
 document.querySelector('[data-inspect-moon]')?.addEventListener('click', () => openSample('moon'));
 document.querySelector('#topic-policy')?.addEventListener('change', event => { if (data) setPolicy(event.target.value); });
 document.querySelector('#narration-pace')?.addEventListener('change', event => {
@@ -311,7 +259,6 @@ document.querySelector('#narration-pace')?.addEventListener('change', event => {
 document.querySelector('#reset-demo')?.addEventListener('click', () => {
   stopAudio();
   state = initialState();
-  heroTopic = 'moon';
   chooseTopic(state, 'moon');
   render();
   announce('Preview reset. Sample activity and settings cleared; the Moon answer is ready.');
@@ -330,7 +277,7 @@ async function loadDemo() {
     data = discoveries; story = book;
     chooseTopic(state, 'moon');
     render();
-    document.querySelectorAll('[data-mode],[data-hear],[data-hero-topic],[data-hero-boundary],[data-boundary],[data-inspect-moon],#topic-policy,#narration-pace,#reset-demo').forEach(button => button.disabled = false);
+    document.querySelectorAll('[data-mode],[data-inspect-moon],#topic-policy,#narration-pace,#reset-demo').forEach(button => button.disabled = false);
   } catch {
     content.setAttribute('aria-busy', 'false');
     content.innerHTML = '<h3 class="watch-title">Let’s try that again.</h3><p class="ending">The prepared sample could not load. The rest of the website is still available.</p><button class="button watch-cta" data-action="retry">Retry the demo</button>';

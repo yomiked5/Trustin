@@ -41,8 +41,7 @@ function parse(html, document) {
 class Element {
   constructor(tag, document) {
     this.tag = tag; this.document = document; this.attrs = {};
-    // DOMStringMap reflects mutations back to attributes, including the changing
-    // Hear target in the hero. A plain object would hide a real selector contract.
+    // DOMStringMap reflects data attributes used by the actual page controls.
     const attribute = key => 'data-' + key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
     this.dataset = new Proxy({}, {
       get: (_, key) => this.attrs[attribute(key)],
@@ -153,19 +152,20 @@ test('runtime Moon changes stop affected narration and visibly explain the bound
   assert.equal(app.state().view, 'boundary');
   assert.ok(app.audio.pauseCalls > pauses); assert.equal(app.audio.src, undefined);
   assert.match(app.query('#policy-result').textContent, /grown-up/);
-  assert.match(app.query('#hero-policy').innerHTML, /With a grown-up/);
-  assert.match(app.query('[data-hear="moon"]').innerHTML, /See parent boundary/);
-  assert.match(app.query('#hero-answer').innerHTML, /ask your grown-up/);
-  await app.click('[data-hear="moon"]');
+  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
+  await app.click('[data-inspect-moon]');
   assert.equal(app.state().view, 'boundary'); assert.equal(app.audio.playCalls, 1);
 });
 
-test('runtime explicit Hear action keeps playback controls in view', async () => {
+test('primary preview action focuses the single demo without starting narration', async () => {
   const app = await setup();
-  await app.click('[data-hear="moon"]');
-  assert.equal(app.audio.playCalls, 1);
-  assert.equal(app.document.activeElement.dataset.action, 'listen');
-  assert.equal(app.query('[data-action="listen"]').scrolled, true);
+  await app.click('[data-mode="story"]');
+  await app.click('[data-start="moon"]');
+  assert.equal(app.state().topic, 'moon');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.audio.playCalls, 0);
+  assert.equal(app.document.activeElement.tag, 'h3');
+  assert.equal(app.document.side.scrolled, true);
 });
 
 test('runtime unrelated parent changes leave story narration and progress alone', async () => {
@@ -229,74 +229,66 @@ test('runtime content failure offers a retry and reset clears the sample session
   assert.equal(app.state().view, 'discovery'); assert.equal(app.state().topic, 'moon');
 });
 
-test('hero choices show the selected discovery and Hear plays its own recording', async () => {
+test('all three discoveries remain selectable and play their own recording', async () => {
   const app = await setup();
   for (const topic of ['seed', 'butterfly', 'moon']) {
-    await app.click(`[data-hero-topic="${topic}"]`);
+    await app.click('[data-action="questions"]');
+    await app.click(`[data-topic="${topic}"]`);
     const discovery = discoveries.find(item => item.illustration === topic);
-    assert.equal(app.query('#hero-preview').getAttribute('data-topic'), topic);
-    assert.equal(app.query('#hero-question').textContent, discovery.question);
-    assert.match(app.query('#hero-symbol').innerHTML, new RegExp('icons\\.svg#' + topic));
-    assert.equal(app.query(`[data-hero-topic="${topic}"]`).getAttribute('aria-pressed'), 'true');
-    assert.equal(app.document.querySelectorAll('[data-hero-topic]').filter(button => button.getAttribute('aria-pressed') === 'true').length, 1);
     const calls = app.audio.playCalls;
-    await app.click(`[data-hear="${topic}"]`);
     assert.equal(app.state().topic, topic);
     assert.equal(app.state().view, 'discovery');
+    assert.ok(app.query('#watch-content').innerHTML.includes(discovery.question));
+    await app.click('[data-action="listen"]');
     assert.equal(app.audio.src, `/assets/audio/${discovery.id}.v${discovery.version}-answer.m4a`);
     assert.equal(app.audio.playCalls, calls + 1);
     assert.equal(app.state().moonPolicy, 'explore');
   }
 });
 
-test('hero parent choice synchronizes the child, Dock and hero then restores the answer', async () => {
+test('Dock choice synchronizes the child response and restores the answer without autoplay', async () => {
   const app = await setup();
-  await app.click('[data-hear="moon"]');
-  await app.click('[data-hero-boundary]');
+  await app.click('[data-action="listen"]');
+  await app.policy('together');
   assert.equal(app.state().view, 'boundary');
   assert.equal(app.query('#topic-policy').value, 'together');
   assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
   assert.match(app.query('#policy-result').textContent, /grown-up/);
-  assert.match(app.query('#hero-answer').innerHTML, /grown-up/);
-  assert.match(app.query('#hero-policy').innerHTML, /With a grown-up/);
   assert.equal(app.audio.src, undefined);
   assert.equal(app.audio.playCalls, 1, 'Changing a preference must not start narration');
-  await app.click('[data-hero-boundary]');
+  await app.policy('explore');
   assert.equal(app.state().view, 'discovery');
   assert.equal(app.query('#topic-policy').value, 'explore');
-  assert.match(app.query('#hero-answer').innerHTML, /Moon stays round/);
   assert.match(app.query('#policy-result').textContent, /available/);
   assert.equal(app.audio.playCalls, 1);
-  await app.click('[data-hear="moon"]');
+  await app.click('[data-action="listen"]');
   assert.match(app.audio.src, /discover-moon.*answer\.m4a$/);
 });
 
-test('hero parent choice preserves unrelated story audio and the active conversation prompt', async () => {
+test('parent choice preserves unrelated story audio and its conversation prompt', async () => {
   const app = await setup();
   await app.click('[data-mode="story"]');
   await app.click('[data-action="next"]');
   await app.click('[data-action="listen"]');
   const src = app.audio.src, pauses = app.audio.pauseCalls;
   const prompt = app.query('#parent-prompt').textContent;
-  await app.click('[data-hero-boundary]');
+  await app.policy('together');
   assert.equal(app.state().mode, 'story');
   assert.equal(app.state().storyPage, 1);
   assert.equal(app.audio.src, src);
   assert.equal(app.audio.pauseCalls, pauses);
   assert.equal(app.query('#parent-prompt').textContent, prompt);
   assert.equal(app.query('#topic-policy').value, 'together');
-  assert.match(app.query('#hero-answer').innerHTML, /grown-up/);
 });
 
-test('conversation starters follow the active activity rather than the hero teaser', async () => {
+test('conversation starters follow each discovery, story and Math activity', async () => {
   const app = await setup();
-  const moonPrompt = app.query('#parent-prompt').textContent;
-  assert.match(moonPrompt, /Moon/);
-  await app.click('[data-hero-topic="butterfly"]');
-  assert.equal(app.query('#parent-prompt').textContent, moonPrompt);
-  await app.click('[data-hear="butterfly"]');
+  assert.match(app.query('#parent-prompt').textContent, /Moon/);
+  await app.click('[data-action="questions"]');
+  await app.click('[data-topic="butterfly"]');
   assert.match(app.query('#parent-prompt').textContent, /butterfly/);
-  await app.click('[data-start="seed"]');
+  await app.click('[data-action="questions"]');
+  await app.click('[data-topic="seed"]');
   assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
   await app.click('[data-mode="story"]');
   assert.match(app.query('#parent-prompt').textContent, /Trustin notice.*plant/);
@@ -326,13 +318,15 @@ test('narration pace changes current playback and carries into another narrated 
   assert.match(app.query('#demo-status').textContent, /Calm/);
 });
 
-test('full reset clears progress and restores hero, parent prompt and narration defaults', async () => {
+test('full reset clears progress and restores the Moon, parent prompt and narration defaults', async () => {
   const app = await setup();
   await app.click('[data-mode="story"]');
   for (let page = 0; page < book.nodes.length; page++) await app.click('[data-action="next"]');
-  await app.click('[data-hero-boundary]');
-  await app.click('[data-hero-topic="seed"]');
-  await app.click('[data-hear="seed"]');
+  await app.policy('together');
+  await app.click('[data-mode="ask"]');
+  await app.click('[data-action="home"]');
+  await app.click('[data-topic="seed"]');
+  await app.click('[data-action="listen"]');
   await app.pace(1.1, 'A little quicker');
   await app.click('#reset-demo');
   assert.equal(app.state().view, 'discovery');
@@ -341,9 +335,7 @@ test('full reset clears progress and restores hero, parent prompt and narration 
   assert.equal(app.state().pace, 0.85);
   assert.equal(app.state().log.length, 0);
   assert.equal(Object.keys(app.state().saved).length, 0);
-  assert.equal(app.query('#hero-preview').getAttribute('data-topic'), 'moon');
-  assert.equal(app.query('[data-hero-topic="moon"]').getAttribute('aria-pressed'), 'true');
-  assert.match(app.query('#hero-answer').innerHTML, /Moon stays round/);
+  assert.match(app.query('#watch-content').innerHTML, /Moon stays round/);
   assert.match(app.query('#parent-prompt').textContent, /Moon/);
   assert.equal(app.query('#narration-pace').value, '0.85');
   assert.equal(app.query('#demo-next').hidden, true);

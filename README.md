@@ -20,7 +20,7 @@ No build, paid SaaS, API keys, database or runtime dependency is required. Run `
 
 Three discoveries (Moon, seeds, butterflies), a complete narrated story (*Trustin and the Curled Leaf*), a three-question garden math sample, and a sample Parent Dock. Topic policy changes affect the sample immediately; narration speed changes recorded playback. State is memory-only. The demo does not record a microphone or call an AI provider. No fabricated analytics, waitlist, pricing or App Store release claims.
 
-Revision 1.2 aligns the website around **parent-guided AI discovery**, **For every little why.** and **A world of wonder. Guided by you.** It preserves the original artwork/recordings and full scripted demo, integrates the custom three-topic hero and restrained motion, adds parent conversation starters, revises the philosophy and trust pages, and includes one useful parent guide. Availability distinguishes native beta source from illustrative controls and pending release obligations.
+Revision 1.3 keeps **parent-guided AI discovery**, **For every little why.** and **A world of wonder. Guided by you.**, with a substantially simpler introduction. The homepage now has five sections and one complete child/parent demo. Original art/recordings and all activities remain; motion uses brief 160–240ms fades/state changes. Deeper philosophy, parent guide, privacy and honest availability remain on their dedicated pages.
 
 - `docs/MESSAGING.md`: approved mission, copy/CTA hierarchy and claim rules.
 - `docs/RESEARCH_DECISIONS.md`: current evidence, populations/limits and ten specialist perspectives.

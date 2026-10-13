@@ -1,20 +1,29 @@
 # Validation evidence
 
-Revision 1.2 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
+Revision 1.3 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
 
 ## Executed and passed
 
 - `npm test`: syntax validation of all **5 shipped JS/MJS files**, **38 Node tests**, and static integrity across **6 HTML pages**. No skipped or failing tests at the final integration checkpoint.
 - **13 model tests:** family preference behavior, affected/unrelated activities, independent progress, finite Math completion, required correct answers, per-activity restart, full reset, honest deduplicated logs, invalid actions, playback labels and complete linear story.
-- **16 runtime event-contract tests:** execute shipped `app.js` with small DOM/Audio doubles. Cover prepared initial answer without autoplay; narration pause/resume/replay/retry/progress; affected audio cancellation; hero/Dock/child synchronization; explicit Hear focus; unrelated story audio; retained story position; Math hints/focus; story restart; stale audio rejections; failed-content retry; hero topic-to-recording routing; hero choice toggle; context-specific parent prompts; pace changes and full reset.
+- **16 runtime event-contract tests:** execute shipped `app.js` with small DOM/Audio doubles. Cover prepared initial answer without autoplay; narration pause/resume/replay/retry/progress; affected audio cancellation; Dock/child synchronization; primary preview action focus without autoplay; unrelated story audio; retained story position; Math hints/focus; story restart; stale audio rejections; failed-content retry; all three discovery choices and recording routing; preference restoration; context-specific parent prompts; pace changes and full reset.
 - **9 motion tests:** unsupported/disabled/static behavior; replacement and cancellation; stale-animation completion; finite effects/no persistent fill; bounded reading progress; device reduced-motion changes; manual choice through URL and internal links; no storage/network use by policy; navigation transition suppression and history failure fallback.
 - Static checks: every page title/description/single H1, unique IDs, local links/anchors, SVG symbols, reserved image dimensions, discovery/story text/image/audio references, exact canonical/OG URLs, preview meta/header/robots noindex, sitemap route set and social image presence/1200×630 metadata.
 - All shipped scripts scanned for a narrow set of microphone, live-AI, browser-storage, browser-TTS and cookie APIs. No advertising/analytics/third-party font code is introduced. This is a source check, not network observation of the hosting/authentication platform.
 - **9 core text-palette pairs** exceed 4.5:1 by luminance calculation. This is not a rendered contrast or full WCAG audit.
 - **28 original asset/content files** match their existing GitHub blob hashes exactly. The source-native provenance remains `34557847ad424bd0fdac7419b44563737cb499cf`. No original artwork, story text or recordings were regenerated.
 - **13 audio files decoded successfully** with FFmpeg, without decode errors; aggregate duration approximately 113.8 seconds. This verifies file integrity, not listening quality, real browser playback or Safari gesture handling.
-- `git diff --check` passed. Independent source/automated review passed for continued private-preview evaluation; [full review](INDEPENDENT_REVIEW.md) identifies the boundary.
+- `git diff --check` passed. The prior independent v1.2 source review is retained in [INDEPENDENT_REVIEW.md](INDEPENDENT_REVIEW.md); the v1.3 reduction received a focused source/diff review, not a new independent browser audit.
 - The new 1200×630 social graphic was visually inspected as an image. That is not a website screenshot review.
+
+## Revision 1.3 reduction check
+
+- Full `npm test` rerun: 38/38 passing, five scripts parse, all six pages pass static checks.
+- Tests now exercise discovery selection, recordings and parent choices through the single demo; removed hero controls are no longer test targets. Primary hero action opens Moon, focuses the demo and does not autoplay.
+- Motion contract verifies shipped effects are at most 240ms, finite and optional. Cross-page CSS fades are 160ms. No scroll-entry effects remain.
+- Homepage source changed from 11 sections / 1,315 main-body words to 5 sections / 569 words. Counts exclude dynamically rendered activity text.
+- Original assets, model content and the four deeper information pages are unchanged. A focused source review checked retained anchors, navigation, responsive rules, noindex and removed-handler references.
+- No new audio-decode or independent visual pass was necessary for untouched media; earlier integrity evidence remains scoped to those unchanged bytes.
 
 ## Defects found and fixed
 
@@ -28,7 +37,7 @@ Revision 1.2 · October 13, 2026. These results concern the marketing website an
 
 Semantic navigation, skip link, real buttons/selects/details, descriptive labels, visible focus, persistent status regions, complete narration transcripts, user-started audio, finite activities, static content fallback and system/manual reduced motion. Adult primary controls target at least 44px and child demo controls 64px. No moving hit areas, autoplay carousel, endless feed or motion required for task completion.
 
-The site remains buildless HTML/CSS/JavaScript, with no runtime dependency, AI request, database or new paid infrastructure. System fonts create no third-party request. Original media loads on demand; audio preload is none. Static payload at the checked source was approximately **1.59 MB**, including all audio and the share image. Summed gzip size of homepage HTML/CSS/JS/JSON was approximately **33 KB**, excluding images/headers/hosting behavior. These are local payload calculations, not measured browser transfer or Core Web Vitals.
+The site remains buildless HTML/CSS/JavaScript, with no runtime dependency, AI request, database or new paid infrastructure. System fonts create no third-party request. Original media loads on demand; audio preload is none. The prior v1.2 payload was approximately **1.59 MB**, including media, with approximately **33 KB** summed gzip for homepage HTML/CSS/JS/JSON. The v1.3 pass reduces markup/styles/runtime source while leaving media bytes intact; no new transfer measurement is claimed. These are local payload calculations, not measured browser transfer or Core Web Vitals.
 
 ## Not verified here
 
@@ -39,7 +48,7 @@ Also unverified: target-domain availability/TLS/redirects, owner Cloudflare/DNS 
 ## Before public launch
 
 1. Inspect desktop and 320/390/680/768/850/1024px layouts, long guide title, tables, text zoom, anchors and sticky header. Confirm no horizontal overflow and visible focus.
-2. On actual iPhone Safari, play/pause/resume/replay/retry narration; change pace; choose all hero topics; change related/unrelated preferences; background/resume; complete all samples and reset.
+2. On actual iPhone Safari, play/pause/resume/replay/retry narration; change pace; choose all three discoveries; change related/unrelated preferences; background/resume; complete all samples and reset.
 3. Run keyboard and assistive-technology checks of names, states, announcements, Math feedback, disclosure controls and reduced-motion changes during an active effect.
 4. Have an unfamiliar adult identify category/age/device/testing status, hear an answer, change a sample preference and explain what is available today. No child identity collection is needed.
 5. Verify authorized Cloudflare setup, custom-domain HTTPS/apex/www/404/redirects, preserved mail records, contact delivery and live headers. Check social preview fetching.

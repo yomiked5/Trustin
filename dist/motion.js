@@ -3,8 +3,7 @@ import { createMotionController, readingProgress } from './motion-core.mjs';
 const policy = window.TJMotionPolicy;
 const allowed = () => policy?.enabled() ?? !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const motion = createMotionController({ enabled: allowed });
-const fade = [{ opacity: 0.45 }, { opacity: 1 }];
-const rise = [{ opacity: 0.45, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }];
+const fade = [{ opacity: 0.65 }, { opacity: 1 }];
 
 function syncSwitch() {
   document.querySelectorAll('[data-motion-toggle]').forEach(button => {
@@ -21,48 +20,23 @@ syncSwitch();
 
 window.TrustinMotion = {
   behavior: () => allowed() ? 'smooth' : 'auto',
-  hero() {
-    motion.run(document.querySelector('#hero-symbol'), [
-      { opacity: 0.4, transform: 'translateY(6px) rotate(-4deg)' },
-      { opacity: 1, transform: 'translateY(0) rotate(0)' }
-    ], { duration: 430 });
-    motion.run(document.querySelector('#hero-question'), fade, { duration: 260 });
-    motion.run(document.querySelector('#hero-answer'), fade, { duration: 320 });
-  },
   reader(container) {
     // Buttons and their hit areas never move with the page-turn animation.
     motion.run(container.querySelector('.reader-art'), [
-      { opacity: 0.45, transform: 'translateX(6px)' }, { opacity: 1, transform: 'translateX(0)' }
-    ], { duration: 300 });
+      { opacity: 0.65, transform: 'translateX(4px)' }, { opacity: 1, transform: 'translateX(0)' }
+    ], { duration: 220 });
     motion.run(container.querySelector('.reader-text'), fade, { duration: 220 });
-    motion.run(container.querySelector('.ending'), fade, { duration: 240 });
+    motion.run(container.querySelector('.ending'), fade, { duration: 220 });
   },
-  feedback(node) { motion.run(node, [{ backgroundColor: '#e4eadc' }, { backgroundColor: 'transparent' }], { duration: 400 }); },
-  boundary() { motion.run(document.querySelector('.policy-preview'), [{ backgroundColor: '#d1dfc9' }, { backgroundColor: '#edf0e7' }], { duration: 550 }); }
+  feedback(node) { motion.run(node, [{ backgroundColor: '#e4eadc' }, { backgroundColor: 'transparent' }], { duration: 240 }); },
+  boundary() { motion.run(document.querySelector('.policy-preview'), [{ backgroundColor: '#d1dfc9' }, { backgroundColor: '#edf0e7' }], { duration: 240 }); }
 };
 
-motion.run(document.querySelector('.hero-copy h1'), rise, { duration: 600 });
-motion.run(document.querySelector('.why-stroke'), [
-  { transform: 'scaleX(.15)', opacity: 0 }, { transform: 'scaleX(1)', opacity: 1 }
-], { duration: 650 });
-motion.run(document.querySelector('.wonder-route path'), [
-  { strokeDasharray: '1', strokeDashoffset: 1 }, { strokeDasharray: '1', strokeDashoffset: 0 }
-], { duration: 900 });
-motion.run(document.querySelector('.paper-art'), [
-  { opacity: 0.45, transform: 'translateY(10px) rotate(3deg)' },
-  { opacity: 1, transform: 'translateY(0) rotate(3deg)' }
-], { duration: 550 });
+motion.run(document.querySelector('.hero-copy'), fade, { duration: 220 });
+motion.run(document.querySelector('.hero-portrait'), fade, { duration: 220 });
+motion.run(document.querySelector('.paper-art'), fade, { duration: 220 });
 
 if ('IntersectionObserver' in window) {
-  const reveals = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      motion.run(entry.target, rise, { duration: 460 });
-      reveals.unobserve(entry.target);
-    }
-  }, { threshold: 0.2 });
-  document.querySelectorAll('[data-reveal]').forEach(node => reveals.observe(node));
-
   const links = [...document.querySelectorAll('.nav a')].filter(link => link.pathname === window.location.pathname && link.hash);
   const sections = links.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
   const locations = new IntersectionObserver(entries => {
