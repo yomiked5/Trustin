@@ -11,6 +11,7 @@ const markup = readFileSync(new URL('index.html', root), 'utf8');
 const source = readFileSync(new URL('app.js', root), 'utf8').replace(/^import[^\n]+\n/, '');
 const discoveries = JSON.parse(readFileSync(new URL('assets/discoveries.json', root)));
 const book = JSON.parse(readFileSync(new URL('assets/story/book.json', root)));
+const iconIds = new Set([...readFileSync(new URL('assets/icons.svg', root), 'utf8').matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
 function matches(node, selector) {
@@ -28,6 +29,9 @@ function parse(html, document) {
       if (attr[1].startsWith('data-')) node.dataset[attr[1].slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = attr[2] ?? '';
     }
     node.disabled = 'disabled' in node.attrs;
+    if (node.tag === 'use' && node.attrs.href?.startsWith('/assets/icons.svg#')) {
+      assert.ok(iconIds.has(node.attrs.href.split('#')[1]), 'Missing rendered icon: ' + node.attrs.href);
+    }
     const after = html.slice(match.index + match[0].length);
     node.textContent = after.slice(0, after.indexOf('</' + node.tag + '>')).replace(/<[^>]+>/g, '').trim();
     nodes.push(node);
@@ -36,10 +40,17 @@ function parse(html, document) {
 }
 class Element {
   constructor(tag, document) {
-    this.tag = tag; this.document = document; this.attrs = {}; this.dataset = {};
+    this.tag = tag; this.document = document; this.attrs = {};
+    // DOMStringMap reflects mutations back to attributes, including the changing
+    // Hear target in the hero. A plain object would hide a real selector contract.
+    const attribute = key => 'data-' + key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+    this.dataset = new Proxy({}, {
+      get: (_, key) => this.attrs[attribute(key)],
+      set: (_, key, value) => { this.attrs[attribute(key)] = String(value); return true; }
+    });
     this.listeners = {}; this.children = []; this.textContent = ''; this.value = ''; this.hidden = false; this.disabled = false;
   }
-  set innerHTML(value) { this.html = value; if (this.attrs.id === 'watch-content') this.children = parse(value, this.document); }
+  set innerHTML(value) { this.html = value; this.children = parse(value, this.document); }
   get innerHTML() { return this.html || ''; }
   setAttribute(key, value) { this.attrs[key] = value; }
   getAttribute(key) { return this.attrs[key] ?? null; }
@@ -105,7 +116,11 @@ async function setup({ failsToLoad = false } = {}) {
     await settle();
   };
   const policy = async value => { const select = query('#topic-policy'); select.value = value; await select.emit('change'); await settle(); };
-  return { document, audio, controls, context, query, click, policy, state:()=>vm.runInContext('state', context) };
+  const pace = async (value, label) => {
+    const select = query('#narration-pace'); select.value = String(value); select.selectedOptions = [{textContent:label}];
+    await select.emit('change'); await settle();
+  };
+  return { document, audio, controls, context, query, click, policy, pace, state:()=>vm.runInContext('state', context) };
 }
 
 test('runtime opens a prepared Moon answer without autoplay or a real account', async () => {
@@ -212,4 +227,127 @@ test('runtime content failure offers a retry and reset clears the sample session
   await app.policy('together'); await app.click('#reset-demo');
   assert.equal(app.state().moonPolicy, 'explore'); assert.equal(app.state().log.length, 0);
   assert.equal(app.state().view, 'discovery'); assert.equal(app.state().topic, 'moon');
+});
+
+test('hero choices show the selected discovery and Hear plays its own recording', async () => {
+  const app = await setup();
+  for (const topic of ['seed', 'butterfly', 'moon']) {
+    await app.click(`[data-hero-topic="${topic}"]`);
+    const discovery = discoveries.find(item => item.illustration === topic);
+    assert.equal(app.query('#hero-preview').getAttribute('data-topic'), topic);
+    assert.equal(app.query('#hero-question').textContent, discovery.question);
+    assert.match(app.query('#hero-symbol').innerHTML, new RegExp('icons\\.svg#' + topic));
+    assert.equal(app.query(`[data-hero-topic="${topic}"]`).getAttribute('aria-pressed'), 'true');
+    assert.equal(app.document.querySelectorAll('[data-hero-topic]').filter(button => button.getAttribute('aria-pressed') === 'true').length, 1);
+    const calls = app.audio.playCalls;
+    await app.click(`[data-hear="${topic}"]`);
+    assert.equal(app.state().topic, topic);
+    assert.equal(app.state().view, 'discovery');
+    assert.equal(app.audio.src, `/assets/audio/${discovery.id}.v${discovery.version}-answer.m4a`);
+    assert.equal(app.audio.playCalls, calls + 1);
+    assert.equal(app.state().moonPolicy, 'explore');
+  }
+});
+
+test('hero parent choice synchronizes the child, Dock and hero then restores the answer', async () => {
+  const app = await setup();
+  await app.click('[data-hear="moon"]');
+  await app.click('[data-hero-boundary]');
+  assert.equal(app.state().view, 'boundary');
+  assert.equal(app.query('#topic-policy').value, 'together');
+  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
+  assert.match(app.query('#policy-result').textContent, /grown-up/);
+  assert.match(app.query('#hero-answer').innerHTML, /grown-up/);
+  assert.match(app.query('#hero-policy').innerHTML, /With a grown-up/);
+  assert.equal(app.audio.src, undefined);
+  assert.equal(app.audio.playCalls, 1, 'Changing a preference must not start narration');
+  await app.click('[data-hero-boundary]');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.query('#topic-policy').value, 'explore');
+  assert.match(app.query('#hero-answer').innerHTML, /Moon stays round/);
+  assert.match(app.query('#policy-result').textContent, /available/);
+  assert.equal(app.audio.playCalls, 1);
+  await app.click('[data-hear="moon"]');
+  assert.match(app.audio.src, /discover-moon.*answer\.m4a$/);
+});
+
+test('hero parent choice preserves unrelated story audio and the active conversation prompt', async () => {
+  const app = await setup();
+  await app.click('[data-mode="story"]');
+  await app.click('[data-action="next"]');
+  await app.click('[data-action="listen"]');
+  const src = app.audio.src, pauses = app.audio.pauseCalls;
+  const prompt = app.query('#parent-prompt').textContent;
+  await app.click('[data-hero-boundary]');
+  assert.equal(app.state().mode, 'story');
+  assert.equal(app.state().storyPage, 1);
+  assert.equal(app.audio.src, src);
+  assert.equal(app.audio.pauseCalls, pauses);
+  assert.equal(app.query('#parent-prompt').textContent, prompt);
+  assert.equal(app.query('#topic-policy').value, 'together');
+  assert.match(app.query('#hero-answer').innerHTML, /grown-up/);
+});
+
+test('conversation starters follow the active activity rather than the hero teaser', async () => {
+  const app = await setup();
+  const moonPrompt = app.query('#parent-prompt').textContent;
+  assert.match(moonPrompt, /Moon/);
+  await app.click('[data-hero-topic="butterfly"]');
+  assert.equal(app.query('#parent-prompt').textContent, moonPrompt);
+  await app.click('[data-hear="butterfly"]');
+  assert.match(app.query('#parent-prompt').textContent, /butterfly/);
+  await app.click('[data-start="seed"]');
+  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
+  await app.click('[data-mode="story"]');
+  assert.match(app.query('#parent-prompt').textContent, /Trustin notice.*plant/);
+  await app.click('[data-mode="math"]');
+  assert.match(app.query('#parent-prompt').textContent, /four objects.*two groups/);
+  await app.click('[data-mode="ask"]');
+  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
+  assert.equal(app.state().log.length, 0, 'Conversation starters are not invented child activity');
+});
+
+test('narration pace changes current playback and carries into another narrated activity', async () => {
+  const app = await setup();
+  await app.click('[data-action="listen"]');
+  const src = app.audio.src, calls = app.audio.playCalls, pauses = app.audio.pauseCalls;
+  await app.pace(1.1, 'A little quicker');
+  assert.equal(app.audio.playbackRate, 1.1);
+  assert.equal(app.state().pace, 1.1);
+  assert.equal(app.audio.src, src);
+  assert.equal(app.audio.playCalls, calls);
+  assert.equal(app.audio.pauseCalls, pauses);
+  assert.match(app.query('#demo-status').textContent, /A little quicker/);
+  await app.click('[data-mode="story"]');
+  await app.click('[data-action="listen"]');
+  assert.equal(app.audio.playbackRate, 1.1);
+  await app.pace(0.85, 'Calm');
+  assert.equal(app.audio.playbackRate, 0.85);
+  assert.match(app.query('#demo-status').textContent, /Calm/);
+});
+
+test('full reset clears progress and restores hero, parent prompt and narration defaults', async () => {
+  const app = await setup();
+  await app.click('[data-mode="story"]');
+  for (let page = 0; page < book.nodes.length; page++) await app.click('[data-action="next"]');
+  await app.click('[data-hero-boundary]');
+  await app.click('[data-hero-topic="seed"]');
+  await app.click('[data-hear="seed"]');
+  await app.pace(1.1, 'A little quicker');
+  await app.click('#reset-demo');
+  assert.equal(app.state().view, 'discovery');
+  assert.equal(app.state().topic, 'moon');
+  assert.equal(app.state().moonPolicy, 'explore');
+  assert.equal(app.state().pace, 0.85);
+  assert.equal(app.state().log.length, 0);
+  assert.equal(Object.keys(app.state().saved).length, 0);
+  assert.equal(app.query('#hero-preview').getAttribute('data-topic'), 'moon');
+  assert.equal(app.query('[data-hero-topic="moon"]').getAttribute('aria-pressed'), 'true');
+  assert.match(app.query('#hero-answer').innerHTML, /Moon stays round/);
+  assert.match(app.query('#parent-prompt').textContent, /Moon/);
+  assert.equal(app.query('#narration-pace').value, '0.85');
+  assert.equal(app.query('#demo-next').hidden, true);
+  assert.equal(app.audio.src, undefined);
+  await app.click('[data-action="listen"]');
+  assert.equal(app.audio.playbackRate, 0.85);
 });

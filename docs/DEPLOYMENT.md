@@ -1,6 +1,6 @@
 # Deployment and domain handoff
 
-Prepared 12 October 2026. Production target: `https://trustinjr.com`.
+Updated 13 October 2026 · mission-led revision 1.2. Production target: `https://trustinjr.com`.
 
 ## Current state
 
@@ -37,3 +37,12 @@ Edit `dist/` and relevant docs, run `npm test`, commit/push to GitHub, and let P
 Static delivery, local demo state and existing narration avoid per-visitor AI cost. There is no database, email SaaS subscription, analytics pixel or third-party font. Hosting usage and plan limits still apply; this is not an unlimited-free-service promise. Logs are handled by the hosting provider, so do not claim zero data processing.
 
 Official setup references: [GitHub integration](https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/), [custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/).
+
+
+## Revision 1.2 handoff
+
+This revision retains the existing owner-private review Site. Source includes six pages, the improved scripted child/parent demonstration, original media, a parent guide and a dedicated 1200×630 social card. GitHub PR delivery does not change DNS, production Cloudflare, the native application or public indexing.
+
+Before public launch, change **all three** preview controls deliberately: HTML robots metadata, `_headers` X-Robots-Tag and `robots.txt`. Test live behavior after deployment; source files alone do not prove header enforcement. Private authentication/access policy is the privacy boundary, not noindex. `trustinjr.com` canonical and social URLs remain target-domain configuration until domain verification.
+
+Review [validation](VALIDATION.md), [independent critique](INDEPENDENT_REVIEW.md), [research decisions](RESEARCH_DECISIONS.md) and [messaging rules](MESSAGING.md). Actual browser/Safari and contact-delivery acceptance are still required. For rollback, retain the prior successful private deployment/source `77c93af0447832dd37ca7c130f9f05090318ef58` and GitHub main `64593cd541add1ddcb476c03df7056056eb660fe`; do not use a rollback to change the audience.
