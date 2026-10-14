@@ -21,9 +21,9 @@ function setup({reduced=false,small=false,short=false}={}) {
   const device=node();
   const panels=['packs','ask','continue'].map(key=>node({tourPanel:key},{left:700,top:180,width:350,height:380}));
   const controls=[0,1,2,3].map(index=>node({tourTo:String(index)}));
-  const line=node(), dot=node(), status=node(), rail=node();
+  const line=node(), dot=node(), status=node(), rail=node(), cards=node();
   const root=node({},bounds);
-  root.querySelector=selector=>({'.story-stage':stage,'.tour-device':device,'.tour-controls':rail,'[data-tour-line]':line,'[data-tour-dot]':dot,'[data-tour-status]':status}[selector] || (selector.startsWith('[data-tour-hotspot') ? node({}, {left:150,top:200,width:90,height:90}) : null));
+  root.querySelector=selector=>({'.story-stage':stage,'.tour-device':device,'.tour-controls':rail,'.tour-panels':cards,'[data-tour-line]':line,'[data-tour-dot]':dot,'[data-tour-status]':status}[selector] || (selector.startsWith('[data-tour-hotspot') ? node({}, {left:150,top:200,width:90,height:90}) : null));
   root.querySelectorAll=selector=>selector==='[data-tour-panel]' ? panels : controls;
   const events={}, frames=[], scrolls=[];
   let enabled=!reduced, subscriber;
@@ -35,7 +35,7 @@ function setup({reduced=false,small=false,short=false}={}) {
     addEventListener:(event,fn)=>{events[event]=fn;}, scrollTo:options=>scrolls.push(options)
   };
   vm.runInNewContext(source,{window:win,document:{querySelector:()=>root},chapterStops,tourFrame,tourProgress,connectorPath,mountSwipe});
-  return {root,device,panels,controls,rail,line,dot,status,frames,events,scrolls,
+  return {root,device,panels,controls,rail,cards,line,dot,status,frames,events,scrolls,
     progress(p){bounds.top=72-p*(3200-728);events.scroll();frames.splice(0).forEach(fn=>fn?.());},
     off(){enabled=false;subscriber();}, on(){enabled=true;subscriber();}
   };
@@ -109,11 +109,20 @@ test('geometry is clamped and all chapter stops reveal their named state',()=>{
   chapterStops.forEach((p,i)=>assert.equal(tourFrame(p).chapter,i-1));
   assert.equal(tourFrame(1).shrink,1);
 });
-test('the actual homepage rail swipes in both directions and highlights the adjacent control',()=>{
-  const a=setup({reduced:true}),target={closest:()=>null};
-  const swipe=(x,end)=>{a.rail.events.pointerdown({pointerType:'touch',pointerId:1,clientX:x,clientY:10,target});a.rail.events.pointerup({pointerId:1,clientX:end,clientY:10});};
-  swipe(100,20);assert.equal(a.root.dataset.chapter,'packs');assert.equal(a.controls[1].attrs['aria-pressed'],'true');
-  swipe(100,20);assert.equal(a.root.dataset.chapter,'ask');swipe(20,100);assert.equal(a.root.dataset.chapter,'packs');swipe(20,100);assert.equal(a.root.dataset.chapter,'overview');
+test('the homepage rail and explanation card share swipe navigation and selected-state feedback',()=>{
+  const target={closest:()=>null};
+  const swipe=(surface,x,end)=>{surface.events.pointerdown({pointerType:'touch',pointerId:1,clientX:x,clientY:10,target});surface.events.pointerup({pointerId:1,clientX:end,clientY:10});};
+  const a=setup({reduced:true});
+  swipe(a.rail,100,20);assert.equal(a.root.dataset.chapter,'packs');
+  swipe(a.cards,100,20);assert.equal(a.root.dataset.chapter,'ask');assert.equal(a.controls[2].attrs['aria-pressed'],'true');
+  swipe(a.cards,100,20);assert.equal(a.root.dataset.chapter,'continue');
+  swipe(a.cards,100,20);assert.equal(a.root.dataset.chapter,'continue');
+  swipe(a.cards,20,100);assert.equal(a.root.dataset.chapter,'ask');
+  swipe(a.cards,20,100);assert.equal(a.root.dataset.chapter,'packs');
+  swipe(a.cards,20,100);assert.equal(a.root.dataset.chapter,'overview');assert.equal(a.controls[0].attrs['aria-pressed'],'true');
+  const b=setup({small:true});b.progress(.88);
+  swipe(b.cards,20,100);assert.equal(b.scrolls.length,1);assert.equal(b.scrolls[0].behavior,'smooth');
+  b.progress(chapterStops[2]);assert.equal(b.root.dataset.chapter,'ask');assert.equal(b.controls[2].attrs['aria-pressed'],'true');
 });
 test('unenhanced markup preserves feature copy and uses matching native artwork hotspots',()=>{
   for(const key of ['packs','ask','continue']) {

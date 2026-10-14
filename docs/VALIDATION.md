@@ -9,7 +9,7 @@ The owner’s two 23:59 screenshots show v1.7 markup with legacy styles and the 
 ## Executed checks
 
 - `npm test`: **65 Node tests**, syntax validation of **14 source JS/MJS files**, byte validation of **22 release dependencies**, static integrity across **7 HTML routes**.
-- The first two approved homepage sections’ HTML remains unchanged. Curiosity’s rail deliberately gains touch swiping and selected-state feedback; its source artwork and composition are preserved.
+- The first two approved homepage sections’ HTML remains unchanged. Curiosity’s rail and full explanation card share touch swiping and selected-state feedback; its source artwork and composition are preserved. The existing controller test covers both surfaces, backward/forward navigation, boundary clamping, manual mode and normal scroll-driven selection.
 - New release tests simulate an old browser cache, follow the transitive module URL, verify CSS changes invalidate the complete release, retain old open-document dependencies, reject missing/unversioned imports, and confirm the Parent phone plus first explanation are laid out before JavaScript.
 - Gesture tests cover left/right intent, click suppression, vertical scrolling, cancellation, taps, mouse input, and exclusion of device/form interactions. The actual homepage and Parent controllers execute swipe handling with DOM doubles.
 - Watch runtime tests execute shipped code for Curiosity, live Home, internal activity selection, the finite microphone/stars sequence, two three-choice rounds and return, cancellation, links, recorded audio retry/pause/resume, stale promises, sample policy, Math retries, Pip completion, reading pace, word timings and reset.

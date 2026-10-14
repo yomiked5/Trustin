@@ -85,7 +85,9 @@ export function mountCuriosityTour(root, { win = window, policy = win.TJMotionPo
     button.disabled = false;
     button.addEventListener('click', () => navigate(Number(button.dataset.tourTo)));
   });
-  mountSwipe(root.querySelector('.tour-controls'), direction => navigate(selected + 1 + direction));
+  const swipeChapter = direction => navigate(selected + 1 + direction);
+  mountSwipe(root.querySelector('.tour-controls'), swipeChapter);
+  mountSwipe(root.querySelector('.tour-panels'), swipeChapter);
   root.dataset.tourReady = 'true';
   win.addEventListener('scroll', schedule, {passive:true});
   win.addEventListener('resize', configure, {passive:true});

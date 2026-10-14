@@ -1,10 +1,10 @@
 {
-  "id": "c5e63474cf64e48d",
+  "id": "27607a1ba631dbe3",
   "files": {
     "app.js": "82f78ec9a30e7d1fe8c17d5f4edcd6b6514a01647662598276b30b3cc161c48b",
     "curiosity-tour-core.mjs": "789aa4572e3c7e7ba938a9fee836e3894c8330611d9de7056e39a7d9b41ba63a",
-    "curiosity-tour.css": "5eabe2f0b3bf6c7eededf33c95df41745b88725653f3f1d708fef095bfb6db28",
-    "curiosity-tour.js": "a5d198d896b8bf967c158483803fa773b1c262f3a0255c23c95296e4d3aea8de",
+    "curiosity-tour.css": "176e3661f76dc6236f8c55205706a63ab71e835af02cc735181d2f2b04d44309",
+    "curiosity-tour.js": "951fea1937cce2e031b56776994dcbaa4484b3026ae5dae2c02657a8abc362a5",
     "demo-exhibit.css": "a6afa2618148a343f75a9ef9171f2c9bac407c43ab47c0daf350b0d587498f8f",
     "demo-exhibit.js": "ca320105e1e74b6d0b12d29501b1fd0545951573f663164564cc2f8ad483f497",
     "demo-model.mjs": "5f34d5902da70522ac81dff8d07b07510a40fc3a8a5346e562aa3d17b7eb5bff",

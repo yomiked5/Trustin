@@ -4,9 +4,9 @@ Version 1.8 · October 14, 2026 (Pacific)
 
 ## Accepted direction
 
-Mike approved the first two homepage sections as the desired design: the native Curiosity hero and the three-activity gallery. Preserve those compositions. Their Overview / Packs / Ask / Continue rail now also accepts horizontal touch swipes. This revision makes the compact Watch and Parent Dock functional prepared previews with separate, stable explanations.
+Mike approved the first two homepage sections as the desired design: the native Curiosity hero and the three-activity gallery. Preserve those compositions. Horizontal touch swipes on either the explanation card or the Overview / Packs / Ask / Continue rail change the same selected section. This revision makes the compact Watch and Parent Dock functional prepared previews with separate, stable explanations.
 
-The first two sections’ HTML markup is unchanged from v1.5. Curiosity markup SHA-256: `b8ab32528226f5b10b3c701bb28975a2a449c61492766d015def85196599894e`; gallery: `c8ebf5bf093a7b6c74d625142607f905029a2170e384f5be402ee5c34b18529c`. The Curiosity rail alone adds touch intent handling and selected-state feedback; its approved composition and scroll narrative remain intact.
+The first two sections’ HTML markup is unchanged from v1.5. Curiosity markup SHA-256: `b8ab32528226f5b10b3c701bb28975a2a449c61492766d015def85196599894e`; gallery: `c8ebf5bf093a7b6c74d625142607f905029a2170e384f5be402ee5c34b18529c`. The Curiosity rail and full explanation card share touch navigation and selected-state feedback; left advances and right goes back, while vertical scrolling and pinch zoom remain available. Its approved composition and scroll narrative remain intact.
 
 **Show the real subject. Guide attention. Give depth a useful place.**
 
