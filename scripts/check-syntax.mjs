@@ -8,6 +8,8 @@ const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const scripts = [];
 function visit(directory) {
   for (const entry of readdirSync(directory, {withFileTypes:true})) {
+    // Release copies are byte-verified against these sources before this check.
+    if(entry.name === 'releases') continue;
     const path = join(directory, entry.name);
     if (entry.isDirectory()) visit(path);
     else if (/\.(?:js|mjs)$/.test(entry.name)) scripts.push(path);

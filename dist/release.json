@@ -1,0 +1,27 @@
+{
+  "id": "c5e63474cf64e48d",
+  "files": {
+    "app.js": "82f78ec9a30e7d1fe8c17d5f4edcd6b6514a01647662598276b30b3cc161c48b",
+    "curiosity-tour-core.mjs": "789aa4572e3c7e7ba938a9fee836e3894c8330611d9de7056e39a7d9b41ba63a",
+    "curiosity-tour.css": "5eabe2f0b3bf6c7eededf33c95df41745b88725653f3f1d708fef095bfb6db28",
+    "curiosity-tour.js": "a5d198d896b8bf967c158483803fa773b1c262f3a0255c23c95296e4d3aea8de",
+    "demo-exhibit.css": "a6afa2618148a343f75a9ef9171f2c9bac407c43ab47c0daf350b0d587498f8f",
+    "demo-exhibit.js": "ca320105e1e74b6d0b12d29501b1fd0545951573f663164564cc2f8ad483f497",
+    "demo-model.mjs": "5f34d5902da70522ac81dff8d07b07510a40fc3a8a5346e562aa3d17b7eb5bff",
+    "editorial.css": "baf3bd2b799b5e3c0453356b8455ad82ad2210586c7868dcd61ad505d8fba3ef",
+    "editorial.js": "502221d9fde2577881cff5e4c28a5525f75538ed7c01d372778c435724526212",
+    "experience.css": "8025ccf2e83131b352f57c877082d1c04bc906c2491e7adc2ac3525431571efe",
+    "motion-core.mjs": "d637a00b5c4660d88a417123501c4b0741ac50827012d206798ed97b4e111f29",
+    "motion-policy.js": "35584d61590bbb6064d6830790d1640e9b5cc0dbf59cf438283bdec6dcd74579",
+    "motion.js": "ff54d8be3a735b7eedd2e7393a3c22bcfbf564caa2f3b9dada0dda6f84d70c13",
+    "no-script.css": "7931d6bc488dd7b4bccf2520dbcf596003c49ec9384ad0f0da2163209599ef69",
+    "parent-tour.css": "5d63e2db556d41482e826a7b97b84beae4d7038e83cf490b434c575c7cf15e7d",
+    "parent-tour.js": "b06b985742c35014d13206b2b788097470fd9df5117a6ee3a86a5a3f8dfe11b0",
+    "parent-ui.mjs": "88274006b1dde272dc688c4110055afa34d35b2de9c17ad319485ffaa90da9ba",
+    "showcase.css": "f4d4cc71e92f9e7eb0310ce5f613f55c5a9999a8d4fa5de793bf4994b3846334",
+    "spotlight.js": "61cf03c5888735ee0c07bba2c1619f400c2854ea3ebb439db34fc31a2b1c05c6",
+    "styles.css": "9890032e7c5c06cf443c8715ec812f7c58fba3753a7dd232f21005283acf8a87",
+    "swipe.js": "d44c2611650f27c58c6c63de22562a7da0390aaa55d21aba92ec6e6a1bf265fd",
+    "watch-ui.mjs": "5ab6b9ca401fb5705046fb08f620b66d0f122047e7f2f2ee1933dc592883be98"
+  }
+}

@@ -1,0 +1,10 @@
+/* Preserve every explanation when interactive enhancement is unavailable. */
+.parent-story[data-parent-mode=docked] { height:auto }
+.parent-story[data-parent-mode=docked] .parent-stage { position:static; height:auto; display:block; padding-block:40px }
+.parent-story[data-parent-mode=docked] .parent-device { width:190px; margin:25px auto }
+.parent-story[data-parent-mode=docked] .parent-panels { max-height:none; height:auto }
+.parent-story[data-parent-mode=docked] .parent-panel { height:auto; overflow:visible; margin-block:20px }
+.parent-story[data-parent-mode=docked] .parent-panel[hidden] { display:block!important }
+.parent-story[data-parent-mode=docked] .parent-controls,.parent-story .parent-connector { display:none!important }
+.parent-story[data-parent-mode=docked] .parent-source-note { position:static; padding:0 }
+.parent-story[data-parent-mode=docked] .parent-skip { position:static; transform:none; margin:15px auto }

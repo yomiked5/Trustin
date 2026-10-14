@@ -1,6 +1,6 @@
 # TrustinJr website bible
 
-Version 1.7 · October 13, 2026 (Pacific)
+Version 1.8 · October 14, 2026 (Pacific)
 
 ## Accepted direction
 
@@ -106,6 +106,14 @@ Curiosity retains its accepted 300ms reveal. Exhibit descriptions change by dire
 Eight primary perception/multimedia studies and W3C motion guidance are documented in [RESEARCH_DECISIONS.md](RESEARCH_DECISIONS.md). They inform coherence, proximity, pacing, cueing, and continuity. Attention is not equivalent to comprehension; findings do not demonstrate website conversion or preschool AI learning outcomes.
 
 The learning whitepaper separately distinguishes scaffolding, adult-guided play, relationships, policy guidance, and parent survey research. Neither an educational framework nor an appealing demo validates TrustinJr’s learning effects.
+
+## Release continuity
+
+The owner’s October 14 screenshots exposed a failed v1.7 experience: new HTML paired with old CSS/JS produced giant icons, an obsolete demo error and a large Parent phone with missing explanations. Live inspection found root scripts/styles cached for four hours while HTML revalidated. Passing source tests and a green deployment did not detect the returning-visitor mismatch.
+
+All page styles and scripts now use one content-addressed `/releases/<hash>/` directory; relative imports remain inside it. A source change invalidates the whole presentation dependency set. Old release folders remain available for open documents. Mutable HTML/root asset URLs revalidate; only versioned release files are immutable. Preparing and checking this release is a publishing gate. The Parent Dock’s stable geometry and first explanation are present in the HTML before enhancement; a no-JavaScript stylesheet restores all explanations to ordinary flow.
+
+For future visual work, verify delivery coherence and first-load layout as well as controller behavior. A successful deployment and automated test count cannot establish an acceptable mobile presentation.
 
 ## Verification
 

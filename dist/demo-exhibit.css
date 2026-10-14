@@ -22,7 +22,7 @@
 .wj-toolbar strong { font-size:6cqw; line-height:1.1; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
 [data-mode=home] .wj-toolbar { color:#406d70 } [data-mode=story] .wj-toolbar { color:#796194 } [data-mode=math] .wj-toolbar { color:#9c6445 }
 .wj-content { min-height:0; padding:1cqw 6cqw 6cqw; position:relative; outline:none }
-.wj-content button { font-family:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; color:inherit }
+.wj-content button { -webkit-appearance:none; appearance:none; font-family:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; color:inherit }
 .wj-content button:active,.wj-toolbar button:active { transform:scale(.96) }
 .wj-content button:focus-visible,.wj-toolbar button:focus-visible { outline:2px solid #285c57; outline-offset:1px }
 .wj-curiosity { height:100%; display:grid; grid-template-rows:minmax(0,1fr) 30cqw 23cqw; gap:1cqw; justify-items:center; align-items:center }

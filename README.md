@@ -14,20 +14,22 @@ https://trustin-jr.yomiked.chatgpt.site — owner-private review site. This is s
 - `docs/VALIDATION.md`: completed checks and outstanding browser/device verification.
 - `tests/`: meaningful demo transition and static integrity checks.
 
-No build, paid SaaS, API keys, database or runtime dependency is required. Run `npm test` with Node and Python 3. For an ordinary local checkout, serve `dist/` using a static server. Use the supported Sites preview workflow in ChatGPT Work rather than starting a separate server there.
+No framework, paid SaaS, API keys, database or runtime dependency is required. After source edits, run `npm run build` to prepare the content-addressed CSS/JS release, then `npm test` with Node and Python 3. Commit the generated `dist/releases/` files and updated HTML together. For an ordinary local checkout, serve `dist/` using a static server. Use the supported Sites preview workflow in ChatGPT Work rather than starting a separate server there.
 
 ## Demo
 
 Three discoveries (Moon, seeds, butterflies), the original narrated story (*Pip and the Patient Seed*), a three-question garden math sample, and a sample Parent Dock. Topic policy changes affect the sample immediately; narration speed changes recorded playback. State is memory-only. The demo does not record a microphone or call an AI provider. No fabricated analytics, waitlist, pricing or App Store release claims.
 
-Revision 1.7 adds touch swiping to the approved Curiosity feature rail, a prominent red no-advertising commitment, and compact native-layout Watch and Parent Dock previews. The Watch has a real Home screen for Ask Trustin, Math and Stories. Its scripted microphone demonstrates listening, thinking stars and two rounds of three follow-up choices. Story/Math add no simulated waiting time. Parent tabs and key sample settings work locally. Both tours keep the device stationary while separate, swipeable descriptions change within a fixed stage; full rationale stays outside the product.
+Revision 1.8 fixes the mixed-version delivery regression reported after v1.7. Every HTML page now references the same content-addressed CSS/JS release; relative module imports remain inside that release. Mutable entry points revalidate, and immutable release files are cached. The Parent Dock begins in its fixed layout before JavaScript runs, with one explanation visible; Safari button appearance is explicitly reset.
+
+The retained v1.7 work adds touch swiping to the approved Curiosity feature rail, a prominent red no-advertising commitment, and compact native-layout Watch and Parent Dock previews. The Watch has a real Home screen for Ask Trustin, Math and Stories. Its scripted microphone demonstrates listening, thinking stars and two rounds of three follow-up choices. Story/Math add no simulated waiting time. Parent tabs and key sample settings work locally. Both tours keep the device stationary while separate, swipeable descriptions change within a fixed stage; full rationale stays outside the product.
 
 - `docs/MESSAGING.md`: approved mission, copy/CTA hierarchy and claim rules.
 - `docs/RESEARCH_DECISIONS.md`: current evidence, populations/limits and ten specialist perspectives.
 - `docs/INDEPENDENT_REVIEW.md`: source-based post-implementation critical review.
 - `/parents/ai-and-young-children/`: original five-question parent guide.
 
-Current validation: 61 source/model/event-contract tests, 14 shipped script syntax checks and seven-page static integrity. Actual rendering, mobile Safari, screen-reader and performance measurements for this revision remain unverified. The public domain was already launched; see the deployment record.
+Current validation: 65 source/model/event-contract tests, 14 source script syntax checks, 22 byte-verified release dependencies and seven-page static integrity. Actual rendering, mobile Safari, screen-reader and performance measurements for this revision remain unverified. The public domain was already launched; see the deployment record.
 
 Original Trustin art and existing Cedar recordings are reused from the owner's native application, source revision `34557847ad424bd0fdac7419b44563737cb499cf`. Original imported media was checked against native source; the Pip narration also matches all seven native timing-file SHA-256 hashes. The native code and release pipeline are separate and unchanged.
 

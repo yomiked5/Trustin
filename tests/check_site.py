@@ -191,7 +191,7 @@ for discovery in json.loads((root / 'assets/discoveries.json').read_text()):
         if not path.exists():
             errors.append('Missing discovery recording ' + str(path))
 
-scripts = sorted(path for path in root.rglob('*') if path.suffix in ['.js', '.mjs'])
+scripts = sorted(path for path in root.rglob('*') if path.suffix in ['.js', '.mjs'] and 'releases' not in path.relative_to(root).parts)
 for path in scripts:
     source = path.read_text()
     for forbidden in ['getUserMedia', 'localStorage', 'sessionStorage', 'speechSynthesis', 'api.openai.com']:
@@ -221,5 +221,5 @@ for foreground, background in contrast_pairs:
 assert not errors, '\n'.join(errors)
 print(f'Passed: {len(docs)} pages; links, anchors, SVG symbols, reserved image dimensions and content/audio references.')
 print('Passed: public indexing, preview/404 noindex headers, canonical routes, sitemap and 1200×630 social metadata/image.')
-print(f'Passed: narrow privacy/narration API scan across all {len(scripts)} shipped scripts; no deployment behavior is inferred.')
+print(f'Passed: narrow privacy/narration API scan across {len(scripts)} source scripts; release copies are byte-verified separately.')
 print(f'Passed: {len(contrast_pairs)} core text color pairings exceed 4.5:1 (not a rendered accessibility audit).')

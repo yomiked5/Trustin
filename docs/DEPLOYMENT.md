@@ -1,5 +1,15 @@
 # Deployment and domain handoff
 
+## Returning-visitor repair — revision 1.8
+
+Baseline: marketing `4c96cd503e83012d09803cc9c08024a7de014aab`, private source `4a2ff9945d4e786fa10571481e274e83218c7536`. The owner reported a broken Watch demo and oversized Parent Dock with absent guidance. Live headers confirmed four-hour caching of mutable script/style URLs. Current source bytes alone were insufficient for a returning browser.
+
+Run `npm run build` after source edits to prepare `/releases/<content-hash>/`, then `npm test`. Commit the generated release directory, release.json and all rewritten HTML atomically. Every transitive module must stay inside that release; keep prior directories for already-open documents. Entry-point/root files and HTML use `no-cache`; fingerprinted releases use one-year immutable caching. This is a source `_headers` update, not a zone/DNS/paid-plan operation. The existing Pages build configuration stays unchanged.
+
+65 tests, 14 source script syntax checks, 22 dependency byte checks and seven-page integrity pass. After publication run `python3 scripts/check-live-release.py https://trustinjr.com` from the public export to check exact served bytes, MIME types and cache headers. Record exact deployment and HTTP results in the project handoff; neither substitutes for iPhone Safari rendering. The prior v1.7 deployment is a known reported regression, not a visually accepted rollback target.
+
+Official header reference: https://developers.cloudflare.com/pages/configuration/headers/ (matching rules combine; use non-overlapping cache paths).
+
 ## Compact interactive exhibits — revision 1.7
 
 Public baseline / rollback source: `6d5bfcc55d69564f7a073bc58fc7708de73f8d47`. The GitHub → Cloudflare Pages route remains unchanged. This revision adds touch swiping, the red no-advertising commitment, native-layout Watch Home and scripted microphone, original Pip media, and functional fixed-geometry Parent Dock chapters. Private review remains owner-only/noindex; production retains public indexing, contact, sitemap and preview/404 rules.

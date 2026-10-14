@@ -1,11 +1,16 @@
 # Validation evidence
 
-Revision 1.7 · October 13, 2026 (Pacific). Marketing website and scripted demo only.
+Revision 1.8 · October 14, 2026 (Pacific). Marketing website and scripted demo only.
+
+## Observed regression
+
+The owner’s two 23:59 screenshots show v1.7 markup with legacy styles and the legacy “Let’s try that again” runtime error. Live HTTP inspection returned current script/style bytes with `Cache-Control: public, max-age=14400, must-revalidate`; HTML used `max-age=0`. This strongly supports a returning-visitor mixed-version cache failure. The old source tests did not exercise that delivery path. V1.7 was not visually accepted.
 
 ## Executed checks
 
-- `npm test`: **61 Node tests**, syntax validation of **14 shipped JS/MJS files**, static integrity across **7 HTML routes**.
+- `npm test`: **65 Node tests**, syntax validation of **14 source JS/MJS files**, byte validation of **22 release dependencies**, static integrity across **7 HTML routes**.
 - The first two approved homepage sections’ HTML remains unchanged. Curiosity’s rail deliberately gains touch swiping and selected-state feedback; its source artwork and composition are preserved.
+- New release tests simulate an old browser cache, follow the transitive module URL, verify CSS changes invalidate the complete release, retain old open-document dependencies, reject missing/unversioned imports, and confirm the Parent phone plus first explanation are laid out before JavaScript.
 - Gesture tests cover left/right intent, click suppression, vertical scrolling, cancellation, taps, mouse input, and exclusion of device/form interactions. The actual homepage and Parent controllers execute swipe handling with DOM doubles.
 - Watch runtime tests execute shipped code for Curiosity, live Home, internal activity selection, the finite microphone/stars sequence, two three-choice rounds and return, cancellation, links, recorded audio retry/pause/resume, stale promises, sample policy, Math retries, Pip completion, reading pace, word timings and reset.
 - Seed/butterfly completion returns to Curiosity without unrelated Moon follow-ups.
@@ -32,5 +37,7 @@ Source/DOM/Audio/geometry checks do not establish actual Safari fit, sticky beha
 At 320/390px portrait, short landscape and 1024/1440px desktop: confirm the Watch and its explanation fit together; swipe the surrounding stage without affecting in-device controls; switch all Parent chapters and expand rationale without moving the phone; use skip links and reverse scroll. Check motion-off, 200% text zoom, keyboard and screen reader.
 
 On real iPhone Safari, test microphone simulation, Home, discoveries, Pip and Math endings, guidance, narration, pace, backgrounding and reset. Ask an unfamiliar adult which elements are product UI versus website explanation and what a sample setting actually changes.
+
+`scripts/check-live-release.py` verifies all page/release bytes, MIME types and cache policy directly on production after publication; results belong to the handoff. This HTTP check is not rendering or browser interaction.
 
 Publication receipts verify deployment, not visual acceptance. Existing public indexing, contact, hosting and DNS remain unchanged. Native privacy, consent, retention, deletion and device compatibility remain separate release responsibilities.
