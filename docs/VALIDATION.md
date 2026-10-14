@@ -38,6 +38,6 @@ At 320/390px portrait, short landscape and 1024/1440px desktop: confirm the Watc
 
 On real iPhone Safari, test microphone simulation, Home, discoveries, Pip and Math endings, guidance, narration, pace, backgrounding and reset. Ask an unfamiliar adult which elements are product UI versus website explanation and what a sample setting actually changes.
 
-`scripts/check-live-release.py` verifies all page/release bytes, MIME types and cache policy directly on production after publication; results belong to the handoff. This HTTP check is not rendering or browser interaction.
+`scripts/check-live-release.py` verifies all page/release bytes, MIME types and cache policy directly on production after publication; results belong to the handoff. The first public run correctly rejected Cloudflare’s email rewriting and remaining four-hour root-asset TTL; the immutable Pages origin was unaffected. Header repair adds `no-transform` on HTML and `no-store` on mutable root files. This HTTP check is not rendering or browser interaction.
 
 Publication receipts verify deployment, not visual acceptance. Existing public indexing, contact, hosting and DNS remain unchanged. Native privacy, consent, retention, deletion and device compatibility remain separate release responsibilities.
