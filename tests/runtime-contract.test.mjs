@@ -130,6 +130,15 @@ test('runtime opens a prepared Moon answer without autoplay or a real account', 
   assert.equal(app.query('#topic-policy').disabled, false);
 });
 
+test('native-style Home returns to Curiosity topics and stops the previous recording', async () => {
+  const app = await setup(); await app.click('[data-action="listen"]');
+  await app.click('[data-shell-home]');
+  assert.equal(app.state().view, 'home'); assert.equal(app.state().mode, 'ask');
+  assert.equal(app.audio.src, undefined); assert.equal(app.audio.playCalls, 1);
+  assert.ok(app.query('[data-topic="seed"]')); assert.ok(app.query('[data-action="questions"]'));
+  assert.equal(app.query('#demo-activity-label').textContent, 'Curiosity');
+});
+
 test('homepage activity links open the matching full demo without autoplay', async () => {
   for (const [activity, view] of [['moon','discovery'], ['seed','discovery'], ['butterfly','discovery'], ['story','story'], ['math','mathIntro']]) {
     const app = await setup({search:'?activity=' + activity});

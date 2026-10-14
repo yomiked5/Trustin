@@ -1,0 +1,91 @@
+.demo-page { background:#fbfcfa }
+.demo-page .demo-section { padding-top:42px; padding-bottom:65px }
+.preview-heading { text-align:center; padding:0 0 25px }
+.preview-heading>p:first-child { font-size:11px; color:#59675e; letter-spacing:.06em; margin-bottom:16px }
+.demo-page .preview-heading h1 { font-size:clamp(40px,5.2vw,64px); line-height:1.05; font-weight:600; letter-spacing:-.06em }
+.preview-heading .demo-disclosure { font-size:11px; color:#59675e; margin-top:18px }
+.demo-page .demo-toolbar { justify-content:center; padding:0; border:0; margin:5px auto 45px }
+.demo-page .demo-tabs { padding:4px; background:#eef2e9; border-radius:30px; gap:4px; border:1px solid #d8e2d3 }
+.demo-page .demo-tabs button { border:0; border-radius:24px; min-height:44px; padding:9px 22px; font-size:12px; background:none }
+.demo-page .demo-tabs button[aria-pressed=true] { background:#285c57; color:#fff8ef }
+.demo-page .demo-tabs svg { width:17px; height:17px }
+.demo-page .demo-stage { grid-template-columns:minmax(0,440px) minmax(0,370px); gap:85px; max-width:950px; align-items:center; padding:10px 10px 15px }
+.demo-page .child-side { position:relative }
+.demo-page .child-side:before { content:''; width:68%; height:calc(100% + 40px); border-radius:60px; position:absolute; top:-20px; background:linear-gradient(90deg,#a2b09b,#bbcab0 12%,#b6c5ac 90%,#96aa93); z-index:0 }
+.demo-page .demo-watch { width:410px; border:3px solid #879889; background:linear-gradient(130deg,#6f8170,#21372b 45%,#536951); padding:10px; border-radius:66px; box-shadow:0 25px 50px #263c2d21 }
+.demo-page .watch-screen { border-radius:52px; border:3px solid #1c2e22; font-family:ui-rounded,system-ui,sans-serif }
+.demo-page .watch-time { justify-content:flex-end; padding:12px 25px 7px; font-size:16px }
+.demo-native-toolbar { display:flex; justify-content:space-between; align-items:center; padding:6px 13px; color:#526e4d; font-weight:650; font-size:17px; gap:10px }
+.demo-native-toolbar button { border:0; background:none; color:inherit; width:44px; height:44px; padding:8px; border-radius:12px }
+.demo-native-toolbar>svg { width:23px; height:23px; margin-right:7px }
+.demo-page .watch-content { padding:3px 20px 24px; min-height:430px }
+.demo-page .watch-title { font-size:23px; margin:8px 0 17px }
+.demo-page .reader-text { font-size:15px; line-height:1.7; padding:17px; border-radius:20px }
+.demo-page .reader-controls button { font-size:12px; min-height:60px }
+.demo-page .demo-kicker { display:none }
+.demo-page .demo-avatar { height:115px; margin:8px auto 10px }
+.demo-page .mic-button { width:75px; height:75px; min-height:75px; align-self:center; border:0; border-radius:50%; margin-top:15px }
+.demo-page .mic-button svg { width:40px; height:40px }
+.demo-page .topic-shelf { gap:10px; margin-block:5px 10px }
+.demo-page .topic-button { font-size:13px; min-width:80px }
+.preview-aside { position:relative; width:100%; padding:0; z-index:1 }
+.preview-aside:before { content:''; position:absolute; width:70px; height:1px; background:#8caf98; right:100%; top:52%; pointer-events:none }
+.preview-selector { display:flex; flex-direction:column; gap:9px; margin:0 20px 17px }
+.preview-selector label { font-size:10px; letter-spacing:.08em; color:#59675e; text-transform:uppercase }
+.preview-selector select { border:0; border-bottom:1px solid #bdcfbf; border-radius:0; min-height:44px; padding:8px 24px 8px 0; background:transparent; font-size:15px; color:#285c57; width:100% }
+.preview-panel { position:relative; background:linear-gradient(135deg,#fffffff0,#edf5ede8); border:1px solid #ccdece; border-radius:25px; padding:29px; box-shadow:0 20px 45px #2146320c; min-height:285px }
+.preview-panel:before { content:''; position:absolute; top:-2px; left:29px; width:43px; height:3px; background:#82a58c; border-radius:2px }
+.preview-panel .preview-symbol { width:55px; height:55px; color:#4c765d; margin:0 0 25px }
+.preview-panel h2 { font-size:30px; line-height:1.12; letter-spacing:-.045em; font-weight:600 }
+.preview-panel>p { font-size:14px; color:#59675e; line-height:1.7; margin-top:17px }
+.preview-panel .setting { border:0; padding:19px 0 0; display:block }
+.preview-panel .setting label { font-size:12px; margin-bottom:8px }
+.preview-panel .setting select { width:100%; max-width:none; font-size:15px; margin:0; border-color:#adbfaf; background:#fff; border-radius:12px; min-height:47px }
+.preview-panel .policy-preview { margin:20px 0 0; background:#eaf1e5; padding:15px; border:0; border-radius:14px }
+.preview-panel .policy-preview p { font-size:13px; margin:0 }
+.preview-panel .text-button { padding:10px 0; min-height:44px }
+.preview-panel .together-prompt { padding:0; border:0; background:none; margin-top:20px }
+.preview-panel #parent-prompt { font-size:19px; line-height:1.55; font-family:system-ui,sans-serif; letter-spacing:-.025em; color:#293c38 }
+.preview-panel #activity-log { font-size:14px; margin-top:25px; line-height:1.7 }
+.preview-panel #activity-count { display:block; margin-top:12px; font-size:12px; color:#59675e }
+.preview-reset { display:flex; justify-content:space-between; align-items:center; margin:12px 15px 0; font-size:11px; color:#59675e }
+.preview-reset button { min-height:44px; font-size:11px }
+.preview-reset a { padding:12px 0 }
+.demo-page .demo-footnote { max-width:730px; margin:60px auto 0; border-top:1px solid #d5dfd2; font-size:12px; color:#59675e; padding-top:12px }
+.demo-footnote summary { cursor:pointer; min-height:44px; padding:12px 0 }
+.demo-footnote p { font-size:12px; line-height:1.8; margin-bottom:15px }
+.demo-page .demo-next { max-width:550px; margin:35px auto 0; padding:0; border:0; background:none; text-align:center }
+.demo-page .parent-story { margin-top:25px }
+.demo-page .parent-intro h2 { font-size:clamp(36px,4vw,55px); line-height:1.08; letter-spacing:-.05em }
+.demo-page .parent-panel h3 { font-size:32px; line-height:1.1; letter-spacing:-.04em }
+.demo-page .parent-stage { max-width:1100px }
+.demo-page .parent-source-note { max-width:620px }
+@media(max-width:900px) {
+  .demo-page .demo-stage { gap:45px; grid-template-columns:minmax(0,1fr) minmax(0,1fr); max-width:800px }
+  .preview-panel { padding:23px }
+  .preview-panel h2 { font-size:27px }
+  .preview-aside:before { width:38px }
+  .demo-page .demo-watch { border-radius:56px }
+  .demo-page .watch-screen { border-radius:43px }
+}
+@media(max-width:700px) {
+  .demo-page .demo-section { padding-top:30px }
+  .demo-page .preview-heading h1 { font-size:40px }
+  .preview-heading { padding-bottom:22px }
+  .demo-page .demo-toolbar { margin-bottom:40px }
+  .demo-page .demo-tabs button { padding:9px 14px; font-size:11px }
+  .demo-page .demo-stage { display:flex; flex-direction:column; gap:53px; padding-inline:0; max-width:410px }
+  .demo-page .child-side { width:100% }
+  .demo-page .demo-watch { width:360px }
+  .demo-page .watch-content { min-height:405px; padding-inline:15px }
+  .demo-page .reader-text { font-size:15px; line-height:1.65; padding:15px }
+  .demo-page .watch-title { font-size:22px }
+  .preview-aside:before { width:1px; height:31px; top:-39px; right:50% }
+  .preview-selector { margin-inline:8px }
+  .preview-panel { min-height:0; padding:27px }
+  .preview-panel .preview-symbol { width:44px; height:44px; margin-bottom:20px }
+  .preview-panel h2 { font-size:29px }
+  .preview-panel .setting select { font-size:16px }
+  .demo-page .demo-footnote { margin-top:40px }
+}
+@media print { .preview-aside:before,.preview-selector,.preview-reset { display:none } .preview-panel[hidden] { display:block!important } }

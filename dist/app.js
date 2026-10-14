@@ -139,9 +139,11 @@ function renderDock() {
 }
 function render() {
   if (!data || !story || !content) return;
+  const activityLabel = document.querySelector('#demo-activity-label');
+  if (activityLabel) activityLabel.textContent = state.mode === 'ask' ? 'Curiosity' : state.mode === 'story' ? 'Storytime' : 'Garden math';
   let html = '';
-  if (state.view === 'home') html = `<p class="demo-kicker">Ask Trustin</p><img class="demo-avatar" src="/assets/trustin.png" alt="Trustin, a small teal learning character" width="300" height="353"><h3 class="watch-title">What do you wonder?</h3><div class="topic-shelf">${topicButton('seed')}${topicButton('moon')}${topicButton('butterfly')}</div><button class="mic-button" data-action="questions" aria-label="Choose a prepared question; no microphone recording">${icon('mic')} Choose a question</button><p class="demo-hint">Prepared questions. Nothing is recorded.</p>`;
-  if (state.view === 'questions') html = `<p class="demo-kicker">Ask Trustin</p><h3 class="watch-title">Start with a little why.</h3><div class="question-choices">${['moon','seed','butterfly'].map(topic => '<button class="question-choice" data-topic="' + topic + '">' + esc(data.find(item => item.illustration === topic).question) + '</button>').join('')}</div><p class="demo-hint">Choose an example to hear Trustin.</p><button class="reset" data-action="home">Back to topics</button>`;
+  if (state.view === 'home') html = `<img class="demo-avatar" src="/assets/trustin.png" alt="Trustin, a small teal learning character" width="300" height="353"><h3 class="sr-only">Choose a discovery</h3><div class="topic-shelf">${topicButton('seed')}${topicButton('moon')}${topicButton('butterfly')}</div><button class="mic-button" data-action="questions" aria-label="Choose a prepared question; no microphone recording">${icon('mic')}</button>`;
+  if (state.view === 'questions') html = `<p class="demo-kicker">Ask Trustin</p><h3 class="watch-title">Start with a little why.</h3><div class="question-choices">${['moon','seed','butterfly'].map(topic => '<button class="question-choice" data-topic="' + topic + '">' + esc(data.find(item => item.illustration === topic).question) + '</button>').join('')}</div><button class="reset" data-action="home">Back to topics</button>`;
   if (state.view === 'discovery') {
     const topic = data.find(item => item.illustration === state.topic);
     html = `<button class="watch-home" data-action="questions">${icon('back')} Questions</button><h3 class="watch-title">${esc(topic.question)}</h3><div class="reader-art topic-art">${icon(state.topic)}</div><div class="reader-text">${esc(state.page === 0 ? topic.explanation : topic.continuation)}</div>${progress(state.page + 1, 2, 'Discovery')}${controls(true, state.page === 1 ? 'Finish' : 'More')}`;
@@ -152,14 +154,14 @@ function render() {
     const alt = node.art === 'repot' ? 'Trustin helps a gardener move the plant to a new pot' : node.art === 'later' ? 'Trustin returns to the plant as a new leaf opens' : 'Trustin notices a curled leaf beside a watering can';
     html = `<p class="demo-kicker">Storytime</p><h3 class="watch-title">${state.storyPage === 0 ? 'Trustin and the<br>Curled Leaf' : 'Look. Check. Ask.'}</h3><img class="reader-art" src="/assets/story/${node.art}.jpg" alt="${alt}" width="480" height="320"><div class="reader-text">${esc(node.text)}</div>${progress(state.storyPage + 1, story.nodes.length, state.storyPage === 0 ? 'Story introduction' : 'Story page')}${controls(state.storyPage > 0, state.storyPage === story.nodes.length - 1 ? 'Finish' : 'Next')}`;
   }
-  if (state.view === 'mathIntro') html = `<p class="demo-kicker">Little garden math</p><div class="reader-art topic-art">${icon('math')}</div><h3 class="watch-title">A few seeds.<br>A little counting.</h3><p class="ending">Help get the garden ready.<br>Three small counting challenges.<small>Try an answer. If it’s tricky, a hint will help.<br>This sample uses text and pictures.</small></p><button class="button watch-cta" data-action="startMath">Let’s try</button>`;
+  if (state.view === 'mathIntro') html = `<p class="demo-kicker">Little garden math</p><div class="reader-art topic-art">${icon('math')}</div><h3 class="watch-title">A few seeds.<br>A little counting.</h3><p class="ending">Help get the garden ready.<br>Three small counting challenges.<small>Try an answer. A hint can help.</small></p><button class="button watch-cta" data-action="startMath">Let’s try</button>`;
   if (state.view === 'math') {
     const question = mathQuestions[state.mathPage];
     html = `<p class="demo-kicker">Little garden math</p><h3 class="watch-title">${esc(question.prompt)}</h3><div class="math-display" role="img" aria-label="${question.count} seeds">${Array.from({length:question.count}, () => icon('seedling')).join('')}</div><div class="math-options">${question.options.map(number => '<button data-number="' + number + '" aria-label="' + number + ' seeds" ' + (state.mathSolved ? 'disabled' : '') + ' class="' + (state.mathSolved && number === question.answer ? 'correct' : '') + '">' + number + '</button>').join('')}</div><p class="math-message" id="math-feedback">${esc(state.mathFeedback || 'Take your time. Count the seeds if it helps.')}</p>${progress(state.mathPage + 1, 3, 'Counting challenge')}${state.mathSolved ? '<button class="button watch-cta" data-action="nextMath">' + (state.mathPage === 2 ? 'Finish' : 'Next challenge') + '</button>' : ''}`;
   }
   if (state.view === 'done') {
     const text = state.mode === 'ask' ? observations[state.topic] : state.mode === 'story' ? 'Trustin learned to look, check, and ask. What could you notice together today?' : 'You helped with the garden. With a grown-up, try counting four things around you.';
-    html = `<p class="demo-kicker">A good place to pause</p><div class="done-icon">${icon('leaf')}</div><h3 class="watch-title">${state.mode === 'story' ? 'The end.' : 'Now, into the world.'}</h3><p class="ending">${esc(text)}<small>Nothing else starts automatically.<br>There’s a whole world to explore.</small></p><button class="button watch-cta" data-action="home">Back to sample topics</button>${state.mode !== 'ask' ? '<button class="reset" data-action="restart">' + (state.mode === 'story' ? 'Read this story again' : 'Try the math again') + '</button>' : ''}`;
+    html = `<p class="demo-kicker">A good place to pause</p><div class="done-icon">${icon('leaf')}</div><h3 class="watch-title">${state.mode === 'story' ? 'The end.' : 'Now, into the world.'}</h3><p class="ending">${esc(text)}</p><button class="button watch-cta" data-action="home">Back to topics</button>${state.mode !== 'ask' ? '<button class="reset" data-action="restart">' + (state.mode === 'story' ? 'Read this story again' : 'Try the math again') + '</button>' : ''}`;
   }
   content.innerHTML = html;
   content.setAttribute('aria-busy', 'false');
@@ -250,6 +252,11 @@ document.querySelectorAll('[data-start]').forEach(link => link.addEventListener(
   openSample(link.dataset.start);
 }));
 document.querySelector('[data-inspect-moon]')?.addEventListener('click', () => openSample('moon'));
+document.querySelector('[data-shell-home]')?.addEventListener('click', () => {
+  if (!data) return;
+  stopAudio(); chooseMode(state, 'ask'); state.view = 'home'; state.topic = null; state.page = 0;
+  render(); focusContent(); announce('Curiosity topics opened.');
+});
 document.querySelector('#topic-policy')?.addEventListener('change', event => { if (data) setPolicy(event.target.value); });
 document.querySelector('#narration-pace')?.addEventListener('change', event => {
   state.pace = Number(event.target.value);

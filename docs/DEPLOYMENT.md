@@ -1,5 +1,11 @@
 # Deployment and domain handoff
 
+## Parent Dock and full-site redesign — revision 1.6
+
+Public baseline: marketing main `83e889c382f2ccbb4861ff55a9197d458a6714aa`. The existing GitHub → Cloudflare Pages deployment remains the production route. Revision 1.6 preserves the first two approved homepage sections, adds the source-based iPhone tour, and redesigns all deeper pages. The private review stays owner-only/noindex; the public export keeps public indexing, sitemap, contact and preview/404 header rules.
+
+No DNS, hosting-account, native-release or paid-infrastructure change is needed. Both export profiles run the same 62 behavior tests and static checks. Exact publication receipts belong to the project handoff. A successful deployment is not a rendered browser/device acceptance result; see `VALIDATION.md`. Older launch and redesign evidence below is historical and does not verify v1.6’s layout.
+
 ## Visual-first redesign — revision 1.4
 
 The public baseline was inspected at marketing main `2f33e2bb5253e367e0d3d434659a2f06a3982f2b`. Its contact, desktop-overflow correction, public index/follow metadata, robots and Pages-preview/404 noindex rules are preserved in the redesign's GitHub export. The full demo moves to `/demo/`. No DNS, hosting account, paid plan or sharing settings change.

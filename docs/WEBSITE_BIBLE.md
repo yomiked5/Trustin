@@ -1,239 +1,113 @@
 # TrustinJr website bible
 
-Version 1.5 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+Version 1.6 · October 13, 2026 (Pacific)
 
-## Current direction — the Curiosity screen tells the story
+## Accepted direction
 
-The owner's 20:33 PDT correction rejects accumulated tooltip captions and the invented hero interface. Show the approved Curiosity design first; shrink the same Watch as the parent scrolls; reveal a diegetic glass menu one item at a time. The real interface must remain identifiable throughout. This supersedes v1.4's illustrative Watch/iPhone pairing.
+Mike approved the first two homepage sections as the desired design: the native Curiosity hero and the three-activity gallery. Preserve those compositions. This revision extends their visual hierarchy and one-feature-at-a-time explanation to the iPhone Parent Dock and all deeper pages.
 
-### Ground truth and fidelity
+The first two sections are byte-for-byte unchanged from v1.5. Curiosity markup SHA-256: `b8ab32528226f5b10b3c701bb28975a2a449c61492766d015def85196599894e`; gallery: `c8ebf5bf093a7b6c74d625142607f905029a2170e384f5be402ee5c34b18529c`. Their CSS and tour behavior are unchanged too.
 
-Native main was freshly verified at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Watch/DiscoveryHome.swift`, `TrustinWatchApp.swift`, `DiscoveryAnimalArt.swift`, `TJIcon.swift`, `Shared/Theme.swift` and `Packages/TrustinCore/Sources/TrustinCore/CuriosityHome.swift`. The retained October 1 native 44mm screenshot and October 8 color preview were visually inspected as source references, not as screenshots of this website. October 1 pixels have older microphone/header styling, so they are not presented as current.
+**Show the real subject. Guide attention. Give depth a useful place.**
 
-The website uses a responsive HTML/CSS recreation of the native single-screen arrangement, the unchanged original Trustin PNG, and SVG translations of the exact native Butterfly/Moon/Magnet and Home/Bulb/Microphone/Next drawing paths. Native palettes and the October 8 cream microphone interior are preserved. Typography and hardware rendering are web approximations, not simulator output. The example Continue state is an existing bookmarked pack, not a claim that every first-time child sees Continue. The native app, backend and release pipeline are untouched.
+## Product and audience
 
-### Choreography
+Market to parents, initially of children ages 4–5. Child discovery happens on Apple Watch; the Parent Dock is on iPhone. The native app is in development/testing. The website offers prepared samples without live AI, microphone access, a child account, or a physical device connection.
 
-| State | Dominant visual | Information shown |
+Mission: to open a world of knowledge and discovery to every child, while keeping parents at the center of their learning journey. Conviction: the future of learning should not come at the expense of childhood.
+
+The three commitments are discovery for children, meaningful parent participation, and childhood free from advertising, sponsored answers, purchase pressure, or manipulative engagement. Parent preferences add to essential safeguards. A family preference cannot make harmful content permissible. AI may be wrong; human relationships remain central.
+
+Do not invent efficacy, testimonials, kid approval, compliance, live settings, complete monitoring, release dates, prices, or App Store availability. Wider age choices in source do not expand the announced release scope. Activity counts are not learning scores.
+
+## Product versus presentation
+
+Keep actual product labels, readable answers, feedback, and errors within the product. Keep website explanation, tutorial navigation, sample labels, marketing links, and rationale outside its viewport.
+
+The homepage devices are source-grounded HTML/CSS renderings, not native runtime or pixel-identical screenshots. The original Trustin art is unchanged. iOS fonts, symbols, hardware, and examples are web approximations. Example activity data is disclosed outside the phone. No account is connected.
+
+The working browser demo remains an adaptation. Its harmless Moon preference is illustrative, not a native topic category. Its listening controls affect browser recordings only. The separate phone tour shows the current iOS design and states that final release UI may change.
+
+## Homepage sequence
+
+| Section | What leads | What follows |
 |---|---|---|
-| Arrival | Large, straight-on Curiosity screen | Category, age and one brand headline; no feature annotations |
-| First scroll | The same Watch scales down and moves into position | Intro yields; no panel competes during the shrink |
-| Packs | Two native subject illustrations projected beside their shelf | Knowledge packs; brief on-the-go discovery idea |
-| Ask | Native microphone plus a still voice mark | A child asks in their own words |
-| Continue | The saved pack and its arrow badge | Return to a saved discovery |
-| Beyond the tour | Existing activity visuals, parent choice and no-ads commitment | Complete demo, philosophy and availability remain reachable |
+| Curiosity | The real native screen, without surrounding labels | Same Watch shrinks; Packs, Ask, Continue appear one at a time |
+| Activities | Three distinct visual worlds | Direct links to the corresponding prepared samples |
+| Their wonder. Your guidance. | The current iOS Today dashboard | Same phone shrinks; one relevant screen and connected explanation at a time |
+| Childhood | A concise no-advertising commitment | Philosophy link |
+| Next step | One useful preview action | Availability, product-rendering, and AI questions in disclosures |
 
-Only one panel and one source highlight are active. Connectors are calculated from actual element bounds. No timers, automatic advance, wheel/touch interception, parallax backgrounds, particles or looping glow. The Watch screen does not silently switch content. Ordinary scroll is reversible; fixed chapter controls revisit any feature. Panel reveal is a finite 300ms fade/wipe. Mobile stacks the projected panel below the Watch and reserves space for it; short landscape viewports use manual navigation. System reduction or `?motion=off` removes the scroll scene and preserves all three features through buttons. Without JavaScript, the native screen and all feature articles remain in normal document flow.
+No timed carousel, looping background animation, automatic sound, scroll interception, or moving interactive targets. Standard scrolling is reversible. Direct chapter controls remain outside device transforms. Reduced motion and short viewports use manual chapters. Without JavaScript, all feature articles remain in normal flow.
 
-The opening Watch is a visual, not a set of moving hit targets. Header CTA and chapter controls remain outside its transformed layer. Keyboard focus stays on the control selected; scroll changes do not flood live announcements. Product function labels stay visible in the actual interface.
+## Parent Dock tour: current source and reasons
 
-### Caption discipline
+Native main was rechecked at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Parent/TrustinParentApp.swift`, `NativeFamilySetup.swift`, `ParentStoryReadingSettings.swift`, `WatchFaceSetup.swift`, and `Packages/TrustinCore/Sources/TrustinCore/LocalStoryBook.swift`. The retained September 28 setup screenshot was inspected for native palette, rounded styling, navigation, and tab treatment; it is not a screenshot of this website.
 
-Keep essential action labels, complete readable answers and recoverable errors. Remove repeated instructions about reading/listening, generic surface labels, duplicate progress bars and 0:00 placeholders. Consolidate preview scope into one introduction and an optional details disclosure. The Parent Dock still demonstrates an immediate preference consequence and explicitly retains essential safeguards. No fake child data, new live AI, microphone or account is introduced.
+Earlier Parent/safeguard decisions were reconciled with current source. The later Master Guardian direction supersedes historical peer-admin proposals. Suspended Review Gates and daily book-renewal proposals are not reintroduced. No native code, backend, policy activation, or release changed.
 
-### Research and acceptance
-
-Eight primary perception/multimedia studies and W3C motion guidance inform the decisions, with populations and transfer limits in [RESEARCH_DECISIONS.md](RESEARCH_DECISIONS.md). They support design hypotheses about proximity, attention, continuity and pacing; they do not demonstrate product efficacy or conversion superiority. Do not market this page as scientifically proven or kid-approved.
-
-Acceptance is **53 automated contracts**, not browser approval. Real iPhone/Safari sizing, connector placement, sticky behavior, native scrolling, zoom, keyboard/screen-reader behavior and performance remain unverified because the supported browser capability is absent. No alternative screenshot renderer was used. Source-level responsive provisions are not a substitute for that acceptance.
-
-## Deployment reconciliation
-
-Marketing main `2f33e2bb5253e367e0d3d434659a2f06a3982f2b` includes the completed public Cloudflare launch, public indexing, the owner's inquiry address `jrtrustin@gmail.com` and a desktop-header overflow correction. Those changes were inspected and preserved. The owner-private Site retains noindex. This redesign makes no DNS, sharing or hosting-account changes. Older launch-preparation passages below are historical; consult `DEPLOYMENT.md` for the current record. Browser evidence from the earlier release does not verify this redesigned layout.
-
-## The job
-
-Help a parent understand, experience and evaluate TrustinJr in one visit. Lead with a child's curiosity and the parent's role. The website is a parent-facing marketing surface; it is not the production child application. Primary conversion at the current testing stage: evaluate a useful demo and parent choice, then understand current availability. An adult email inquiry is optional; delivery remains a launch check. Do not invent a launch date, subscription price, waitlist count, testimonial or App Store link.
-
-The owner selected GitHub and Cloudflare. This mission-led revision preserves the existing product content, original artwork and working demonstrations while improving their introduction. The existing marketing Site is `trustin-jr.yomiked.chatgpt.site`; the separate Family Playground remains separate. `trustinjr.com` is registered at Namecheap according to the owner. Domain/DNS state must be verified before migration. Preserve email records.
-
-## Product truth
-
-Source: `yomiked5/trustinjr-native`, main `34557847ad424bd0fdac7419b44563737cb499cf`, plus the canonical Master Library TrustinJr route, re-read 13 October 2026. Native main remained at that SHA. Parent UI source confirms Today/Activity/Safeguards/Watch setup, gated topic preferences and per-record activity deletion; no new live-backend or device verification occurred. The native privacy worksheet leaves provider retention, consent and account deletion unresolved.
-
-| Category | Public treatment |
-|---|---|
-| Ask Trustin, prepared discoveries, Storytime, project Math | Describe as the current product direction under development/testing. Demonstrate curated content. |
-| Apple Watch child interface, iPhone parent interface | Explain plainly. Do not suggest the website pairs a physical Watch. |
-| Initial age focus | Ages 4–5. Wider age progression is a future ambition, not a live capability claim. |
-| Voice and stories | Use existing Cedar recordings, original character and source story assets. No voice substitution or paid generation needed. |
-| Parent preferences | Show a clearly labeled illustrative Parent Dock, with real changes to the scripted demo. Do not represent mock activity summaries as real child data or finalized native UI. |
-| Device compatibility | Current beta needs a normally paired iPhone/Watch. Apple Family Setup onboarding is unresolved. No school-use positioning. |
-| Availability | In development/testing. No public App Store availability, pricing or release date verified. |
-| Efficacy | Research-informed approach; no demonstrated product learning gains claimed. |
-| Privacy | Describe this website precisely. Separate future app data policies from this static demo. No claim of zero server data or universal safety. |
-
-## Positioning and voice
-
-Mission: **To open a world of knowledge and discovery to every child, while keeping parents at the center of their learning journey.**
-
-Conviction: **The future of learning shouldn’t come at the expense of childhood.**
-
-Headline: **For every little why.** Supporting line: **A world of wonder. Guided by you.** Category: **Parent-guided AI discovery · Ages 4–5**. Explain questions, discoveries, stories and early math, audio-first Apple Watch child experience and iPhone Parent Dock, alongside visible development/testing status.
-
-The three promises, in order: **a world of discovery for children; meaningful guidance for parents; a childhood that isn’t for sale**. Lead with aspiration, then demonstrate parental agency and earn trust through concrete, verified behavior. “Every child” is the mission’s ambition, not a present universal-access or device-compatibility claim.
-
-Primary action: **Try the preview** → `/demo/`, opening Moon without autoplay. The homepage leads with category/age, the original headline, development status and a large illustrative Watch/iPhone pairing. Visual highlight links open a matching activity through a whitelisted `activity` query. A small independent homepage example demonstrates a parent's choice; all narration, story/math progression and full Dock controls stay in the complete demo. The homepage control explicitly changes only its prepared example; it is not synchronized or persisted across navigation.
-
-Parent guidance means participation as well as preferences. The Dock includes context-specific conversation starters; the child sample ends with an optional real-world activity. The harmless Moon setting is explicitly an example of choosing to discuss a topic together, not a claim that astronomy requires restriction.
-
-Use concrete language: ask, notice, try, listen, count, explore, together. Avoid fear, guilt, AI superlatives, invented proof, developmental diagnoses, emotional-companion framing and unverified independence/adaptive-learning claims. Trustin is a learning character/tool; human relationships and teaching remain essential. [Messaging guidelines](MESSAGING.md) define approved copy, CTA behavior and claim boundaries.
-
-## Research and design decisions
-
-Research first accessed 12 October and refreshed 13 October 2026. [Research decisions](RESEARCH_DECISIONS.md) records current AAP, UNICEF and Common Sense sources, population limits and the ten specialist perspectives. Comparable observations concern public content and information architecture, not measured conversion performance or a full pixel audit.
-
-| Source | Useful observation | Decision |
+| Chapter | Current component | Design rationale / honest limit |
 |---|---|---|
-| [Pok Pok](https://playpokpok.com/) and [FAQ](https://playpokpok.com/faqs/) | Child benefit, recognizable activities, calm design and a clear action precede deeper explanation. | Make the product tangible early; use original tactile art and generous whitespace. Do not borrow claims, awards, reviews or compositions. |
-| [Khan Academy Kids](https://www.khanacademy.org/kids) | Parent trust questions are answered in plain language. | Put ad policy, parent role and limits on the home page; link details. |
-| [Yoto](https://us.yotoplay.com/yoto-player) and [parent app](https://us.yotoplay.com/the-yoto-app) | Child independence is paired with tangible parent controls. | Show the two sides together. Say audio-first, not screen-free or microphone-free. |
-| [Read Along](https://readalong.google/) | A direct browser experience and deeper evidence coexist. | Primary CTA is Try the demo; philosophy is a readable, independently addressable page. |
-| [Wood, Bruner & Ross, 1976](https://doi.org/10.1111/j.1469-7610.1976.tb00381.x) | Foundational scaffolding concept. | Explain one manageable step, a helpful hint and a child attempt; not simply longer answers. |
-| [Skene et al., 2022](https://onlinelibrary.wiley.com/doi/full/10.1111/cdev.13730) | Guided-play review reports selected benefits; computer-guided studies were excluded. | Use as design background only. It does not prove TrustinJr efficacy. |
-| [Hirsh-Pasek et al., 2015](https://doi.org/10.1177/1529100615569721) | Active, engaged, meaningful, socially interactive learning with a learning goal. | Every demo activity needs a purpose and a bridge back to the child's world. |
-| [Harvard Serve and Return](https://developingchild.harvard.edu/key-concept/serve-and-return/) | Responsive relationships with adults matter. | Parent conversation starters; no claims that AI replaces these relationships. |
-| [UNICEF AI and Children 3.0](https://www.unicef.org/innocenti/reports/policy-guidance-ai-children) | Transparency, privacy, accountability, appropriate safeguards. | Be candid about AI limits; no dependency mechanics or endorsement badges. |
-| [AAP 2026 media recommendations](https://www.healthychildren.org/English/news/Pages/creating-a-child-friendly-digital-world-AAP-releases-new-media-recommendations.aspx) | Child-centered design, privacy and easier disengagement. | Finite experiences; no autoplay chains, streaks or pressure to return. |
-| [FTC COPPA plan](https://www.ftc.gov/business-guidance/resources/childrens-online-privacy-protection-rule-six-step-compliance-plan-your-business) | Notice, appropriate consent, parental rights, minimization and retention obligations. | No child profiles or voice collection in this website. App launch requires its own verified operational privacy work; do not claim certification. |
+| Today | Child, date range, last update, saved activity counts | Whose information, over what period, and how fresh; not a score or continuous monitoring |
+| Together | Activity-based conversation starter and its reason | Bring discovery back into a human relationship; not inferred ability or personality |
+| Activity | Saved question/answer details and individual deletion | Context behind a summary; reports omit some offline activity; notices are not emergency alerts |
+| Topics | Seven supported topic categories and explicit outcomes | Family readiness/values alongside essential protections; expanded settings are capability-gated |
+| Reading | Slower, Calm, Natural; Hear sample; Send to Watch | Listen before choosing; distinguish saved from applied; downloaded books remain offline |
+| Guidance | Age, starting Math level, bounded explanation style | A useful starting point, preserve practice, understandable support; fixed books retain their wording |
+| Watch setup | Child selection, prepare/send connection, Watch list, optional face customization | Distinguish account/profile/device; expiry is not online status; disconnect has a precise scope |
 
-## Visual system
+Each panel begins with a short explanation. “Why it’s designed this way” opens the full rationale and relevant limits. Only one feature and one connector are active. The phone’s screen changes with the selected chapter; the physical phone remains stable. Detailed reasoning is outside the app.
 
-Crisp product-led presentation with warm original app artwork. Marketing field `#FBFCFA`, ink `#172C28`, muted `#53635D`, surface `#F0F4EF`, action teal `#285C57`. The original app's cream `#FFF8EF`, sage, peach, lavender and ochre stay inside product illustrations and the demo. The dark discovery highlight uses pale text on deep teal. Large quiet surfaces, image-led activity panels and whitespace replace explanatory copy.
+The current beta requires normal Watch/iPhone pairing; Apple Family Setup is not supported. Master Guardian sharing remains a separate unfinished direction and is not advertised as a working control.
 
-Marketing headings now use a compact medium-heavy system sans with tight tracking; the serif-led landing-page direction is superseded. All fonts remain local system fonts. Illustration-only device compositions scale at explicit breakpoints; actual controls and readable copy reflow independently. The original character and recordings are unchanged.
+## Demo behavior and visual ownership
 
-Keep the original matte Trustin portrait. Native October 8 color correction governs controls: cream microphone/lens/play interiors, dark definition, peach/sage/lavender button surfaces, cream-on-teal forward action. Math uses +, − and 1 blocks, never dice. No talking mouth, gloss, harsh gradients or rapid motion. No mandatory animation or moving hit targets.
+The demo opens a prepared Moon answer without autoplay. Activity links use a whitelist: Moon, seed, butterfly, story, math. Switching activities preserves independent page state while the page stays open.
 
-Layout: 1200px text canvas and up to 1320px visual gallery. Five homepage sections: centered introduction/device pairing; three visual activities; one parent-choice scene; one no-advertising commitment; demo close and two collapsed FAQs. The full paired demo moves to `/demo/`, removing dashboard density without removing functionality. Highlights become a native, keyboard-focusable horizontal scroll rail below 850px. Phones retain a compact brand/CTA header and footer access to deeper pages. The full demo stacks below 850px.
+The Watch contains content and functional child-facing controls. Its Home action returns to Curiosity topics and stops old narration. Redundant tutorial sentences and browser-sample commentary are removed from the product viewport.
 
-Motion: optional 680ms one-shot headline/artwork reveals on intersection; bounded reversible scroll offsets on decorative Watch/phone layers; a 280ms parent-response icon transition; retained 160–240ms page/reader/control feedback. No scroll hijacking, autoplay gallery, continuous animation loop, moving hit target or audio autoplay. Passive scroll events are coalesced with requestAnimationFrame, with reads before writes. System/manual reduced motion cancels effects and clears offsets. Content is visible without enhancement APIs or JavaScript. These are source contracts, not verified browser performance results.
+A separate floating website panel shows one topic at a time: experience, guidance, listening pace, together, or completed preview activity. The phone design is a separate manual tour below. This avoids labeling website experiment controls as native product controls.
 
-## Visitor journey
+Audio supports Listen/Pause/Resume/Replay/Retry, complete readable text, progress, pace changes, stale-request cancellation, and stop on affected navigation. Moon guidance immediately replaces only the relevant discovery. Story/Math are not hijacked by a stale topic. Math has three finite challenges with useful retries. Completion invites a real-world next step. Logs contain only completed samples, never invented child history. Reload/reset clears state; no cookies or browser storage retain it.
 
-1. Identify: what is this, for whom, and why should I care?
-2. Try: three curated discoveries, a complete narrated story and a counting activity.
-3. Inspect: change a sample topic boundary and narration speed; see the demo activity log update.
-4. Understand: the learning approach, parent role and no-advertising commitment.
-5. Evaluate: read the whitepaper, privacy notice, availability and honest FAQs.
-6. Act: inspect the availability page and optionally open an explicitly labeled email inquiry to `jrtrustin@gmail.com`. Do not fake a working waitlist. Mail delivery and ownership still need an owner test before public launch.
+## Deeper pages
 
-## Demo contract
-
-The preview is scripted and adapted for a browser, visibly labeled throughout. No microphone permission, open-ended chat, AI requests, login or real child data. The Dock is labeled a temporary sample session; no real child profile is created. State is memory-only and resets on reload. Hosting infrastructure may process ordinary request data.
-
-Curiosity: open directly on the prepared Moon discovery. Offer other questions about Moon, seeds and butterflies. Reuse exact source text and prerecorded Cedar audio. Read at your own pace by default; narration is user-initiated, with Listen/Pause/Resume/Replay, elapsed progress and complete visible text. Explicit More/Finish and explicit ending; no automatic progression. Two actual pages per discovery, followed by an optional observation with a grown-up. Playback failures show visible retry guidance as well as a polite announcement; canceling playback must not produce a stale error on another activity.
-
-Story: *Trustin and the Curled Leaf*, complete source introduction and seven pages, matching images and recordings; manually advance from cover and into The end. Full transcript text stays visible, without an inner scrolling text box. Source word-timing files are retained, but this preview does not claim synchronized word highlighting.
-
-Math: a short, deterministic three-question garden project, useful incorrect-answer hints, visible +/− blocks, no punitive response or streak. This is a web sample, not a representation of backend adaptive placement.
-
-Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. The Moon select in the Dock governs the complete demo; the separately labeled homepage illustration is independent. Context-specific conversation starters connect all three activity types to parent participation.
-
-Switching activities preserves each activity's independent place while the page is open. Completed Story/Math samples have an explicit restart action that retains family settings and the completed-only activity log. Reset clears all settings, saved progress and log entries, then opens the default Moon example. Log only completed demo activities, no fabricated starting metrics or implied assessment. Finish with a real-world prompt, not another automatically queued activity. Math feedback is announced through a persistent live region; focus returns to the chosen answer for an incorrect attempt or the next control for a correct answer.
-
-## Whitepaper
-
-Title: **Curiosity, with care.** Subtitle: the TrustinJr learning philosophy. Dated, versioned, readable on mobile and printable; no email gate. Begin with a three-part plain-language summary. Eight principles: child curiosity; manageable steps; learning beyond the device; involved parents; family choices with essential protections intact; AI transparency; no advertising to children; evidence and candor. Include a concrete seed example, evidence limits, product status, references and revision history. Research citations are context, not institutional endorsement.
-
-## Accessibility, quality and performance
-
-Target WCAG 2.2 AA: 4.5:1 normal text contrast, 3:1 large text and meaningful controls; visible keyboard focus; semantic headings, labels and buttons; skip link; no hover-only information. Child demo targets at least 64px where practical; adult controls at least 44px. Reflow at 320 CSS px. No autoplay sound. Equivalent transcripts. Respect reduced motion. Avoid excessive live announcements and focus jumps.
-
-References: [WAI contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), [focus](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html), [motion](https://www.w3.org/WAI/WCAG22/Techniques/css/C39), [media](https://www.w3.org/WAI/media/av/).
-
-Static HTML/CSS/JS, no runtime dependencies. Reserve image dimensions, do not lazy-load the hero, lazy-load lower images, preload no audio. Targets from [Web Vitals](https://web.dev/articles/vitals): LCP ≤2.5s, INP ≤200ms, CLS ≤0.1 at the real-user 75th percentile. These are targets, not measured results. No tracking scripts, cookies, third-party embeds or paid SaaS required.
-
-Check genuine functional risks: navigation, page transitions, state reset, audio stop on topic/mode change, blocked-topic behavior, Math retries/completion, story ending, links/assets, metadata and deployment packaging. Browser/device checks must be reported honestly if the supported preview environment is unavailable.
-
-## Marketing and UX review — revision 1.1
-
-Owner direction: review and modify the messaging, design, UI and UX to aim for a best-in-class parent-facing experience. This is an implementation goal, not a verified market ranking or conversion claim. The website and scripted browser demo changed; the native application did not.
-
-| Source-observed weakness in v1 | Revision |
-|---|---|
-| Hero led with generic warmth; category/device roles came late. | Explicit audio-first/age/category framing, device roles, current status, concrete answer and direct narration. |
-| Demo required a sequence of guesses before showing value. | Open on an actual answer; descriptive activity buttons; direct discovery links; one-step boundary example. |
-| Mobile parent setting and child consequence were separated. | Immediate child-response preview inside the Dock, with an explicit inspect action. |
-| Parent positioning was vague and ad policy small. | Plain no-ads manifesto, specific parent authority, human-relationship and finite-activity commitments. |
-| Repeated disclaimers and abstract feature prose diluted the story. | Compact persistent demo disclosure; concrete learning sequence; six focused FAQ entries; honest availability action. |
-| Switching modes reset work; stale Moon state could hijack another activity. | Independent memory-only progress; scoped policy effects; dedicated regression tests. |
-| Playback state and failures were unclear; math focus was lost. | Resume/Replay/Retry, visible error/progress, canceled-request handling, intentional focus, persistent announcements. |
-| Mobile navigation disappeared and Watch text scrolled inside a small box. | Visible compact navigation; larger adult labels; full text flow; no nested reading scroll. |
-
-The bounded source critique was useful for defects and hierarchy, not a visual audit. Current follow-up research rechecked [Pok Pok's public presentation](https://playpokpok.com/), [WAI target-size guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) and [focus visibility guidance](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html). These inform choices; they do not certify this site.
-
-Acceptance: see `VALIDATION.md`. No conversion lift, browser rendering result, Lighthouse score, screen-reader result or product efficacy result is claimed. Next useful design validation is a real-device parent walkthrough: ask what the product is, have the parent hear an answer and change a boundary, then ask what they believe is available today. Do not collect child identities or sensitive child information for this test.
-
-## Visual-first product presentation — revision 1.4
-
-The owner's October 13, 19:15 PDT request explicitly identifies Apple's iPhone Duo product page, excessive captions/explanations and a need for eye-guiding scroll animation. This supersedes v1.3's no-scroll-reveal rule without undoing its preference for reduction.
-
-- [Apple reference](https://www.apple.com/iphone-duo/) reviewed for short headline hierarchy, image-led highlights, device-led storytelling and on-demand detail. The public page and hero start/end image resources were retrieved. No Apple art, text, code, product claims or endorsement was imported. This is reference analysis, not a measured browser animation audit.
-- Full demo moved intact to a dedicated route; links open Moon, Storytime or Math without autoplay. The main page no longer loads demo content/audio code.
-- Source main-body count fell from 568 to 267 words (53%); 179 words remain outside collapsed FAQ content, including illustrative UI labels. Counts strip tags and split whitespace, exclude dynamically rendered demo content and do not measure reading time.
-- Illustrative product cases are native HTML/CSS, not fictional screenshots. The character, story image, icon symbols and recorded media remain original.
-- Optional one-shot reveals and scroll offsets follow [W3C motion guidance](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html). Standard scrolling/navigation remain intact. No new dependencies, services or data collection.
-- Seven HTML routes, six scripts and 45 automated tests. Browser/device visual and motion acceptance remains outstanding; no screenshot or conversion claim.
-
-## Owner-directed simplification — revision 1.3 (historical)
-
-The owner found v1.2 too much and requested clean, crisp transitions and a reduction. This supersedes the earlier emphasis on a second interactive hero and repeated editorial sections.
-
-- Reduced homepage from 11 sections to 5; static main-body copy from 1,315 to 569 whitespace-counted words (57% less). This excludes dynamically rendered demo text and is a source comparison, not a measured reading time.
-- One original-character hero and one primary action; one complete interactive child/parent demo.
-- Consolidated commitments into three open text columns, with four FAQs and links to the unchanged deeper resources.
-- Shortened the Dock introduction and removed the extra parent-choice shortcut. Kept immediate child response, conversation starters, pace, activity and reset.
-- Removed obsolete hero event handlers and associated motion; adapted existing runtime checks to the real demo controls, with all 38 tests passing.
-- Preserved every original asset and authored activity. No new runtime dependencies, AI calls, data collection or infrastructure.
-- Browser/Safari rendering and actual playback remain unverified because supported browser access is unavailable. Do not call this a rendered visual acceptance pass.
-
-## Mission-led implementation — revision 1.2 (historical; simplified in 1.3)
-
-Ten independently evaluated specialist perspectives were reconciled into one implementation. No measured conversion superiority is claimed. [Independent critical review](INDEPENDENT_REVIEW.md) records the post-implementation source review; [validation](VALIDATION.md) separates executed checks from browser/device work.
-
-- Retained the unfinished custom hero/motion work found in the checkout and repaired its blocking extra-parenthesis JavaScript syntax defect before integration. Original art/audio/content bytes remain unchanged.
-- Replaced the defensive-first promise strip with the three mission promises; widened the parent role from restriction to participation; placed AI/category/age/testing context in the hero.
-- Retained the full early dual demo, then explained scaffolding, the reason for a distinct early-childhood approach, parent involvement, no-advertising commitment, AI limits and exact website privacy.
-- Added one useful original [parent guide](../dist/parents/ai-and-young-children/index.html), with five practical evaluation questions and a shared seed example. It does not pressure families to start AI or buy hardware. It is research-informed editorial guidance, not personalized developmental advice.
-- Whitepaper v1.2 uses the new mission, a short parent introduction, deeper principles, explicit evidence populations and a concrete learning example.
-- Availability distinguishes native source in testing, illustrative browser controls, and unresolved launch/privacy obligations. Offline discovery listening is excluded from native saved activity reports; no claim of complete monitoring.
-- Updated titles/descriptions, canonical paths, sitemap and social metadata. A dedicated 1200×630 share card reuses the unchanged original portrait. All six pages retain noindex; the static header file adds X-Robots-Tag. Target-domain URLs are launch configuration, not evidence that trustinjr.com is live.
-- No SoftwareApplication/offers/review/FAQ-rich-result claims were added. No analytics, advertising, third-party fonts, AI service, database, recurring worker or dependency was introduced. One authored guide serves a genuine parent question; no keyword-page proliferation.
-- Added lower-amplitude one-shot artwork and reader transitions, native supported page transitions, current-section cues and article reading progress. Content is visible if animation fails. Manual motion-off follows same-origin links through a disclosed URL parameter; system reduced motion always wins. Buttons/hit areas do not move. Fixed the paper-art transform snap; Math feedback lasts 400ms.
-- Raised functional microcopy and mobile selects (16px), used one-column demo at narrow tablet sizes, and made the guide heading smaller. These are source-level provisions, not rendered acceptance.
-
-### Promise verification
-
-| Commitment | Evidence in this website | Native/public-release requirement |
+| Page | Presentation | Substance retained |
 |---|---|---|
-| Discovery supports understanding | Prepared explanations, story, Math hints/attempts, real-world completion prompts | Accuracy/age/learning evaluation; no measured efficacy yet |
-| Meaningful family guidance | Sample Moon preference changes related child content; conversation starters; empty completed-only log | Verify parent authority, setting sync/enforcement and actual report coverage |
-| Essential safeguards independent | Explicit design principle; no safety engine claimed in script | Runtime and bypass evaluation before release |
-| No ads/sponsored answers/purchase pressure | None in source, content or actions | Preserve business policy and inspect all native/provider surfaces |
-| Respect attention | Manual progression, finite endings, no streak/feed/autoplay chain | Native notification/reward/session audit |
-| Privacy-conscious handling | No mic/child account/storage/analytics in demo code; hosting caveat disclosed | Data map, providers, consent, retention and deletion evidence |
+| Philosophy / whitepaper | Large original-art opening; three visual commitments; expandable principles; quiet article navigation | Mission, scaffolding example, eight principles, evidence populations/limits, product status, full references |
+| Parent guide | Visual introduction, five expandable evaluation questions, a short notice/wonder/explore sequence | No pressure to introduce AI, practical seed example, mistakes/privacy/stopping points, original sources |
+| Availability | Clear current stage, a three-step release path, device roles, focused details | Normal-pairing limitation, incomplete release validation, no launch/pricing claims, real contact |
+| Website privacy | Clear scope, concise opening, numbered readable sections | Memory-only demo, request/hosting data, motion URL preference, email handling, separate native responsibilities |
+| 404 | Original character and one obvious way home | Real navigation, no misleading action |
 
-### SEO and conversion continuation
+Progressive disclosure is a way to manage optional depth, not a way to conceal material limitations. Whitepaper deep links open their containing principle. Print expands disclosures and restores the reader’s choices afterward. Essential transcripts, errors, availability limits, and consequences remain readable.
 
-Prepare public launch before acquisition measurement. Verify domain/TLS/redirects/contact, pass real-browser acceptance and explicitly authorize indexing; only then change meta/header/robots controls and submit the verified sitemap/Search Console property. Existing private access is the privacy boundary—robots directives are not access control. Social platform fetching of the target-domain image is not yet verified.
+## Visual and motion system
 
-For adult evaluation, test whether a parent can identify age/category/device/testing status in five seconds, hear a discovery, change a sample preference, explain its effect and distinguish native beta from illustration. This is a proposed usability protocol, not a study already conducted. Avoid gathering child identities. Any later measurement plan should minimize data and be approved before introducing collection.
+System typography; dark natural ink; quiet near-white marketing surfaces. The native cream, sage, peach, lavender, and gold live mainly in the product and original artwork. Large spacing, clear silhouettes, and restrained contrast establish hierarchy.
 
-### Video placement
+Use real artifacts and purposeful original art before decoration. Keep one explanatory focal point. Put labels near their referents. A still voice mark or connector can carry the relationship without continuous animation.
 
-The first real 30–45 second captioned walkthrough should replace or sit inside the demo introduction, not become another repeated promotional section. Until footage exists, the working prepared preview is the product demonstration; no nonfunctional play button, stock scene or fictional testimonial.
+Curiosity retains its accepted 300ms reveal. Parent panels use a finite 280ms reveal; the reader drives scene progression. Motion-off changes the layout to direct manual selection rather than concealing information. No new runtime dependencies or expensive generation were required.
 
-## Hosting and ownership
+## Research and truth
 
-Portable `dist/` is the deploy artifact. GitHub owns the independent marketing source; the native app has no new build triggers. Cloudflare Pages can serve `dist/` without a framework build. A managed Sites preview may use Cloudflare-backed hosting while the owner's Cloudflare account/domain connection is completed. Do not call that the owner's completed Cloudflare migration.
+Eight primary perception/multimedia studies and W3C motion guidance are documented in [RESEARCH_DECISIONS.md](RESEARCH_DECISIONS.md). They inform coherence, proximity, pacing, cueing, and continuity. Attention is not equivalent to comprehension; findings do not demonstrate website conversion or preschool AI learning outcomes.
 
-Cloudflare setup: [GitHub integration](https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/) and [custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/). Configure the custom domain within Pages, then use returned DNS records. Apex setup requires Cloudflare nameservers; preserve all email and verification records. No domain purchase, paid plan or DNS substitution assumed. Domain launch must verify HTTPS, redirects, email, legal contact details and mobile interactions.
+The learning whitepaper separately distinguishes scaffolding, adult-guided play, relationships, policy guidance, and parent survey research. Neither an educational framework nor an appealing demo validates TrustinJr’s learning effects.
 
-## Video production brief
+## Verification
 
-One 30–45 second authentic walkthrough is the priority: a parent introduces a question; a normally paired Watch shows Ask; TJ gives a short answer; show one real Parent setting; finish with a family noticing/counting activity. Record clean screen captures and clear audio. Use adult hands or explicit parental permission for any identifiable child. Include captions and transcript; never use a child as a testimonial without permission. No placeholder play button on the live site. Add the video only when the asset exists.
+See [VALIDATION.md](VALIDATION.md). Source tests cover interactions, not rendering. No current browser/device screenshot, Safari playback, screen-reader session, measured Web Vitals, conversion, or efficacy result is claimed. The supported browser capability is absent in the managed environment; no substitute browser path was used.
 
-## Change discipline
+Next valuable visual check: the parent scene at 320/390px and short landscape, desktop 1024/1440px, reverse scroll, each chapter, expanded rationale, motion-off, 200% text zoom, then real demo audio and keyboard use. Ask an unfamiliar parent what is product UI, what is a website annotation, what their choices change, and what is available today.
 
-Centralize product status. Update the availability page before changing release CTAs. Recheck all public safety/privacy claims against actual behavior; keep platform safeguards separate from family topic preferences. Preserve native artwork and source recordings. Record the source revision for reused assets and avoid invented evidence.
+## Ownership, launch, and maintenance
+
+Portable static `dist/`; GitHub marketing source; established owner Cloudflare Pages Free deployment. Owner-private Sites review remains private/noindex. Production preserves its existing public indexing, sitemap, preview/404 protection, contact `jrtrustin@gmail.com`, and desktop-header overflow fix. No DNS, nameserver, account, paid plan, analytics, database, API key, or native pipeline changes.
+
+Update product status before release CTAs. Recheck source for later UI changes. Maintain the distinction between source, deployment, physical-device verification, and public release. Original art/audio stays original; do not substitute a new glossy character.
+
+Future authentic video should show an actual question, response, parent setting, and return to family life. Add captions/transcript and user-controlled playback. Do not install a placeholder play button or fabricate a testimonial.
+
+Earlier versions and superseded compositions remain in Git history. [DEPLOYMENT.md](DEPLOYMENT.md) separates established infrastructure from the current redesign’s verification limits.

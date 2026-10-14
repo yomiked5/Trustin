@@ -20,14 +20,14 @@ No build, paid SaaS, API keys, database or runtime dependency is required. Run `
 
 Three discoveries (Moon, seeds, butterflies), a complete narrated story (*Trustin and the Curled Leaf*), a three-question garden math sample, and a sample Parent Dock. Topic policy changes affect the sample immediately; narration speed changes recorded playback. State is memory-only. The demo does not record a microphone or call an AI provider. No fabricated analytics, waitlist, pricing or App Store release claims.
 
-Revision 1.5 centers the **native Curiosity design**: original Trustin, Continue and two knowledge packs, then the centered microphone. One Watch shrinks on scroll; three connected glass panels explain Packs, Ask and Continue one at a time. The scene has keyboard chapter buttons, a reduced-motion manual presentation and a readable no-JavaScript fallback. The separate **`/demo/`** keeps working audio, activities and parent controls with fewer instructional captions. This is a source-grounded web recreation, not an embedded Watch app or a claim of a pixel-identical screenshot.
+Revision 1.6 preserves the approved native Curiosity hero and activity gallery. “Their wonder. Your guidance.” now stages the current iOS Parent Dock through seven connected feature chapters with optional design rationale. Product UI and website commentary occupy separate surfaces. The complete scripted demo, whitepaper, parent guide, availability, privacy, and 404 have been redesigned around the same visual hierarchy. These are source-grounded web renderings, not connected native sessions or claimed screenshots.
 
 - `docs/MESSAGING.md`: approved mission, copy/CTA hierarchy and claim rules.
 - `docs/RESEARCH_DECISIONS.md`: current evidence, populations/limits and ten specialist perspectives.
 - `docs/INDEPENDENT_REVIEW.md`: source-based post-implementation critical review.
 - `/parents/ai-and-young-children/`: original five-question parent guide.
 
-Current validation: 53 source/model/event-contract tests, eight shipped script syntax checks and seven-page static integrity. Actual rendering, mobile Safari, screen-reader and performance measurements for this revision remain unverified. The public domain was already launched; see the deployment record.
+Current validation: 62 source/model/event-contract tests, 11 shipped script syntax checks and seven-page static integrity. Actual rendering, mobile Safari, screen-reader and performance measurements for this revision remain unverified. The public domain was already launched; see the deployment record.
 
 Original Trustin art and existing Cedar recordings are reused from the owner's native application, source revision `34557847ad424bd0fdac7419b44563737cb499cf`. Source bytes were verified with Git blob hashes before copying. The native code and release pipeline are separate and unchanged.
 
