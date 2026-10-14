@@ -1,0 +1,171 @@
+/* One native screen; one connected explanation. All movement follows the reader. */
+.curiosity-story { --tour-top:72px; --watch-width:360px; position:relative; background:var(--marketing-bg) }
+.product-home .site-header { position:sticky; top:0; z-index:20 }
+.story-stage { position:relative; max-width:1500px; margin:auto; padding:42px 40px 60px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center }
+.story-intro { grid-column:1/-1; text-align:center; z-index:3 }
+.story-intro .product-category { font-size:13px; margin:0 0 16px }
+.story-intro h1 { font-size:clamp(38px,4.5vw,62px); letter-spacing:-.058em; line-height:1.04; margin:0 }
+.tour-device { position:relative; width:var(--watch-width); margin:25px auto; isolation:isolate; filter:drop-shadow(0 22px 24px #273d321b) }
+.tour-watch { padding:11px; border:3px solid #939d96; border-radius:22%/18%; background:linear-gradient(125deg,#c1c7bf 0%,#546459 15%,#25372e 50%,#66756a 90%,#9aa79a); box-shadow:inset 1px 1px 1px #ebeee7,inset -1px -1px 2px #263d2b,0 2px 3px #2f443a4d; position:relative }
+.tour-crown { position:absolute; right:-12px; top:25%; width:10px; height:38px; border-radius:0 6px 6px 0; border:1px solid #839082; background:repeating-linear-gradient(0deg,#4d5e52 0px,#4d5e52 2px,#8d9b8e 2px,#8d9b8e 3px) }
+.tour-strap { position:absolute; z-index:-1; background:linear-gradient(90deg,#899f91,#a8b7a7 8%,#a0b29f 90%,#7d9484); width:61%; height:116%; left:19.5%; top:-8%; border-radius:20%; box-shadow:inset 2px 0 1px #bdcabb,inset -2px 0 2px #6b8070; opacity:.9 }
+.tour-strap:after { content:''; position:absolute; inset:0 12px; border-inline:1px solid #c0cebd7a; border-radius:24px }
+.native-screen { container-type:inline-size; aspect-ratio:184/224; position:relative; overflow:hidden; border-radius:19%/15.6%; background:#fff8ef; border:4px solid #15251c; color:#2a2b2e; font-family:ui-rounded,'SF Pro Rounded',system-ui,sans-serif; font-weight:650; user-select:none }
+.native-clock { height:12.5%; text-align:right; padding:2.5% 11.5% 0 0; background:#526e4d; color:#fff8ef; font-size:8cqw; font-weight:550; line-height:1.4; font-variant-numeric:tabular-nums }
+.native-toolbar { position:absolute; inset:14% 3% auto; height:10%; display:flex; align-items:center; justify-content:space-between; color:#526e4d; font-size:6.3cqw; font-weight:750 }
+.native-toolbar svg { width:10%; height:100% }
+.native-avatar { position:absolute; width:28%; height:24%; left:36%; top:27%; object-fit:contain }
+.native-shelf { position:absolute; top:51%; left:6%; right:6%; height:22%; display:flex; gap:2%; align-items:start }
+.native-topic { min-width:0; width:32%; text-align:center; font-size:5.15cqw; letter-spacing:-.025em; font-weight:750; line-height:1.5 }
+.native-topic-art { width:77%; aspect-ratio:1; position:relative; margin:0 auto 1px; border-radius:50% }
+.native-topic-art>svg { width:100%; height:100%; display:block }
+.native-new-topics { display:flex; justify-content:space-between; width:66%; border-radius:14px }
+.native-new-topics .native-topic { width:49% }
+.native-resume-badge { position:absolute; right:0; bottom:0; width:33%; aspect-ratio:1; display:grid; place-items:center; background:#526e4d; color:#fff8ef; border-radius:50% }
+.native-resume-badge svg { width:65%; height:65% }
+.native-mic { position:absolute; top:75%; left:38%; width:24%; aspect-ratio:1; border-radius:50%; background:#f5cfb5; display:grid; place-items:center }
+.native-mic>svg { width:60%; height:60% }
+.tour-panels { min-width:0; width:100%; max-width:365px; margin:auto; position:relative; z-index:2 }
+.holo-panel { position:relative; padding:30px; margin:20px 0; border-radius:25px; background:linear-gradient(135deg,#ffffffef,#edf6efef); border:1px solid #cbdcd0; box-shadow:inset 0 1px 0 #fff,0 22px 48px #345e4010; color:var(--marketing-ink) }
+.holo-panel:before { content:''; position:absolute; width:42px; height:3px; background:#7fab9b; border-radius:4px; left:30px; top:-2px }
+.holo-panel[hidden] { display:none!important }
+.holo-art { height:116px; margin:0 0 24px; display:flex; align-items:center; position:relative }
+.holo-art svg { width:100px; height:100px }
+.pack-projection { gap:15px }
+.pack-projection svg:last-child { width:78px; height:78px }
+.ask-projection>div { width:96px; height:96px; display:grid; place-items:center; background:#f5cfb5; border-radius:50% }
+.ask-projection>div svg { width:58px; height:58px }
+.voice-mark { display:flex; gap:6px; align-items:center; margin-left:26px; color:#639283 }
+.voice-mark i { height:15px; width:5px; border-radius:6px; background:currentColor }
+.voice-mark i:nth-child(2),.voice-mark i:nth-child(4) { height:30px }
+.voice-mark i:nth-child(3) { height:45px }
+.continue-projection>span { position:absolute; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:#526e4d; color:#fff8ef; left:70px; top:77px }
+.continue-projection>span svg { width:22px; height:22px }
+.holo-label { color:var(--marketing-muted); font-size:12px; font-weight:600; letter-spacing:.015em; margin:0 0 12px }
+.product-home .holo-panel h2 { font-size:34px; font-weight:650; line-height:1.08; letter-spacing:-.046em; margin:0 }
+.holo-description { font-size:15px; line-height:1.55; color:var(--marketing-muted); margin:18px 0 0; max-width:28ch }
+.tour-bottom { grid-column:1/-1; z-index:4; display:flex; align-items:center; justify-content:center; gap:22px; min-height:52px; position:relative }
+.tour-controls { display:none; background:#ffffffed; border:1px solid #d8e3da; border-radius:28px; padding:4px; gap:3px; box-shadow:0 6px 23px #1f45310b }
+.tour-controls button { font:550 12px/1 system-ui,sans-serif; padding:0 15px; min-height:42px; border:0; border-radius:22px; background:transparent; color:var(--marketing-muted) }
+.tour-controls button[aria-pressed=true] { background:#254f43; color:#fff8ef }
+.tour-controls button:hover:not([aria-pressed=true]) { background:#edf3eb }
+.tour-controls button:focus-visible { outline-offset:2px }
+.tour-scroll-cue { font-size:12px; color:var(--marketing-muted); display:none; gap:16px; align-items:center; margin:0 }
+.tour-skip { font-size:11px; color:var(--marketing-muted); min-height:44px; display:flex; align-items:center; gap:8px; text-decoration:none }
+.tour-skip:hover { text-decoration:underline }
+.tour-connector { display:none; position:absolute; inset:0; width:100%; height:100%; overflow:visible; z-index:1; pointer-events:none }
+.tour-connector path { fill:none; stroke:#7fab9b; stroke-width:1.4 }
+.tour-connector circle { fill:#4a7c69; stroke:#fbfcfa; stroke-width:2 }
+.curiosity-story[data-tour-ready=true] .tour-controls { display:flex }
+.curiosity-story[data-tour-mode=scroll] { height:400svh; --watch-width:min(380px,calc((100svh - 265px)*.82),calc(100vw - 60px)) }
+[data-tour-mode=scroll] .story-stage { position:sticky; top:var(--tour-top); height:calc(100svh - var(--tour-top)); display:block; padding:0; overflow:clip }
+[data-tour-mode=scroll] .story-intro { position:absolute; left:20px; right:20px; top:5%; opacity:var(--intro-opacity,1); transform:translateY(var(--intro-lift,0px)); pointer-events:none }
+[data-tour-mode=scroll] .tour-device { position:absolute; left:50%; top:57%; margin:0; transform:translate(calc(-50% + var(--watch-x,0px)),calc(-50% + var(--watch-y,0px))) scale(var(--watch-scale,1)); transform-origin:center; will-change:transform }
+[data-tour-mode=scroll] .tour-panels { position:absolute; left:calc(50% + 72px); top:50%; width:min(365px,36%); transform:translateY(-50%); margin:0 }
+[data-tour-mode=scroll] .holo-panel { margin:0 }
+[data-tour-mode=scroll] .tour-bottom { position:absolute; left:20px; right:20px; bottom:4%; height:52px }
+[data-tour-mode=scroll] .tour-scroll-cue { display:flex; position:absolute; left:24px; top:0; height:52px }
+[data-tour-mode=scroll] .tour-skip { position:absolute; right:24px }
+[data-tour-mode=scroll] .tour-connector { display:block }
+[data-tour-mode=scroll]:not([data-chapter=overview]) .tour-scroll-cue { visibility:hidden }
+[data-tour-mode=scroll]:not([data-chapter=overview]) .holo-panel { animation:holo-arrive 300ms ease-out both }
+[data-tour-mode=scroll][data-chapter=packs] .native-new-topics,
+[data-tour-mode=scroll][data-chapter=ask] .native-mic,
+[data-tour-mode=scroll][data-chapter=continue] .native-resume { outline:2px solid #6b9d85; outline-offset:5px }
+@keyframes holo-arrive { from { opacity:0; clip-path:inset(0 0 15% 0 round 25px) } to { opacity:1; clip-path:inset(0 0 0 0 round 25px) } }
+.curiosity-story[data-tour-mode=manual] .tour-panels:has(.holo-panel:not([hidden])) { display:block }
+.curiosity-story[data-tour-mode=manual][data-chapter=overview] .tour-panels { display:none }
+.curiosity-story[data-tour-mode=manual][data-chapter=overview] .tour-device { grid-column:1/-1 }
+.curiosity-story[data-tour-mode=manual] .tour-scroll-cue { display:none }
+.curiosity-story+.highlights { margin-top:0 }
+
+/* Functional preview: keep labels that identify controls; remove narration about the UI. */
+.demo-page .surface-label { display:none }
+.demo-page .demo-watch { border:3px solid #829385; padding:10px; border-radius:64px; box-shadow:0 20px 45px #213c3020 }
+.demo-page .watch-time { background:#526e4d; color:#fff8ef; padding:13px 28px 10px; letter-spacing:0; font-size:12px }
+.demo-page .watch-time span:first-child { text-transform:none }
+.demo-page .watch-content { padding:14px 19px 24px; min-height:435px }
+.demo-page .demo-watch .watch-screen { min-height:0 }
+.demo-page .watch-title { font-family:ui-rounded,system-ui,sans-serif; font-weight:650; font-size:25px; line-height:1.2; margin:11px 0 18px }
+.demo-page .watch-home { align-self:flex-start; min-height:44px; font-size:12px; display:flex; align-items:center; gap:6px; margin-top:-8px; text-decoration:none }
+.demo-page .watch-home svg { width:16px; height:16px }
+.demo-page .reader-art.topic-art { width:74px; height:74px; margin:0 auto 17px }
+.demo-page .reader-text { background:#ede8d9; border-radius:21px; padding:19px 17px; font-size:16px; line-height:1.65; margin:0 0 12px }
+.demo-page .reader-progress { justify-content:center; font-size:11px; margin:2px 0 12px }
+.demo-page .reader-controls { gap:10px }
+.demo-page .reader-controls button { min-height:59px; border:0; border-radius:22px }
+.demo-page .audio-line { margin:13px 3px 0 }
+.demo-page .reader-foot:empty { display:none }
+.demo-page .dock-head p { display:none }
+.demo-page .dock-helper { display:none }
+.demo-page .section-description { max-width:350px }
+.demo-page .section-description p { font-size:14px }
+.demo-page .section-description .demo-disclosure { font-size:12px }
+
+@media (min-width:761px) and (max-width:1000px) {
+  [data-tour-mode=scroll] .tour-panels { left:calc(50% + 55px); width:35% }
+  .holo-panel { padding:25px }
+  .product-home .holo-panel h2 { font-size:30px }
+  .holo-description { font-size:14px }
+}
+@media (max-width:760px) {
+  .curiosity-story { --tour-top:66px; --watch-width:min(290px,calc(100vw - 70px)) }
+  .story-stage { grid-template-columns:1fr; padding:28px 24px 35px; gap:20px }
+  .story-intro h1 { font-size:clamp(33px,7.5vw,49px) }
+  .story-intro .product-category { font-size:11px; margin-bottom:13px }
+  .tour-device { margin:20px auto }
+  .tour-panels { max-width:380px }
+  .holo-panel { padding:23px; margin:15px 0; min-height:186px }
+  .holo-art { position:absolute; width:82px; height:86px; left:22px; top:50%; transform:translateY(-50%); margin:0 }
+  .holo-art svg { width:70px; height:70px }
+  .pack-projection { display:block }
+  .pack-projection svg:first-child { width:60px; height:60px; position:absolute; top:0; left:0 }
+  .pack-projection svg:last-child { width:47px; height:47px; position:absolute; right:0; bottom:0 }
+  .ask-projection>div { width:70px; height:70px }
+  .ask-projection>div svg { width:44px; height:44px }
+  .voice-mark { display:none }
+  .continue-projection>span { width:26px; height:26px; left:48px; top:55px }
+  .continue-projection>span svg { width:17px; height:17px }
+  .holo-label,.holo-panel h2,.holo-description { margin-left:103px!important }
+  .holo-label { font-size:10px; margin-bottom:8px }
+  .product-home .holo-panel h2 { font-size:26px; line-height:1.08 }
+  .holo-description { font-size:12px; margin-top:10px; line-height:1.5; max-width:28ch }
+  .tour-controls { gap:0; padding:3px }
+  .tour-controls button { padding:0 13px; min-height:42px; font-size:11px }
+  .tour-bottom { flex-wrap:wrap; gap:4px }
+  .curiosity-story[data-tour-mode=scroll] { height:360svh; --watch-width:min(294px,calc((100svh - 235px)*.82),calc(100vw - 70px)) }
+  [data-tour-mode=scroll] .story-intro { top:4%; left:12px; right:12px }
+  [data-tour-mode=scroll] .tour-device { top:50.5% }
+  [data-tour-mode=scroll] .tour-strap { height:106%; top:-3% }
+  [data-tour-mode=scroll] .tour-panels { top:auto; bottom:15%; left:50%; transform:translateX(-50%); width:calc(100% - 40px); max-width:380px }
+  [data-tour-mode=scroll] .holo-panel { min-height:180px }
+  [data-tour-mode=scroll] .tour-bottom { bottom:3%; left:10px; right:10px; height:56px }
+  [data-tour-mode=scroll] .tour-scroll-cue { display:none }
+  [data-tour-mode=scroll] .tour-skip { display:none }
+  .curiosity-story[data-tour-mode=manual] .tour-device { width:min(265px,calc(100vw - 70px)) }
+  .curiosity-story[data-tour-mode=manual] .tour-bottom { gap:4px 18px }
+  .demo-page .watch-content { padding:12px 17px 21px }
+  .demo-page .demo-watch { width:370px; border-radius:55px }
+  .demo-page .watch-title { font-size:23px }
+  .demo-page .reader-text { font-size:15px; padding:16px }
+}
+@media (max-width:370px) {
+  .holo-panel { padding:20px 16px }
+  .holo-art { left:15px; width:70px }
+  .holo-label,.holo-panel h2,.holo-description { margin-left:86px!important }
+  .product-home .holo-panel h2 { font-size:21px }
+  .tour-controls button { padding-inline:11px }
+}
+@media (prefers-reduced-motion:reduce) {
+  .holo-panel { animation:none!important }
+}
+html[data-motion=off] .holo-panel { animation:none!important }
+@media print {
+  .curiosity-story { height:auto!important }
+  .story-stage { position:static!important; height:auto!important; display:block!important }
+  .story-intro,.tour-device,.tour-panels { position:relative!important; left:auto!important; top:auto!important; transform:none!important; opacity:1!important; width:auto!important }
+  .tour-device { max-width:230px!important; margin:40px auto!important }
+  .tour-panels { display:block!important; max-width:none }
+  .holo-panel,.holo-panel[hidden] { display:block!important; break-inside:avoid; margin:20px 0!important }
+  .tour-bottom,.tour-connector { display:none!important }
+}

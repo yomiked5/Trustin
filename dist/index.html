@@ -19,44 +19,67 @@
   <meta name="twitter:card" content="summary_large_image">
   <script src="/motion-policy.js"></script><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/experience.css"><link rel="stylesheet" href="/showcase.css"><script type="module" src="/motion.js"></script>
   <script type="module" src="/showcase.js"></script>
+  <link rel="stylesheet" href="/curiosity-tour.css"><script type="module" src="/curiosity-tour.js"></script>
 <meta name="twitter:image" content="https://trustinjr.com/assets/social-preview.png"><meta name="twitter:image:alt" content="TrustinJr — For every little why. A world of wonder. Guided by you."></head>
 <body class="product-home">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header wrap">
   <a class="brand" href="/" aria-label="TrustinJr home"><img src="/assets/trustin.png" width="300" height="353" alt=""><span>trustin<span>jr.</span></span></a>
-  <nav class="nav" aria-label="Main navigation"><a href="#experience">Discover</a><a href="/philosophy/">Philosophy</a><a class="button" href="/demo/">Try the preview <span aria-hidden="true">↗</span></a></nav>
+  <nav class="nav" aria-label="Main navigation"><a href="#discover">Discover</a><a href="/philosophy/">Philosophy</a><a class="button" href="/demo/">Try the preview <span aria-hidden="true">↗</span></a></nav>
 </header>
 <main id="main">
-  <section class="product-hero" aria-labelledby="product-title">
-    <div class="product-intro wrap">
-      <p class="product-category">Parent-guided AI discovery · Ages 4–5</p>
-      <h1 id="product-title">For every<br><span>little why.</span></h1>
-      <div class="hero-actions" id="demo"><a class="button" href="/demo/">Try the preview <span aria-hidden="true">↗</span></a><a class="quiet-link" href="/availability/">In development <span aria-hidden="true">›</span></a></div>
-    </div>
-    <figure class="product-stage" data-scroll-scene>
-      <div class="device-composition" role="img" aria-label="Illustrative app views: Trustin on a child’s Apple Watch, with family preferences in the iPhone Parent Dock.">
-        <div class="watch-position"><div class="device-motion" data-scroll-layer="-65">
-          <div class="watch-strap"></div><div class="product-watch"><div class="product-crown"></div><div class="product-watch-screen">
-            <div class="device-time"><span>Trustin</span><span>9:41</span></div>
-            <img class="product-character" src="/assets/trustin.png" width="300" height="353" alt="" fetchpriority="high">
-            <p class="watch-greeting">What do you<br>wonder?</p>
-            <div class="watch-mini-topics"><svg aria-hidden="true"><use href="/assets/icons.svg#moon"></use></svg><svg aria-hidden="true"><use href="/assets/icons.svg#seed"></use></svg><svg aria-hidden="true"><use href="/assets/icons.svg#butterfly"></use></svg></div>
-            <div class="visual-mic"><svg aria-hidden="true"><use href="/assets/icons.svg#mic"></use></svg></div>
-          </div></div>
-        </div></div>
-        <div class="phone-position"><div class="device-motion" data-scroll-layer="48"><div class="product-phone"><div class="phone-screen">
-          <div class="phone-status"><span>9:41</span><span aria-hidden="true">••• ▰</span></div><div class="phone-island"></div>
-          <div class="phone-content"><p class="phone-eyebrow">Your family</p><p class="phone-title">Parent Dock</p>
-            <div class="phone-family"><img src="/assets/trustin.png" width="300" height="353" alt=""><span>A little wonder.<br><strong>Guided by you.</strong></span></div>
-            <p class="phone-label">Sample preference</p>
-            <div class="phone-setting"><span>Moon questions</span><strong>Explore <span aria-hidden="true">›</span></strong></div>
-            <div class="phone-setting"><span>Listening pace</span><strong>Calm <span aria-hidden="true">›</span></strong></div>
-            <div class="phone-note"><svg aria-hidden="true"><use href="/assets/icons.svg#parents"></use></svg><p>What did you<br>notice today?</p></div>
-          </div><div class="phone-home"></div>
-        </div></div></div></div>
+  <section class="curiosity-story" id="discover" data-curiosity-story aria-labelledby="product-title">
+    <div class="story-stage">
+      <div class="story-intro">
+        <p class="product-category">Parent-guided AI discovery · Ages 4–5</p>
+        <h1 id="product-title">For every <span>little why.</span></h1>
       </div>
-      <figcaption><span>Apple Watch for them. iPhone for you.</span><small>Illustrative app views · In development</small></figcaption>
-    </figure>
+      <figure class="tour-device" aria-label="Curiosity in TrustinJr for Apple Watch. Web rendering of the native app design: Trustin above Continue, Butterflies and Moon, with a centered microphone below.">
+        <div class="tour-strap" aria-hidden="true"></div>
+        <div class="tour-watch">
+          <div class="tour-crown" aria-hidden="true"></div>
+          <div class="native-screen" aria-hidden="true">
+            <div class="native-clock">9:41</div>
+            <div class="native-toolbar"><svg><use href="/assets/curiosity-native.svg#home"></use></svg><span>Curiosity</span><svg><use href="/assets/curiosity-native.svg#bulb"></use></svg></div>
+            <img class="native-avatar" src="/assets/trustin.png" width="300" height="353" alt="" fetchpriority="high">
+            <div class="native-shelf">
+              <div class="native-topic native-resume" data-tour-hotspot="continue"><div class="native-topic-art"><svg><use href="/assets/curiosity-native.svg#magnet"></use></svg><span class="native-resume-badge"><svg><use href="/assets/curiosity-native.svg#next"></use></svg></span></div><span>Continue</span></div>
+              <div class="native-new-topics" data-tour-hotspot="packs">
+                <div class="native-topic"><div class="native-topic-art"><svg><use href="/assets/curiosity-native.svg#butterfly"></use></svg></div><span>Butterflies</span></div>
+                <div class="native-topic"><div class="native-topic-art"><svg><use href="/assets/curiosity-native.svg#moon"></use></svg></div><span>Moon</span></div>
+              </div>
+            </div>
+            <div class="native-mic" data-tour-hotspot="ask"><svg><use href="/assets/curiosity-native.svg#mic"></use></svg></div>
+          </div>
+        </div>
+      </figure>
+      <svg class="tour-connector" aria-hidden="true"><path data-tour-line></path><circle data-tour-dot r="0"></circle></svg>
+      <div class="tour-panels">
+        <article class="holo-panel" data-tour-panel="packs" aria-labelledby="packs-title">
+          <div class="holo-art pack-projection" aria-hidden="true"><svg><use href="/assets/curiosity-native.svg#butterfly"></use></svg><svg><use href="/assets/curiosity-native.svg#moon"></use></svg></div>
+          <p class="holo-label">Knowledge packs</p><h2 id="packs-title">Little worlds.<br>Ready to explore.</h2>
+          <p class="holo-description">Tap a picture. Discover a subject. Take a little wonder along.</p>
+        </article>
+        <article class="holo-panel" data-tour-panel="ask" aria-labelledby="ask-title">
+          <div class="holo-art ask-projection" aria-hidden="true"><div><svg><use href="/assets/curiosity-native.svg#mic"></use></svg></div><span class="voice-mark"><i></i><i></i><i></i><i></i><i></i></span></div>
+          <p class="holo-label">Ask Trustin</p><h2 id="ask-title">Big questions.<br>One little tap.</h2>
+          <p class="holo-description">A microphone at the center. A question in their own words.</p>
+        </article>
+        <article class="holo-panel" data-tour-panel="continue" aria-labelledby="continue-title">
+          <div class="holo-art continue-projection" aria-hidden="true"><svg><use href="/assets/curiosity-native.svg#magnet"></use></svg><span><svg><use href="/assets/curiosity-native.svg#next"></use></svg></span></div>
+          <p class="holo-label">Continue</p><h2 id="continue-title">Pick up<br>the wonder.</h2>
+          <p class="holo-description">Return to a saved discovery. Right where they left it.</p>
+        </article>
+      </div>
+      <div class="tour-bottom">
+        <p class="tour-scroll-cue">Scroll to discover <span aria-hidden="true">↓</span></p>
+        <div class="tour-controls" role="group" aria-label="Explore the Curiosity screen">
+          <button type="button" data-tour-to="0" aria-pressed="true" disabled>Overview</button><button type="button" data-tour-to="1" aria-pressed="false" disabled>Packs</button><button type="button" data-tour-to="2" aria-pressed="false" disabled>Ask</button><button type="button" data-tour-to="3" aria-pressed="false" disabled>Continue</button>
+        </div>
+        <a class="tour-skip" href="#experience" aria-label="Skip the Curiosity tour">Skip tour <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="sr-only" data-tour-status role="status" aria-live="polite"></p>
+    </div>
   </section>
 
   <section class="highlights" id="experience" aria-labelledby="highlights-title">
@@ -109,7 +132,8 @@
     <a class="button" href="/demo/">Try the preview <span aria-hidden="true">↗</span></a>
     <p>Scripted demo. No account needed.</p>
     <div class="essential-questions">
-      <details class="faq"><summary>Can I get the app yet?</summary><div>TrustinJr is in development and testing. No public launch date or pricing is announced. The current beta uses a normally paired Apple Watch and iPhone; Family Setup onboarding remains unresolved. <a href="/availability/">Check availability before buying a device.</a></div></details>
+      <details class="faq"><summary>Can I get the app yet?</summary><div>TrustinJr is in development and testing. No public launch date or pricing is announced. Apple Watch is for the child; iPhone holds the Parent Dock. The current beta requires normal pairing; Family Setup onboarding remains unresolved. <a href="/availability/">Check availability before buying a device.</a></div></details>
+      <details class="faq"><summary>Is that the real app design?</summary><div>The hero recreates the native Curiosity screen with its current layout and original artwork. The floating feature tour belongs to this website. The separate interactive preview uses prepared samples, with no live AI or microphone.</div></details>
       <details class="faq"><summary>What should parents know about the AI?</summary><div>AI can make mistakes. Family preferences add to essential safeguards; they do not replace adult judgment or relationships. This preview uses prepared content, not live AI or a microphone. <a href="/parents/ai-and-young-children/">Read the parent guide</a> or our <a href="/privacy/">website privacy notice</a>.</div></details>
     </div>
   </section>

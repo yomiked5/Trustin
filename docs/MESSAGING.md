@@ -1,6 +1,14 @@
 # TrustinJr messaging guidelines
 
-Version 1.4 · October 13, 2026 · Visual-first, parent-guided product presentation.
+Version 1.5 · October 13, 2026 · Native Curiosity first; one visual explanation at a time.
+
+## Current presentation rule
+
+The approved app screen is the opening explanation. Do not reinvent its layout or surround it with floating labels. As the Watch shrinks, one connected feature panel presents one native control and one short benefit. Knowledge packs, Ask and Continue each get a turn. The gallery, parent choice, no-ads principle and deeper philosophy follow. Keep research in the bible, not on the marketing canvas.
+
+“Knowledge packs” names the native prepared discoveries. “Ready to explore” is acceptable; “kid-approved” would imply validation not established here. The hero is a source-grounded web recreation. The floating panels belong to the website, not the native app. A saved-pack Continue example does not imply cross-device learning history or offline live Ask.
+
+Useful action labels are not clutter. Preserve accessible names, readable answers, progress and visible errors; remove explanations that simply narrate obvious controls. Keep one clear scripted-preview disclosure and optional details. Do not remove meaningful product limitations to make the surface look cleaner.
 
 ## The center
 

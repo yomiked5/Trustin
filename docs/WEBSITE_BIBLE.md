@@ -1,6 +1,41 @@
 # TrustinJr website bible
 
-Version 1.4 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+Version 1.5 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+
+## Current direction — the Curiosity screen tells the story
+
+The owner's 20:33 PDT correction rejects accumulated tooltip captions and the invented hero interface. Show the approved Curiosity design first; shrink the same Watch as the parent scrolls; reveal a diegetic glass menu one item at a time. The real interface must remain identifiable throughout. This supersedes v1.4's illustrative Watch/iPhone pairing.
+
+### Ground truth and fidelity
+
+Native main was freshly verified at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Watch/DiscoveryHome.swift`, `TrustinWatchApp.swift`, `DiscoveryAnimalArt.swift`, `TJIcon.swift`, `Shared/Theme.swift` and `Packages/TrustinCore/Sources/TrustinCore/CuriosityHome.swift`. The retained October 1 native 44mm screenshot and October 8 color preview were visually inspected as source references, not as screenshots of this website. October 1 pixels have older microphone/header styling, so they are not presented as current.
+
+The website uses a responsive HTML/CSS recreation of the native single-screen arrangement, the unchanged original Trustin PNG, and SVG translations of the exact native Butterfly/Moon/Magnet and Home/Bulb/Microphone/Next drawing paths. Native palettes and the October 8 cream microphone interior are preserved. Typography and hardware rendering are web approximations, not simulator output. The example Continue state is an existing bookmarked pack, not a claim that every first-time child sees Continue. The native app, backend and release pipeline are untouched.
+
+### Choreography
+
+| State | Dominant visual | Information shown |
+|---|---|---|
+| Arrival | Large, straight-on Curiosity screen | Category, age and one brand headline; no feature annotations |
+| First scroll | The same Watch scales down and moves into position | Intro yields; no panel competes during the shrink |
+| Packs | Two native subject illustrations projected beside their shelf | Knowledge packs; brief on-the-go discovery idea |
+| Ask | Native microphone plus a still voice mark | A child asks in their own words |
+| Continue | The saved pack and its arrow badge | Return to a saved discovery |
+| Beyond the tour | Existing activity visuals, parent choice and no-ads commitment | Complete demo, philosophy and availability remain reachable |
+
+Only one panel and one source highlight are active. Connectors are calculated from actual element bounds. No timers, automatic advance, wheel/touch interception, parallax backgrounds, particles or looping glow. The Watch screen does not silently switch content. Ordinary scroll is reversible; fixed chapter controls revisit any feature. Panel reveal is a finite 300ms fade/wipe. Mobile stacks the projected panel below the Watch and reserves space for it; short landscape viewports use manual navigation. System reduction or `?motion=off` removes the scroll scene and preserves all three features through buttons. Without JavaScript, the native screen and all feature articles remain in normal document flow.
+
+The opening Watch is a visual, not a set of moving hit targets. Header CTA and chapter controls remain outside its transformed layer. Keyboard focus stays on the control selected; scroll changes do not flood live announcements. Product function labels stay visible in the actual interface.
+
+### Caption discipline
+
+Keep essential action labels, complete readable answers and recoverable errors. Remove repeated instructions about reading/listening, generic surface labels, duplicate progress bars and 0:00 placeholders. Consolidate preview scope into one introduction and an optional details disclosure. The Parent Dock still demonstrates an immediate preference consequence and explicitly retains essential safeguards. No fake child data, new live AI, microphone or account is introduced.
+
+### Research and acceptance
+
+Eight primary perception/multimedia studies and W3C motion guidance inform the decisions, with populations and transfer limits in [RESEARCH_DECISIONS.md](RESEARCH_DECISIONS.md). They support design hypotheses about proximity, attention, continuity and pacing; they do not demonstrate product efficacy or conversion superiority. Do not market this page as scientifically proven or kid-approved.
+
+Acceptance is **53 automated contracts**, not browser approval. Real iPhone/Safari sizing, connector placement, sticky behavior, native scrolling, zoom, keyboard/screen-reader behavior and performance remain unverified because the supported browser capability is absent. No alternative screenshot renderer was used. Source-level responsive provisions are not a substitute for that acceptance.
 
 ## Deployment reconciliation
 

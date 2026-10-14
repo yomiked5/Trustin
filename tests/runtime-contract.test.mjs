@@ -175,10 +175,10 @@ test('runtime Moon changes stop affected narration and visibly explain the bound
   assert.equal(app.state().view, 'boundary'); assert.equal(app.audio.playCalls, 1);
 });
 
-test('primary preview action focuses the single demo without starting narration', async () => {
+test('Dock inspect action focuses the child example without starting narration', async () => {
   const app = await setup();
   await app.click('[data-mode="story"]');
-  await app.click('[data-start="moon"]');
+  await app.click('[data-inspect-moon]');
   assert.equal(app.state().topic, 'moon');
   assert.equal(app.state().view, 'discovery');
   assert.equal(app.audio.playCalls, 0);

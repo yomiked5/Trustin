@@ -46,8 +46,8 @@ test('incomplete homepage enhancement leaves static content alone',()=>{
 });
 
 test('homepage contains visual product scenes and native demo links, not the full app',()=>{
-  assert.match(home,/data-scroll-scene/);
-  assert.match(home,/Illustrative app views/);
+  assert.match(home,/data-curiosity-story/);
+  assert.match(home,/Web rendering of the native app design/);
   assert.match(home,/No ads\. No sponsored answers\. No purchase pressure\./);
   assert.doesNotMatch(home,/id="watch-content"|src="\/app.js"/);
   for (const mode of ['moon','story','math']) assert.ok(home.includes('href="/demo/?activity='+mode+'"'));

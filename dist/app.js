@@ -52,7 +52,7 @@ function updateAudioProgress() {
   const time = document.querySelector('#audio-time');
   const duration = Number.isFinite(player.duration) ? player.duration : 0;
   if (progress) progress.value = duration > 0 ? Math.min(player.currentTime / duration, 1) : 0;
-  if (time) time.textContent = clock(player.currentTime) + ' / ' + clock(duration);
+  if (time) time.textContent = duration ? clock(player.currentTime) + ' / ' + clock(duration) : '';
 }
 function updateAudioButton() {
   if (!player) return;
@@ -64,7 +64,7 @@ function updateAudioButton() {
   }
   const note = document.querySelector('#audio-note');
   if (note) {
-    note.textContent = audioError || (playing ? 'Recorded Trustin voice · Read or move on anytime' : 'Sound only when you choose · Complete text above');
+    note.textContent = audioError;
     note.setAttribute('data-error', String(Boolean(audioError)));
   }
   updateAudioProgress();
@@ -115,10 +115,10 @@ function topicButton(topic) {
   return `<button class="topic-button" data-topic="${topic}" aria-label="Explore the ${labels[topic]} sample">${icon(topic)}<span>${labels[topic]}</span></button>`;
 }
 function progress(current, total, label) {
-  return `<div class="reader-progress"><span>${label}</span><span>${current} of ${total}</span></div><div class="page-progress" aria-hidden="true">${Array.from({length:total}, (_, i) => '<span class="' + (i < current ? 'complete' : '') + '"></span>').join('')}</div>`;
+  return `<div class="reader-progress"><span class="sr-only">${label}, page </span><span>${current} / ${total}</span></div>`;
 }
 function controls(back = true, next = 'Next') {
-  return `<div class="reader-controls"><button data-action="back" aria-label="Previous page" ${back ? '' : 'disabled'}>${icon('back')}<span>Back</span></button><button data-action="listen" aria-label="Listen to recorded Trustin narration">${icon('play')}<span>Listen</span></button><button data-action="next">${icon('next')}<span>${next}</span></button></div><div class="audio-line"><progress id="audio-progress" value="0" max="1" aria-label="Narration progress"></progress><span id="audio-time" aria-hidden="true">0:00 / 0:00</span></div><p class="reader-foot" id="audio-note">Sound only when you choose · Complete text above</p>`;
+  return `<div class="reader-controls"><button data-action="back" aria-label="Previous page" ${back ? '' : 'disabled'}>${icon('back')}<span>Back</span></button><button data-action="listen" aria-label="Listen to recorded Trustin narration">${icon('play')}<span>Listen</span></button><button data-action="next">${icon('next')}<span>${next}</span></button></div><div class="audio-line"><progress id="audio-progress" value="0" max="1" aria-label="Narration progress"></progress><span id="audio-time" aria-hidden="true"></span></div><p class="reader-foot" id="audio-note" role="status"></p>`;
 }
 function renderDock() {
   document.querySelector('#parent-prompt').textContent = parentPrompts[state.mode === 'ask' ? state.topic || 'moon' : state.mode];
@@ -144,7 +144,7 @@ function render() {
   if (state.view === 'questions') html = `<p class="demo-kicker">Ask Trustin</p><h3 class="watch-title">Start with a little why.</h3><div class="question-choices">${['moon','seed','butterfly'].map(topic => '<button class="question-choice" data-topic="' + topic + '">' + esc(data.find(item => item.illustration === topic).question) + '</button>').join('')}</div><p class="demo-hint">Choose an example to hear Trustin.</p><button class="reset" data-action="home">Back to topics</button>`;
   if (state.view === 'discovery') {
     const topic = data.find(item => item.illustration === state.topic);
-    html = `<button class="watch-home" data-action="questions">Choose another question</button><h3 class="watch-title">${esc(topic.question)}</h3><div class="reader-art topic-art">${icon(state.topic)}</div><div class="reader-text">${esc(state.page === 0 ? topic.explanation : topic.continuation)}</div>${progress(state.page + 1, 2, 'Prepared discovery')}${controls(true, state.page === 1 ? 'Finish' : 'More')}`;
+    html = `<button class="watch-home" data-action="questions">${icon('back')} Questions</button><h3 class="watch-title">${esc(topic.question)}</h3><div class="reader-art topic-art">${icon(state.topic)}</div><div class="reader-text">${esc(state.page === 0 ? topic.explanation : topic.continuation)}</div>${progress(state.page + 1, 2, 'Discovery')}${controls(true, state.page === 1 ? 'Finish' : 'More')}`;
   }
   if (state.view === 'boundary') html = `<p class="demo-kicker">Your parent’s choice</p><div class="done-icon">${icon('parents')}</div><h3 class="watch-title">Let’s ask your grown-up.</h3><p class="ending">Your grown-up has chosen to explore Moon questions together.<small>You can ask them about the Moon, or choose another question here.</small></p><button class="button watch-cta" data-action="home">Explore another topic</button>`;
   if (state.view === 'story') {

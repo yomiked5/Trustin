@@ -1,8 +1,22 @@
 # Validation evidence
 
-Revision 1.4 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
+Revision 1.5 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
 
-## Current revision 1.4 — executed and passed
+## Current revision 1.5 — executed and passed
+
+- `npm test`: **53 Node tests**, syntax checks for **8 shipped JS/MJS files**, static integrity across **7 HTML routes**. The existing 45 tests remain, with two obsolete UI references adapted; eight new tour contracts cover annotation-free arrival, shrink-before-label timing, one visible feature, forward/reverse progression, coalesced scroll, page lifecycle cleanup, manual controls, reduced-motion/short-screen fallback, mobile connector direction and unenhanced content.
+- Complete scripted activities, pause/resume/replay/retry, stale audio cancellation, parent preferences, independent progress and honest logs still pass. Removed repetitive captions and duplicate page-progress bars without changing authored scripts or narration assets.
+- Newly ported native SVG symbols parse and all their fragment references resolve. Metadata, canonical routes, links, original content/audio references and privacy API scan pass. The existing 13 core text-palette pairs exceed 4.5:1 by calculation; this does not audit every new composite color or rendered pixel.
+- Native main `34557847ad424bd0fdac7419b44563737cb499cf` read directly. Actual older native reference images were inspected; current source supplied updated controls/palette. Hero is HTML/CSS with source-derived vector illustrations, not a new native capture.
+- `git diff --check` is part of the final packaging gate. Original audio and raster art remain byte-unchanged. No new dependency, provider call, browser data collection or native build.
+
+### Current acceptance limit
+
+Supported `control-browser` is absent in this managed environment. No preview server, alternate browser automation or substitute screenshot renderer was used. **Rendered layout, mobile Safari scrolling/audio, connector alignment, keyboard/screen-reader usability, animation feel and Core Web Vitals remain unverified.** DOM/Audio/geometry doubles test event contracts, not browser rendering. Deployment success is reported separately from visual acceptance.
+
+Priority device pass: 320/390px portrait and short landscape, desktop 1024/1440px, reverse scroll, jump to each chapter, direct deep link, Reduce Motion, motion toggle during the tour, 200% text zoom, keyboard-only use and narrator retry. Confirm the Watch and panel never collide and that the whole first screen is readable in mobile browser chrome.
+
+## Revision 1.4 — historical executed evidence
 
 - `npm test`: **45 Node tests**, all **6 shipped JS/MJS** syntax checks, and static integrity across **7 HTML pages**. Existing 38 tests adapted to the dedicated demo and extended motion timing; seven new tests cover all five activity-entry queries, invalid-entry fallback, bounded scene offsets, scroll event coalescing/motion-off reset/one-shot reveal, homepage preference state/icon/response, missing-enhancement fallback and homepage route/content contracts.
 - The 45 tests comprise 13 model tests, 18 shipped-demo runtime contracts, 11 motion tests and 3 homepage interaction/structure contracts. DOM/Audio/geometry doubles are deliberately not browsers.
@@ -13,7 +27,7 @@ Revision 1.4 · October 13, 2026. These results concern the marketing website an
 - All original media/content remains unchanged; earlier blob/decode evidence below applies to retained bytes. No new audio listening or rendered image/layout test was performed.
 - Motion is optional: a 680ms finite entrance/reveal, bounded scroll offsets on noninteractive device layers, 280ms response-icon fade/scale and retained short reader/state transitions. Policy changes cancel effects and clear offsets; no autoplay or scroll interception.
 
-### Current verification boundary
+### Revision 1.4 verification boundary
 
 Supported `control-browser` remains unavailable in the managed Sites environment. No preview server, substitute browser, screenshot renderer or alternate browser automation was used. **Visual layout, breakpoint fit, Safari narration, native keyboard/screen-reader behavior, animation feel and Core Web Vitals remain unverified.** Private deployment success does not close these acceptance gates. Inspect the new homepage, horizontal highlight rail, response-panel reflow and all deep demo links at 320/390/680/850/1024px before public launch.
 
