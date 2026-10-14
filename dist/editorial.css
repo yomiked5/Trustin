@@ -90,6 +90,17 @@
 .privacy-sections h2 { font-size:28px; line-height:1.2; font-weight:550; margin:0 0 18px }
 .privacy-sections p { font-size:15px; line-height:1.85; color:#59675e }
 .privacy-sections a { color:#285c57 }
+.privacy-shield { background:#f9e9e5 }
+.privacy-shield svg { color:#cf2f32 }
+.privacy-sections p+p { margin-top:14px }
+.privacy-sections strong { color:#293c38 }
+.privacy-sections .privacy-context { margin-top:18px; padding-left:15px; border-left:2px solid #8da58f; font-size:13px }
+.privacy-sections .privacy-help { border-top:1px solid #d6e0d2; margin-top:22px; padding-top:5px }
+.privacy-sections .privacy-help summary { font-size:15px; line-height:1.5; padding:7px 0 }
+.privacy-sections .privacy-help>div { padding:19px 21px; background:#f0f5ed }
+.privacy-sections .privacy-help>div p { font-size:14px }
+.privacy-sections .privacy-help a { font-size:13px; line-height:1.6 }
+.privacy-sections section[id] { scroll-margin-top:100px }
 .lost-art { position:relative; width:220px; height:240px; margin:35px auto 0 }
 .lost-art img { position:absolute; width:110px; height:auto; left:55px; bottom:15px; z-index:1 }
 .lost-art:before { content:''; position:absolute; width:205px; height:205px; border:1px solid #adc3ad; border-radius:50%; top:10px; left:8px }

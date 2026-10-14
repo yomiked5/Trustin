@@ -130,3 +130,7 @@ Update product status before release CTAs. Recheck source for later UI changes. 
 Future authentic video should show an actual question, response, parent setting, and return to family life. Add captions/transcript and user-controlled playback. Do not install a placeholder play button or fabricate a testimonial.
 
 Earlier versions and superseded compositions remain in Git history. [DEPLOYMENT.md](DEPLOYMENT.md) separates established infrastructure from the current redesign’s verification limits.
+
+## Privacy communication update — October 14, 2026
+
+Retain the red shield and no-advertising headline. Explain three concrete purposes: family learning records, no commercial tracking, and careful voice handling. Native HTML disclosures provide tap/keyboard access to the scaffolding example and privacy standards; essential qualifiers remain visible. Keep the detailed data categories, voice-processing facts, release status and official references on `/privacy/`. The whitepaper, parent guide, availability page and demo point to the same message. These copy changes do not certify the app or change provider/backend settings.

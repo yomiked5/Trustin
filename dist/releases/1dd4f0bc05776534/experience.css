@@ -1,0 +1,201 @@
+/* TrustinJr: fewer elements, clear hierarchy, brief state transitions. */
+:root { --ease-out:cubic-bezier(.2,.7,.2,1) }
+::selection { background:#d0dfcd; color:#173c35 }
+h1,h2 { letter-spacing:-.045em }
+.button { box-shadow:none; transition:background 160ms,border-color 160ms }
+.button:active { background:#194843 }
+.nav>a:not(.button) { text-decoration-thickness:1px }
+.nav>a[aria-current] { text-decoration:underline }
+.demo-tabs button,.question-choice,.reader-controls button,.math-options button { transition:background 160ms,border-color 160ms }
+.reader-controls button:hover:not(:disabled),.math-options button:hover:not(:disabled) { border-color:var(--teal) }
+.hero-editorial { grid-template-columns:1.05fr .95fr; gap:60px; padding-block:70px 82px }
+.hero-editorial h1 { font-size:clamp(72px,7.5vw,100px); line-height:1.03; letter-spacing:-.055em }
+.hero-editorial .hero-lead { font-size:21px; font-weight:500; letter-spacing:-.025em }
+.hero-editorial .hero-copy>p { max-width:460px }
+.hero-editorial .actions { margin-top:29px }
+.hero-copy>.hero-status { font-size:12px; margin-top:16px }
+.hero-portrait { margin:0; padding:25px 20px 0; max-width:410px; width:100%; justify-self:center }
+.hero-portrait>p { font:italic 30px/1.3 var(--serif); color:var(--teal); letter-spacing:-.025em; margin:0 0 14px 14px }
+.portrait-art { position:relative; min-height:280px; display:flex; align-items:end; padding:0 28px }
+.portrait-art img { width:210px; height:auto; position:relative }
+.portrait-moon { position:absolute; width:125px; height:125px; right:4px; top:0 }
+.demo-section { margin-top:0; padding-block:64px 36px; background:#edf0e7; border-color:#d7dfcd }
+.demo-section .section-top { margin-bottom:32px }
+.demo-section .section-description { max-width:390px; font-size:15px }
+.demo-toolbar { padding-bottom:23px; margin-bottom:28px }
+.demo-stage { gap:65px }
+.demo-watch .watch-screen { min-height:550px }
+.dock { box-shadow:none; border-radius:18px }
+.dock-head { padding-block:20px 17px }
+.dock-helper { font-size:14px; color:var(--muted); margin:0 0 19px; line-height:1.7 }
+.together-prompt { padding:19px 0; border-top:1px solid var(--line) }
+.together-prompt p { font:20px/1.5 var(--serif); letter-spacing:-.02em; margin-top:8px }
+.together-prompt small { display:block; color:var(--muted); font-size:12px; margin-top:7px }
+.dock-head p,.dock-principle,.dock-bottom,.dock-details summary span,#activity-log,.reset,.reader-foot,.sample-note,.demo-footnote,.policy-preview .text-button { font-size:12px }
+.setting label,.dock-details summary { font-size:14px }
+.setting small,.surface-label div>span { font-size:12px }
+.setting select { font-size:14px; max-width:180px }
+.topic-setting select { max-width:none; font-size:15px }
+.approach-section { padding-block:88px 70px }
+.approach-intro { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:70px; margin-bottom:44px }
+.approach-intro h2 { font-size:clamp(42px,4.5vw,60px) }
+.approach-intro>p { max-width:390px; font:24px/1.5 var(--serif); color:var(--muted); letter-spacing:-.02em }
+.approach-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:42px; padding-block:30px; border-block:1px solid var(--line) }
+.approach-grid h3 { font:25px/1.25 var(--serif); letter-spacing:-.025em; margin-bottom:15px }
+.approach-grid p { font-size:15px; color:var(--muted); line-height:1.8 }
+.approach-links { display:flex; flex-wrap:wrap; gap:12px 36px; padding-top:18px }
+.approach-links .text-link { font-weight:500; font-size:14px }
+.questions-section { padding-block:22px 75px }
+.questions-section h2 { font-size:clamp(36px,3.5vw,47px) }
+.faq summary:after { transition:transform 160ms }
+.next-step { border-top:1px solid var(--line); padding-block:40px 65px; display:flex; align-items:center; justify-content:space-between; gap:30px }
+.next-step h2 { font-size:34px; letter-spacing:-.035em }
+.next-step p { font-size:14px; color:var(--muted); margin-top:10px }
+.next-step .button { flex:none }
+.site-preferences { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-block:16px 0; color:var(--muted); font-size:11px }
+.motion-toggle { min-height:44px; border:1px solid var(--line); border-radius:100px; padding:8px 14px; color:var(--muted); background:none; font-size:12px }
+.motion-toggle:hover:not(:disabled) { border-color:var(--teal); color:var(--teal) }
+.motion-toggle:disabled { opacity:1 }
+.footer-bottom { font-size:11px }
+.footer-links { gap:12px 22px }
+.philosophy-hero { position:relative; padding-right:280px; max-width:none; min-height:420px; padding-block:65px 50px }
+.philosophy-hero .deck { max-width:650px; font-size:20px }
+.philosophy-hero h1 { max-width:640px; font-size:clamp(60px,6.5vw,90px) }
+.paper-art { position:absolute; width:225px; right:0; top:78px; padding:17px; border:1px solid #bcc9b3; background:var(--sage); border-radius:110px 110px 15px 15px; transform:rotate(3deg) }
+.paper-art img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:95px 95px 10px 10px; margin:13px 0 }
+.paper-art span { display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); text-align:center }
+.paper-art span:last-child { font:italic 19px/1.3 var(--serif); text-transform:none; letter-spacing:-.02em; padding-bottom:4px }
+.reading-status { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:0 0 15px; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--teal) }
+.reading-status>span:nth-child(2) { margin-left:auto; font-variant-numeric:tabular-nums }
+.reading-status progress { width:100%; height:3px; accent-color:var(--teal); border:0; background:var(--line); border-radius:3px }
+.reading-status progress::-webkit-progress-bar { background:var(--line) }
+.reading-status progress::-webkit-progress-value { background:var(--teal) }
+.reading-status progress::-moz-progress-bar { background:var(--teal) }
+.paper-nav a[aria-current] { color:var(--teal); font-weight:700; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
+.availability-hero { padding-bottom:26px!important }
+.release-path { margin:0 0 48px; padding:25px 0 27px; list-style:none; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; border-block:1px solid var(--line) }
+.release-path li { min-width:0; display:flex; flex-direction:column; gap:13px }
+.path-dot { display:grid; place-items:center; width:33px; height:33px; border-radius:50%; border:1px solid #b3c2aa; color:var(--teal); font-size:10px }
+.release-path [aria-current] .path-dot { background:var(--teal); color:var(--cream); border-color:var(--teal) }
+.release-path strong { display:block; font-size:13px; line-height:1.5 }
+.release-path p { margin-top:7px; font-size:12px; color:var(--muted); line-height:1.7 }
+.prose table { table-layout:fixed; overflow-wrap:anywhere }
+.prose table caption { text-align:left; color:var(--teal); font-weight:600; margin-bottom:14px }
+.prose th:first-child { width:28% }
+.prose .guide-question { border-top:1px solid var(--line); padding-top:25px; margin-top:35px }
+.parent-guide .paper-hero { max-width:860px }
+.parent-guide .philosophy-hero { padding-right:0; min-height:0 }
+.parent-guide .philosophy-hero h1 { font-size:clamp(40px,4.9vw,65px); max-width:850px }
+.paper-summary p,.references { font-size:14px }
+@media (min-width:901px) {
+  html { scroll-padding-top:116px }
+  .site-header { position:sticky; top:0; z-index:30; min-height:86px; isolation:isolate; background:var(--cream); view-transition-name:site-header }
+  .site-header:before { content:''; position:absolute; inset:0; background:var(--cream); box-shadow:0 0 0 100vmax var(--cream); clip-path:inset(0 -100vmax); z-index:-1; border-bottom:1px solid #ded7c945 }
+  .paper-nav { top:114px }
+}
+@media (max-width:1050px) {
+  .hero-editorial { gap:30px }
+  .hero-portrait { padding-inline:0 }
+  .portrait-art { padding-inline:15px }
+  .demo-stage { gap:40px }
+  .setting { display:block }
+  .setting select { width:100%; max-width:none; margin-top:10px }
+  .approach-grid { gap:27px }
+  .philosophy-hero { padding-right:230px }
+  .paper-art { width:195px }
+}
+@media (max-width:850px) {
+  .hero-editorial { grid-template-columns:1.1fr .9fr; gap:20px; padding-block:48px 60px }
+  .hero-editorial h1 { font-size:clamp(62px,8.7vw,76px) }
+  .hero-editorial .hero-lead { font-size:19px }
+  .hero-copy>p { font-size:15px }
+  .hero-portrait>p { font-size:25px; margin-left:0 }
+  .portrait-art { min-height:240px; padding-inline:0 }
+  .portrait-art img { width:170px }
+  .portrait-moon { width:100px; height:100px }
+  .demo-stage { grid-template-columns:1fr; gap:38px; max-width:540px; margin-inline:auto }
+  .child-side { display:flex; flex-direction:column; align-items:center }
+  .child-side .surface-label { align-self:start }
+  .demo-watch { width:410px }
+  .dock { scroll-margin-top:25px }
+  .approach-intro { gap:35px }
+  .philosophy-hero { padding-right:195px }
+  .paper-art { width:166px; top:90px; padding:13px }
+}
+@media (max-width:680px) {
+  .hero-editorial { grid-template-columns:1fr; padding-block:30px 40px; gap:25px }
+  .hero-editorial h1 { font-size:clamp(58px,13vw,78px); margin-block:17px }
+  .hero-editorial .hero-lead { font-size:19px }
+  .hero-copy>p { line-height:1.7; max-width:390px }
+  .hero-copy .eyebrow { font-size:10px; letter-spacing:.055em }
+  .hero-editorial .actions { margin-top:23px }
+  .hero-editorial .actions .button { min-height:50px; padding:12px 21px }
+  .hero-copy>.hero-status { font-size:12px; margin-top:13px }
+  .hero-portrait { display:grid; grid-template-columns:1fr 1fr; align-items:center; max-width:410px; gap:14px; padding:12px 0 0; border-top:1px solid var(--line) }
+  .hero-portrait>p { font-size:23px; margin:0 }
+  .portrait-art { min-height:174px; padding:0; justify-content:center }
+  .portrait-art img { width:120px }
+  .portrait-moon { width:65px; height:65px; right:0; top:0 }
+  .demo-section { padding-top:44px }
+  .demo-section .section-top { gap:22px }
+  .demo-section .section-description { font-size:15px }
+  .demo-toolbar { padding-bottom:20px; margin-bottom:25px }
+  .dock-head,.dock-body { padding-inline:20px }
+  .setting select,.topic-setting select { font-size:16px; min-height:48px; max-width:none }
+  .dock-principle a { white-space:normal }
+  .approach-section { padding-block:55px 38px }
+  .approach-intro { grid-template-columns:1fr; gap:23px; margin-bottom:28px }
+  .approach-intro h2 { font-size:44px }
+  .approach-intro>p { font-size:23px; max-width:340px }
+  .approach-grid { grid-template-columns:1fr; gap:27px; padding-block:27px }
+  .approach-grid h3 { font-size:24px; margin-bottom:9px }
+  .approach-grid p { font-size:15px }
+  .approach-links { flex-direction:column; align-items:start; gap:0 }
+  .questions-section { padding-block:15px 40px }
+  .questions-section h2 { font-size:39px }
+  .next-step { align-items:start; flex-direction:column; gap:23px; padding-block:30px 45px }
+  .next-step h2 { font-size:32px }
+  .site-preferences { align-items:start; flex-direction:column; gap:12px; padding-top:17px }
+  .philosophy-hero { padding:44px 0 33px; min-height:0 }
+  .philosophy-hero h1 { font-size:60px }
+  .philosophy-hero .deck { font-size:18px }
+  .paper-art { display:none }
+  .reading-status { width:100%; margin-bottom:9px }
+  .release-path { grid-template-columns:1fr; gap:22px; padding-block:25px; margin-bottom:34px }
+  .release-path li { display:grid; grid-template-columns:33px 1fr; gap:15px }
+  .release-path strong { font-size:14px }
+  .release-path p { font-size:13px; margin-top:4px }
+  .prose table { font-size:13px }
+  .prose th,.prose td { padding:12px 6px }
+  .paper-summary { gap:19px }
+  .parent-guide .philosophy-hero h1 { font-size:40px }
+  .nav>a:not(.button),.nav .button { min-height:44px }
+}
+@media (max-width:360px) {
+  .hero-editorial h1 { font-size:58px }
+  .hero-portrait>p { font-size:21px }
+  .portrait-art img { width:105px }
+  .reader-controls button { padding-inline:4px; gap:5px }
+}
+@media (prefers-reduced-motion:no-preference) {
+  @view-transition { navigation:auto }
+  ::view-transition-old(root) { animation:page-out 160ms ease-out both }
+  ::view-transition-new(root) { animation:page-in 160ms var(--ease-out) both }
+  ::view-transition-group(site-header) { animation-duration:160ms }
+  html[data-motion=on] .faq[open]>div { animation:page-in 160ms var(--ease-out) }
+}
+@keyframes page-out { to { opacity:0 } }
+@keyframes page-in { from { opacity:0 } to { opacity:1 } }
+html[data-motion=off] { scroll-behavior:auto }
+html[data-motion=off] *,html[data-motion=off] *:before,html[data-motion=off] *:after { animation:none!important; transition:none!important }
+html[data-motion=off]::view-transition-group(*),html[data-motion=off]::view-transition-old(*),html[data-motion=off]::view-transition-new(*) { animation:none!important }
+@media (prefers-reduced-motion:reduce) {
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*) { animation:none!important }
+}
+@media print {
+  .paper-art,.site-preferences,.reading-status { display:none }
+  .philosophy-hero { padding:0 0 22px; min-height:0 }
+  .philosophy-hero h1 { font-size:38pt }
+  .site-header { position:static }
+  .release-path { break-inside:avoid }
+}

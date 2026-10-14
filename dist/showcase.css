@@ -115,6 +115,36 @@ h1 em,h2 em { font-style:normal; font-weight:inherit }
 .principle-mark { width:62px; height:62px; margin:0 auto 29px; color:var(--teal); stroke-width:1.25 }
 .principle-section p { font-size:17px; color:var(--marketing-muted); margin:25px auto 10px; max-width:480px; line-height:1.6 }
 .principle-section .text-link { font-size:14px; color:var(--teal); font-weight:550 }
+/* Privacy is explained by purpose, with optional depth and no compliance badge. */
+.principle-section .privacy-kicker { margin:42px auto 20px; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase }
+.privacy-promises { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:32px; max-width:960px; margin:0 auto 30px; text-align:left }
+.privacy-promises>div { border-top:1px solid #bdcdbf; padding-top:22px; min-width:0 }
+.privacy-promises h3 { font:600 22px/1.25 system-ui,sans-serif; letter-spacing:-.035em; margin:0 }
+.principle-section .privacy-promises p { font:400 14px/1.65 system-ui,sans-serif; max-width:none; margin:14px 0 0; color:#46594e }
+.privacy-help { margin-top:12px; font-size:13px }
+.privacy-help summary,.privacy-standard summary { display:flex; align-items:center; gap:14px; min-height:44px; list-style:none; cursor:pointer; font-weight:600; color:#285c57 }
+.privacy-help summary::-webkit-details-marker,.privacy-standard summary::-webkit-details-marker { display:none }
+.privacy-help summary>span,.privacy-standard summary>span { margin-left:auto; font:400 24px/1 system-ui,sans-serif; transition:transform .15s ease }
+.privacy-help[open] summary>span,.privacy-standard[open] summary>span { transform:rotate(45deg) }
+.privacy-help>div { background:#fbfcfa; border:1px solid #bdcdbf; border-radius:16px; padding:16px; margin-top:5px }
+.principle-section .privacy-help>div p { font-size:13px; margin:0 0 12px }
+.privacy-help a { display:inline-block; padding-block:9px; color:#285c57; text-underline-offset:4px }
+.privacy-standard { max-width:540px; margin:30px auto 0; text-align:left; border-block:1px solid #bdcdbf; padding-block:7px }
+.privacy-standard summary { font-size:14px }
+.principle-section .privacy-standard p { max-width:none; font-size:14px; color:#46594e; margin:12px 0 18px }
+.principle-section .privacy-status { max-width:540px; font-size:12px; line-height:1.6; margin:18px auto }
+.privacy-help summary:focus-visible,.privacy-standard summary:focus-visible { outline:2px solid #285c57; outline-offset:5px; border-radius:3px }
+@media(max-width:680px) {
+  .privacy-promises { grid-template-columns:1fr; gap:23px; max-width:380px; margin-bottom:25px }
+  .privacy-promises>div { padding-top:19px }
+  .privacy-promises h3 { font-size:21px }
+  .principle-section .privacy-promises p { font-size:14px; margin-top:10px }
+  .privacy-standard { max-width:380px; margin-top:25px }
+  .privacy-standard summary { font-size:14px }
+  .principle-section .privacy-status { max-width:350px; font-size:12px; margin:17px auto }
+}
+@media(prefers-reduced-motion:reduce) { .privacy-help summary>span,.privacy-standard summary>span { transition:none } }
+html[data-motion=off] .privacy-help summary>span,html[data-motion=off] .privacy-standard summary>span { transition:none }
 .product-close { text-align:center; padding-block:103px 70px }
 .product-close>.button { margin-top:29px }
 .product-close>p { margin-top:14px; color:var(--marketing-muted); font-size:12px }

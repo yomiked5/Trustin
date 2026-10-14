@@ -1,6 +1,6 @@
 # Validation evidence
 
-Revision 1.8 · October 14, 2026 (Pacific). Marketing website and scripted demo only.
+Revision 1.9 · October 14, 2026 (Pacific). Marketing website and scripted demo only.
 
 ## Observed regression
 
@@ -41,3 +41,9 @@ On real iPhone Safari, test microphone simulation, Home, discoveries, Pip and Ma
 `scripts/check-live-release.py` verifies all page/release bytes, MIME types and cache policy directly on production after publication; results belong to the handoff. The first public run correctly rejected Cloudflare’s email rewriting and remaining four-hour root-asset TTL; the immutable Pages origin was unaffected. Header repair adds `no-transform` on HTML and `no-store` on mutable root files. This HTTP check is not rendering or browser interaction.
 
 Publication receipts verify deployment, not visual acceptance. Existing public indexing, contact, hosting and DNS remain unchanged. Native privacy, consent, retention, deletion and device compatibility remain separate release responsibilities.
+
+## Privacy copy revision
+
+The red-shield section adds three short commitments and native HTML disclosures for scaffolding and privacy standards. The privacy page now separates native-app commitments and verification gaps from actual website behavior; philosophy, parent guide, availability, parent-tour context and all footer links are aligned. No device geometry, gesture controller, live microphone, account or analytics implementation changes.
+
+Claims were checked against the native privacy evidence worksheet and Watch manifest at `34557847ad424bd0fdac7419b44563737cb499cf`, and current official OpenAI/FTC/California guidance. The source does not establish zero audio retention or full compliance; neither is claimed. Existing release and static checks are reused for the stylesheet/HTML update. No additional implementation-mirroring tests were added for this copy change. Browser/device acceptance remains subject to the verification boundary above.

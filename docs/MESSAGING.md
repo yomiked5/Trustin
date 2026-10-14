@@ -73,3 +73,13 @@ Use plain verbs: ask, notice, think, try, listen, count, explore, together. Expl
 Keep one clear demo disclosure, local labels on illustrative controls, and deeper details in privacy/availability. Useful clarity should not be buried, but repeated warnings should not become the story. Preserve recorded scripts and their matching assets when refining surrounding marketing copy.
 
 When product state changes, update availability first, then the bible, homepage and relevant metadata. Verify operational claims before publishing them.
+
+## Child privacy messaging — October 14, 2026
+
+Use purpose, not a blanket “no data” claim: transcripts and saved learning activity support parent reports and the child’s next learning step. Account/profile/device/service data are separate categories. The owner’s commitments prohibit child advertising, sponsored answers, purchase pressure, sale of child information, commercial profiling, and use of learning records for our marketing or business analytics. These commitments are not a completed native-runtime/provider audit.
+
+Keep three facts distinct: the website microphone is a simulation; the native app captures/processes audio, including off-device; discarding input audio after transcription is a release goal with provider retention still unverified. Do not claim that no provider retains audio.
+
+Scaffolding: “Just enough help for the next step, then room to try.” Use the real scripted math clue/retry as an example. Activity may inform support and parent reports; it is not proof of understanding or validated learning gains. Put the short explanation behind a tap/keyboard disclosure, outside the product UI.
+
+OpenAI’s under-18 guidance, COPPA and applicable state laws are release requirements. Do not state “fully compliant,” use a certification badge, imply OpenAI endorsement, or claim verified Zero Data Retention without operational evidence. The homepage gives a short visible development/verification status and links to the expanded privacy page. See [privacy evidence](PRIVACY_CLAIMS.md).

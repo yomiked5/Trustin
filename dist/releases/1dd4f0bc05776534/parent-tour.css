@@ -1,0 +1,167 @@
+/* Product pixels and explanatory pixels occupy separate surfaces. */
+.parent-story { --parent-top:72px; position:relative; background:#f1f5f0 }
+.parent-stage { max-width:1500px; margin:auto; padding:80px 30px 48px; position:relative }
+.parent-intro { text-align:center; margin:0 auto 48px; position:relative; z-index:2 }
+.parent-intro>p { color:var(--marketing-muted); font-size:12px; margin:0 0 18px }
+.product-home .parent-intro h2 { font-size:clamp(42px,5vw,65px); line-height:1.05; letter-spacing:-.06em }
+.parent-device { position:relative; width:290px; aspect-ratio:390/844; padding:7px; background:linear-gradient(120deg,#bbc7bc,#35493c 30%,#26372d 70%,#9daa9d); border:1px solid #8c9c8d; border-radius:45px; margin:45px auto; box-shadow:inset 0 0 0 2px #ced5cb,0 28px 50px #334b3720; isolation:isolate }
+.parent-device:after { content:''; position:absolute; width:3px; height:53px; top:23%; right:-4px; border-radius:0 3px 3px 0; background:#6f7d6e }
+.ios-screen { width:100%; height:100%; container-type:inline-size; border-radius:37px; border:3px solid #17281e; background:#fff8ef; overflow:hidden; position:relative; color:#272827; font:400 14px/1.4 ui-rounded,system-ui,sans-serif }
+.ios-status { height:10cqw; display:flex; justify-content:space-between; align-items:center; padding:3cqw 7cqw 0; font-size:3.7cqw; font-weight:650 }
+.ios-island { width:28%; height:6cqw; border-radius:6cqw; background:#17211b }
+.ios-nav-title { text-align:center; font-weight:650; font-size:4.7cqw; padding:3cqw 2cqw 2cqw }
+.ios-scroll { position:absolute; top:21cqw; bottom:24cqw; left:0; right:0; padding:3cqw 5cqw 8cqw; overflow:hidden; font-size:4.25cqw }
+.ios-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:4cqw }
+.ios-title h3 { font-size:8.5cqw; letter-spacing:-.035em }
+.ios-title img { width:14cqw; height:14cqw; object-fit:contain }
+.ios-row { display:flex; gap:2cqw; align-items:center; justify-content:space-between; padding:2.6cqw 0; min-width:0 }
+.ios-row>span { min-width:0 }
+.ios-row>span:last-child { text-align:right; color:#416d6d }
+.ios-row i { font-style:normal; padding-left:2cqw }
+.ios-caption { color:#676b65; font-size:3.2cqw; line-height:1.4; margin:2cqw 0 3cqw }
+.ios-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:2cqw; margin:5cqw 0 1cqw }
+.ios-metrics>div { padding:3.4cqw 2.6cqw; border-radius:5cqw; background:#e9e1ef }
+.ios-metrics>div:nth-child(2) { background:#f6e0d0 }
+.ios-metrics>div:nth-child(3) { background:#e6ebdd }
+.ios-metrics strong { display:block; font-size:8cqw; line-height:1.2; font-weight:650 }
+.ios-metrics span { font-size:3cqw; white-space:nowrap }
+.ios-moment { background:#f8edc8; border-radius:5.5cqw; padding:4cqw; margin:4.5cqw 0 }
+.ios-moment strong { display:flex; align-items:center; gap:2cqw; font-size:4cqw }
+.ios-moment svg,.ios-inset svg { width:5cqw; height:5cqw; display:inline-block; vertical-align:middle }
+.ios-moment p { margin:2cqw 0; font-size:3.8cqw }
+.ios-moment b { font-size:3.1cqw }
+.ios-discovery-note { font-size:2.9cqw }
+.ios-recent { font-size:4cqw }
+.ios-recent span { font-size:3.3cqw }
+.ios-activity { border-radius:4.5cqw; padding:4cqw; background:#ffffffbd; font-size:3.7cqw }
+.ios-activity>div { display:flex; justify-content:space-between; font-size:2.9cqw; margin-bottom:2cqw }
+.ios-activity b { color:#416d6d }
+.ios-activity strong { display:block }
+.ios-activity p { margin-top:2cqw; color:#676b65 }
+.ios-tabs { position:absolute; display:grid; grid-template-columns:repeat(4,1fr); bottom:6cqw; left:3cqw; right:3cqw; height:16.5cqw; border:1px solid #fff; background:#fffcf1ed; border-radius:9cqw; padding:1.2cqw; box-shadow:0 1cqw 6cqw #645e3910 }
+.ios-tabs>div { display:flex; flex-direction:column; gap:1cqw; align-items:center; justify-content:center; font-size:2.8cqw; white-space:nowrap; border-radius:8cqw }
+.ios-tabs svg { width:6cqw; height:6cqw }
+.ios-selected { background:#eeece0; color:#416d6d; font-weight:650 }
+.ios-home-bar { position:absolute; width:34%; height:1.2cqw; bottom:2cqw; left:33%; background:#293c38; border-radius:4px }
+.ios-group { margin:3cqw 0 5cqw }
+.ios-section-label { font-size:3.5cqw; color:#676b65; margin:0 3cqw 2cqw }
+.ios-inset { border-radius:5cqw; background:white; padding:1cqw 4cqw }
+.ios-inset>.ios-row+.ios-row { border-top:1px solid #e8e8e1 }
+.ios-inset>p:not(.ios-caption) { margin:3cqw 0; font-size:3.8cqw }
+.ios-inset .ios-row { font-size:3.6cqw; gap:5cqw }
+.ios-inset .ios-row>span:last-child { max-width:49% }
+.ios-native-action { color:#416d6d; padding:2cqw 0 }
+.ios-speed { display:flex; background:#eeede7; padding:.8cqw; border-radius:2cqw; margin:3cqw 0; text-align:center; font-size:3.6cqw }
+.ios-speed>* { flex:1; padding:1.8cqw }
+.ios-speed b { border-radius:1.4cqw; background:#fff; box-shadow:0 1px 3px #0002 }
+.ios-back { color:#416d6d; margin-bottom:5cqw }
+.ios-detail-title { font-size:6.4cqw; margin-bottom:3cqw }
+.ios-scroll h4 { font-size:4.3cqw; margin:5cqw 0 2cqw }
+.ios-delete { color:#a44732; margin-top:6cqw }
+.parent-panels { max-width:470px; margin:auto }
+.parent-panel { background:linear-gradient(130deg,#fffffff2,#edf5eff0); border:1px solid #c7dace; border-radius:26px; padding:34px; margin:28px auto; position:relative; box-shadow:0 23px 60px #294b3510,inset 0 1px 0 #fff }
+.parent-panel:before { content:''; position:absolute; top:-2px; left:34px; width:44px; height:3px; border-radius:4px; background:#7fab9b }
+.parent-panel .parent-label { margin-bottom:15px; font-size:11px; letter-spacing:.06em; color:#59675e }
+.product-home .parent-panel h3 { font-size:clamp(28px,3vw,39px); line-height:1.1; letter-spacing:-.05em; font-weight:650 }
+.parent-panel>p:not(.parent-label) { color:#59675e; font-size:16px; line-height:1.6; margin:20px 0 }
+.parent-panel details { border-top:1px solid #ccdcd1; margin-top:24px; padding-top:10px }
+.parent-panel summary { cursor:pointer; font-size:13px; font-weight:600; min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:12px; list-style:none }
+.parent-panel summary:after { content:'+'; font-size:22px; font-weight:350 }
+.parent-panel details[open] summary:after { content:'−' }
+.parent-reason { max-height:210px; overflow:auto; padding:5px 7px 4px 0; font-size:14px; line-height:1.7; scrollbar-width:thin }
+.parent-reason p+p { margin-top:15px }
+.parent-reason .parent-limit { color:#59675e; font-size:12px; border-top:1px solid #d5ded6; padding-top:14px }
+.parent-connector { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; display:none }
+.parent-connector path { fill:none; stroke:#7fab9b; stroke-width:1.3 }
+.parent-connector circle { fill:#4a7c69; stroke:#f1f5f0; stroke-width:2 }
+.parent-controls { display:none; align-items:center; justify-content:center; gap:8px; z-index:5; margin:32px auto 0 }
+.parent-controls button { width:44px; height:44px; border:1px solid #ccdbcf; border-radius:50%; background:#fff; color:#285c57; font-size:20px }
+.parent-controls select { appearance:auto; border:1px solid #ccdbcf; border-radius:25px; height:46px; padding:0 34px 0 18px; font-size:14px; color:#293c38; background:white; min-width:200px }
+.parent-story[data-parent-ready=true] .parent-controls { display:flex }
+.parent-source-note { text-align:center; color:#59675e; font-size:11px; line-height:1.6; max-width:560px; margin:30px auto 0; padding-inline:16px }
+.parent-skip { display:block; width:max-content; margin:12px auto 0; font-size:11px; color:#59675e; padding:9px }
+
+/* Stable interactive exhibits: the device and panel have independent fixed slots. */
+#childhood .principle-mark { color:#cf2f32; width:78px; height:78px; filter:drop-shadow(0 7px 13px #cf2f3220) }
+#childhood .principle-mark use { stroke-width:1.9 }
+.parent-story[data-parent-mode=docked] { height:170svh }
+.parent-story[data-parent-mode=docked] .parent-stage { --parent-top:72px; position:sticky; top:var(--parent-top); height:calc(100svh - var(--parent-top)); max-width:1100px; margin:auto; padding:20px 40px 12px; display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); grid-template-rows:70px minmax(0,1fr) 48px 30px; gap:16px 58px; align-items:center; touch-action:pan-y pinch-zoom; isolation:isolate }
+.parent-story[data-parent-mode=docked] .parent-intro { grid-column:1/-1; text-align:left; margin:0; display:flex; align-items:center; gap:30px }
+.parent-story[data-parent-mode=docked] .parent-intro>p { margin:0; font-size:11px; max-width:95px; line-height:1.5 }
+.parent-story[data-parent-mode=docked] .parent-intro h2 { font-size:clamp(25px,3.6vw,39px); line-height:1.1; letter-spacing:-.045em; margin:0 }
+.parent-story[data-parent-mode=docked] .parent-intro h2 br { display:none }
+.parent-story[data-parent-mode=docked] .parent-device { margin:0 auto; width:min(250px,calc((100svh - 280px)*.462)); max-width:100%; grid-column:1; grid-row:2; border-radius:17%/8%; padding:6px; touch-action:auto }
+.parent-story[data-parent-mode=docked] .ios-screen { border-radius:15%/7% }
+.parent-story[data-parent-mode=docked] .parent-panels { width:100%; max-width:none; height:100%; max-height:440px; min-height:0; margin:0; grid-column:2; grid-row:2; z-index:2 }
+.parent-story[data-parent-mode=docked] .parent-panel { height:100%; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; margin:0; padding:28px; border-radius:24px; outline-offset:3px }
+.parent-story[data-parent-mode=docked] .parent-panel h3 { font:650 clamp(26px,3.2vw,38px)/1.1 system-ui,sans-serif; letter-spacing:-.045em; margin:0 }
+.parent-story[data-parent-mode=docked] .parent-panel>p:not(.parent-label) { font-size:15px; line-height:1.6; margin:16px 0 }
+.parent-story[data-parent-mode=docked] .parent-reason { max-height:none; overflow:visible; padding-right:0 }
+.parent-story[data-parent-mode=docked] .parent-controls { grid-column:1/-1; grid-row:3; margin:0; width:100%; display:flex; touch-action:pan-y pinch-zoom; user-select:none }
+.parent-story[data-parent-mode=docked] .parent-controls select { min-width:0; width:245px; max-width:calc(100vw - 145px); font-size:14px; height:44px }
+.parent-controls button:disabled { opacity:.35; cursor:default }
+.parent-story[data-parent-mode=docked] .parent-source-note { grid-column:1/-1; grid-row:4; font-size:10px; margin:0; padding:0 130px 0 0; max-width:none; text-align:center; line-height:1.4 }
+.parent-story[data-parent-mode=docked] .parent-skip { position:absolute; bottom:15px; right:40px; margin:0; font-size:11px; z-index:4 }
+.parent-story[data-parent-mode=docked] .parent-connector { display:block; z-index:1 }
+.parent-story[data-parent-mode=docked] .parent-connector path { stroke:#729e88; stroke-width:1.25 }
+.parent-story[data-parent-mode=docked] .parent-connector circle { fill:#416d61; stroke:#f1f5f0; stroke-width:2 }
+.parent-story .hud-box { position:absolute; border:1.5px solid #7fab9b; border-radius:7px; pointer-events:none; z-index:3; box-shadow:0 0 0 3px #ffffff3d }
+.parent-story .ios-scroll { overflow-y:auto; overscroll-behavior:contain; scrollbar-width:none }
+.parent-story .ios-scroll::-webkit-scrollbar { display:none }
+.parent-story .ios-screen button { -webkit-appearance:none; appearance:none; font-family:inherit; cursor:pointer; color:inherit; background:none; border:0; padding:0; text-align:left }
+.parent-story .ios-screen button:focus-visible { outline:2px solid #285c57; outline-offset:1px }
+.parent-story .ios-screen button:active { opacity:.65 }
+.parent-story button.ios-row { width:100%; min-height:24px; padding:2.6cqw 0; font-size:inherit }
+.parent-story .ios-moment button { font-size:3.2cqw; font-weight:650; min-height:24px }
+.parent-story .ios-recent button { font-size:3.5cqw; color:#416d6d; min-height:24px }
+.parent-story button.ios-activity { display:block; width:100%; border-radius:4.5cqw; padding:4cqw; background:#ffffffbd; font-size:3.7cqw; min-height:40px }
+.parent-story .ios-tabs { left:2cqw; right:2cqw; bottom:4cqw; height:max(15cqw,32px); padding:1cqw }
+.parent-story .ios-tabs>button { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:1cqw; min-width:0; border-radius:8cqw; font-size:2.8cqw; line-height:1.15; text-align:center; white-space:nowrap }
+.parent-story .ios-tabs .ios-selected { background:#eeece0; color:#416d6d; font-weight:650 }
+.parent-story .ios-inset .ios-row { font-size:3.6cqw }
+.parent-story .ios-inset .ios-row>span:last-child { color:#416d6d }
+.parent-story .ios-speed { padding:1cqw; gap:1cqw }
+.parent-story .ios-speed>button { flex:1; min-height:24px; text-align:center; font-size:3.6cqw; padding:1cqw; border-radius:1.5cqw }
+.parent-story .ios-speed>button[aria-pressed=true] { background:#fff; box-shadow:0 1px 3px #0002 }
+.parent-story .ios-native-action,.parent-story .ios-back { min-height:28px; color:#416d6d!important; font-size:4cqw; padding:2cqw 0!important }
+.parent-story .ios-section-links { display:flex; flex-direction:column; gap:3cqw; margin-top:4cqw }
+.parent-story .ios-section-links button { min-height:28px; color:#416d6d; font-size:3.8cqw }
+.parent-story .ios-delete { color:#b32e27!important; min-height:28px; font-size:4cqw }
+.parent-story .ios-confirm { border-radius:3cqw; padding:3cqw; background:#f6e0d0; margin-top:4cqw }
+.parent-story .ios-confirm button { min-height:26px; padding:2cqw 4cqw; color:#416d6d }
+.parent-story .ios-notice { background:#e6ebdd; border-radius:3cqw; padding:3cqw; margin-top:4cqw }
+@media(max-width:700px) {
+ .parent-story[data-parent-mode=docked] { height:155svh }
+ .parent-story[data-parent-mode=docked] .parent-stage { --parent-top:66px; padding:12px 16px 10px; grid-template-columns:minmax(105px,.8fr) minmax(0,1.2fr); grid-template-rows:62px minmax(0,1fr) 44px 42px; gap:12px }
+ .parent-story[data-parent-mode=docked] .parent-intro { flex-direction:column; align-items:flex-start; gap:4px }
+ .parent-story[data-parent-mode=docked] .parent-intro>p { max-width:none; font-size:10px }
+ .parent-story[data-parent-mode=docked] .parent-intro h2 { font-size:26px; max-width:330px }
+ .parent-story[data-parent-mode=docked] .parent-device { width:min(155px,calc((100svh - 280px)*.462)); padding:4px }
+ .parent-story[data-parent-mode=docked] .ios-screen { border-width:2px }
+ .parent-story[data-parent-mode=docked] .parent-panel { padding:17px 15px; border-radius:20px }
+ .parent-story[data-parent-mode=docked] .parent-panel:before { left:15px; width:32px }
+ .parent-story[data-parent-mode=docked] .parent-label { font-size:10px; margin-bottom:10px }
+ .parent-story[data-parent-mode=docked] .parent-panel h3 { font-size:24px; line-height:1.08; letter-spacing:-.04em }
+ .parent-story[data-parent-mode=docked] .parent-panel>p:not(.parent-label) { font-size:13px; line-height:1.6; margin:13px 0 }
+ .parent-story[data-parent-mode=docked] .parent-panel details { margin-top:12px }
+ .parent-story[data-parent-mode=docked] .parent-panel summary { font-size:12px; line-height:1.5; min-height:44px; align-items:flex-start; padding:8px 0 }
+ .parent-story[data-parent-mode=docked] .parent-reason { font-size:13px; line-height:1.65 }
+ .parent-story[data-parent-mode=docked] .parent-source-note { font-size:10px; padding:0 0 21px; text-align:center }
+ .parent-story[data-parent-mode=docked] .parent-skip { right:50%; transform:translateX(50%); bottom:6px; padding:5px; font-size:11px; white-space:nowrap; display:block }
+ .parent-story .ios-tabs>button { font-size:3cqw; white-space:normal }
+ .parent-story .ios-nav-title { font-size:5.2cqw }
+ .parent-story[data-parent-mode=docked] .parent-controls select { font-size:16px }
+}
+@media(max-height:580px) {
+ .parent-story[data-parent-mode=docked] { height:auto }
+ .parent-story[data-parent-mode=docked] .parent-stage { position:relative; top:auto; height:500px; grid-template-rows:50px minmax(0,1fr) 44px 35px; padding:12px 20px; gap:12px }
+ .parent-story[data-parent-mode=docked] .parent-device { width:140px }
+ .parent-story[data-parent-mode=docked] .parent-skip { bottom:12px }
+}
+@media print {
+ .parent-story[data-parent-mode=docked] { height:auto!important }
+ .parent-story[data-parent-mode=docked] .parent-stage { height:auto!important; position:static!important; display:block!important }
+ .parent-story[data-parent-mode=docked] .parent-panel { height:auto!important; overflow:visible!important; margin:20px 0!important }
+ .parent-story[data-parent-mode=docked] .parent-panels { max-height:none!important; height:auto!important }
+ .parent-story .hud-box { display:none!important }
+}
