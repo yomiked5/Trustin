@@ -1,0 +1,87 @@
+{
+  "id": "pip",
+  "edition": "illustrated-v1",
+  "title": "Pip and the Patient Seed",
+  "introduction": "Pip and the Patient Seed. In a sunny room, Pip finds something tiny. What will a little care help it become?",
+  "entry": "intro",
+  "cover": "stories-pip",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "intro",
+      "text": "Pip and the Patient Seed. In a sunny room, Pip finds something tiny. What will a little care help it become?",
+      "art": "cover",
+      "audio": "intro.m4a",
+      "cues": "intro.json",
+      "next": "seed",
+      "choices": [],
+      "legacyPage": null
+    },
+    {
+      "id": "seed",
+      "kind": "page",
+      "text": "One tiny seed. What could it become?",
+      "art": "seed",
+      "audio": "seed.m4a",
+      "cues": "seed.json",
+      "next": "plant",
+      "choices": [],
+      "legacyPage": 0
+    },
+    {
+      "id": "plant",
+      "kind": "page",
+      "text": "Pip added soil and a little water.",
+      "art": "plant",
+      "audio": "plant.m4a",
+      "cues": "plant.json",
+      "next": "sun",
+      "choices": [],
+      "legacyPage": 1
+    },
+    {
+      "id": "sun",
+      "kind": "page",
+      "text": "Sunlight warmed the pot each day.",
+      "art": "sun",
+      "audio": "sun.m4a",
+      "cues": "sun.json",
+      "next": "wait",
+      "choices": [],
+      "legacyPage": 2
+    },
+    {
+      "id": "wait",
+      "kind": "page",
+      "text": "Pip wanted to peek. She waited.",
+      "art": "wait",
+      "audio": "wait.m4a",
+      "cues": "wait.json",
+      "next": "shoot",
+      "choices": [],
+      "legacyPage": 3
+    },
+    {
+      "id": "shoot",
+      "kind": "page",
+      "text": "A green shoot! It was growing!",
+      "art": "shoot",
+      "audio": "shoot.m4a",
+      "cues": "shoot.json",
+      "next": "leaves",
+      "choices": [],
+      "legacyPage": 4
+    },
+    {
+      "id": "leaves",
+      "kind": "ending",
+      "text": "Two leaves opened. The end.",
+      "art": "leaves",
+      "audio": "leaves.m4a",
+      "cues": "leaves.json",
+      "next": null,
+      "choices": [],
+      "legacyPage": 5
+    }
+  ]
+}

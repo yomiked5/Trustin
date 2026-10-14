@@ -1,4 +1,5 @@
 import { chapterStops, tourFrame, tourProgress, connectorPath } from './curiosity-tour-core.mjs';
+import { mountSwipe } from './swipe.js';
 
 export function mountCuriosityTour(root, { win = window, policy = win.TJMotionPolicy } = {}) {
   if (!root) return;
@@ -69,10 +70,8 @@ export function mountCuriosityTour(root, { win = window, policy = win.TJMotionPo
     }
     update();
   }
-  controls.forEach(button => {
-    button.disabled = false;
-    button.addEventListener('click', () => {
-      const index = Number(button.dataset.tourTo);
+  function navigate(index) {
+      index = Math.max(0, Math.min(3, index));
       if (mode === 'scroll') {
         const bounds = root.getBoundingClientRect();
         const height = stage.getBoundingClientRect().height;
@@ -81,8 +80,12 @@ export function mountCuriosityTour(root, { win = window, policy = win.TJMotionPo
         select(index - 1, true);
         drawConnector();
       }
-    });
+  }
+  controls.forEach(button => {
+    button.disabled = false;
+    button.addEventListener('click', () => navigate(Number(button.dataset.tourTo)));
   });
+  mountSwipe(root.querySelector('.tour-controls'), direction => navigate(selected + 1 + direction));
   root.dataset.tourReady = 'true';
   win.addEventListener('scroll', schedule, {passive:true});
   win.addEventListener('resize', configure, {passive:true});

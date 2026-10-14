@@ -1,12 +1,12 @@
 # TrustinJr website bible
 
-Version 1.6 · October 13, 2026 (Pacific)
+Version 1.7 · October 13, 2026 (Pacific)
 
 ## Accepted direction
 
-Mike approved the first two homepage sections as the desired design: the native Curiosity hero and the three-activity gallery. Preserve those compositions. This revision extends their visual hierarchy and one-feature-at-a-time explanation to the iPhone Parent Dock and all deeper pages.
+Mike approved the first two homepage sections as the desired design: the native Curiosity hero and the three-activity gallery. Preserve those compositions. Their Overview / Packs / Ask / Continue rail now also accepts horizontal touch swipes. This revision makes the compact Watch and Parent Dock functional prepared previews with separate, stable explanations.
 
-The first two sections are byte-for-byte unchanged from v1.5. Curiosity markup SHA-256: `b8ab32528226f5b10b3c701bb28975a2a449c61492766d015def85196599894e`; gallery: `c8ebf5bf093a7b6c74d625142607f905029a2170e384f5be402ee5c34b18529c`. Their CSS and tour behavior are unchanged too.
+The first two sections’ HTML markup is unchanged from v1.5. Curiosity markup SHA-256: `b8ab32528226f5b10b3c701bb28975a2a449c61492766d015def85196599894e`; gallery: `c8ebf5bf093a7b6c74d625142607f905029a2170e384f5be402ee5c34b18529c`. The Curiosity rail alone adds touch intent handling and selected-state feedback; its approved composition and scroll narrative remain intact.
 
 **Show the real subject. Guide attention. Give depth a useful place.**
 
@@ -26,7 +26,7 @@ Keep actual product labels, readable answers, feedback, and errors within the pr
 
 The homepage devices are source-grounded HTML/CSS renderings, not native runtime or pixel-identical screenshots. The original Trustin art is unchanged. iOS fonts, symbols, hardware, and examples are web approximations. Example activity data is disclosed outside the phone. No account is connected.
 
-The working browser demo remains an adaptation. Its harmless Moon preference is illustrative, not a native topic category. Its listening controls affect browser recordings only. The separate phone tour shows the current iOS design and states that final release UI may change.
+The working browser demo remains an adaptation. Its harmless Moon preference is illustrative, not a native topic category. Its listening controls affect browser recordings only. The phone shows the current iOS hierarchy with local functional sample controls. Final release UI may change.
 
 ## Homepage sequence
 
@@ -34,15 +34,15 @@ The working browser demo remains an adaptation. Its harmless Moon preference is 
 |---|---|---|
 | Curiosity | The real native screen, without surrounding labels | Same Watch shrinks; Packs, Ask, Continue appear one at a time |
 | Activities | Three distinct visual worlds | Direct links to the corresponding prepared samples |
-| Their wonder. Your guidance. | The current iOS Today dashboard | Same phone shrinks; one relevant screen and connected explanation at a time |
-| Childhood | A concise no-advertising commitment | Philosophy link |
+| Their wonder. Your guidance. | A compact, stationary iOS Today dashboard | One connected explanation at a time; the phone changes screens within its fixed slot |
+| Childhood | A prominent red shield and “We do not advertise to children.” | No sponsored answers, purchase pressure or exceptions; commitment link |
 | Next step | One useful preview action | Availability, product-rendering, and AI questions in disclosures |
 
-No timed carousel, looping background animation, automatic sound, scroll interception, or moving interactive targets. Standard scrolling is reversible. Direct chapter controls remain outside device transforms. Reduced motion and short viewports use manual chapters. Without JavaScript, all feature articles remain in normal flow.
+No timed carousel, looping background animation, automatic sound, scroll interception, or moving interactive targets. Standard scrolling is reversible. Direct chapter controls remain outside devices. Homepage Curiosity retains its reduced-motion manual alternative. The two interactive exhibits always use manual chapters, a bounded sticky stage, and a visible skip link. Short viewports return to ordinary page flow. Without JavaScript, homepage and Parent feature articles remain in normal flow.
 
 ## Parent Dock tour: current source and reasons
 
-Native main was rechecked at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Parent/TrustinParentApp.swift`, `NativeFamilySetup.swift`, `ParentStoryReadingSettings.swift`, `WatchFaceSetup.swift`, and `Packages/TrustinCore/Sources/TrustinCore/LocalStoryBook.swift`. The retained September 28 setup screenshot was inspected for native palette, rounded styling, navigation, and tab treatment; it is not a screenshot of this website.
+Native main was rechecked at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Parent/TrustinParentApp.swift`, `NativeFamilySetup.swift`, `ParentStoryReadingSettings.swift`, `WatchFaceSetup.swift`, and `Packages/TrustinCore/Sources/TrustinCore/LocalStoryBook.swift`. The retained September 28 setup reference and October 8 native Watch contact sheets were inspected for source layouts, palette, navigation and proportions; they are not screenshots of this website. Watch references include TrustinWatchApp.swift, DiscoveryHome.swift, AskReader.swift, LocalStoryScreen.swift, ProjectMathScreen.swift and TrustinMotionView.swift.
 
 Earlier Parent/safeguard decisions were reconciled with current source. The later Master Guardian direction supersedes historical peer-admin proposals. Suspended Review Gates and daily book-renewal proposals are not reintroduced. No native code, backend, policy activation, or release changed.
 
@@ -56,19 +56,30 @@ Earlier Parent/safeguard decisions were reconciled with current source. The late
 | Guidance | Age, starting Math level, bounded explanation style | A useful starting point, preserve practice, understandable support; fixed books retain their wording |
 | Watch setup | Child selection, prepare/send connection, Watch list, optional face customization | Distinguish account/profile/device; expiry is not online status; disconnect has a precise scope |
 
-Each panel begins with a short explanation. “Why it’s designed this way” opens the full rationale and relevant limits. Only one feature and one connector are active. The phone’s screen changes with the selected chapter; the physical phone remains stable. Detailed reasoning is outside the app.
+Each panel begins with a short explanation. “Why it’s designed this way” opens the full rationale and relevant limits. Only one feature and one connector are active. The phone’s screen changes with the selected chapter; the physical phone and its grid slot remain stable. The panel occupies its own fixed-height, internally scrollable slot. Expanding the full rationale never changes the phone’s position or stage height. On mobile, the smaller phone sits beside the higher-priority description. Today/Activity/Safeguards/Watch setup tabs, child/date samples, activity detail and confirmed local deletion, reading pace, topic/style choices, and illustrative preparation/send controls work without connecting an account. Detailed reasoning stays outside the app.
 
 The current beta requires normal Watch/iPhone pairing; Apple Family Setup is not supported. Master Guardian sharing remains a separate unfinished direction and is not advertised as a working control.
 
 ## Demo behavior and visual ownership
 
-The demo opens a prepared Moon answer without autoplay. Activity links use a whitelist: Moon, seed, butterfly, story, math. Switching activities preserves independent page state while the page stays open.
+The demo opens Curiosity: original mascot, picture shelf, Continue and microphone. Watch geometry has the native 184:224 aspect ratio, rounded clipped screen, compact source-based controls and internal scrolling for complete answers. It never grows vertically to fit reader text. Home opens Ask Trustin / Math / Stories inside the device. The redundant external activity bar is removed. Activity deep links remain whitelisted; switching modes preserves prepared activity progress.
 
-The Watch contains content and functional child-facing controls. Its Home action returns to Curiosity topics and stops old narration. Redundant tutorial sentences and browser-sample commentary are removed from the product viewport.
+The microphone plays a finite demonstration: a visible sample child’s question outside the Watch, a listening state, then thinking stars, then a prepared Moon answer. Parents can explore three choices, another round of three, and return to Curiosity. Reduced motion shortens the simulation and removes animated effects. Leaving/resetting cancels pending work. No microphone is accessed and no live AI is called. Ordinary knowledge packs retain their complete prepared text; unrelated discoveries never lead into Moon follow-ups.
 
-A separate floating website panel shows one topic at a time: experience, guidance, listening pace, together, or completed preview activity. The phone design is a separate manual tour below. This avoids labeling website experiment controls as native product controls.
+Storytime uses the original *Pip and the Patient Seed* images, seven native recordings and word timing files. Cover, shelf, Continue, page turns, narration and read-along are based on the native layouts. Math retains three finite authored garden questions with hints and retries in the native screen hierarchy. These modes have no artificial loading delays; ordinary asset transfer still depends on the visitor’s connection. All audio is user-initiated and supports pause/resume/replay/retry.
 
-Audio supports Listen/Pause/Resume/Replay/Retry, complete readable text, progress, pace changes, stale-request cancellation, and stop on affected navigation. Moon guidance immediately replaces only the relevant discovery. Story/Math are not hijacked by a stale topic. Math has three finite challenges with useful retries. Completion invites a real-world next step. Logs contain only completed samples, never invented child history. Reload/reset clears state; no cookies or browser storage retain it.
+Four external Watch chapters—Experience, Packs, Ask, Guidance—use arrows, a selector and horizontal swipes. A connector and non-intercepting highlight mark the actual current control. Guidance changes a harmless sample Moon preference and shows its effect; it never weakens essential protections. Full reasoning belongs in the external panel.
+
+### Gesture and geometry contract
+
+- A touch starting inside the device belongs to its sample UI. It cannot change the surrounding explanation.
+- A horizontal swipe on the surrounding stage changes the explanation; right goes backward, left goes forward. Clicks, arrows and selectors remain available.
+- Vertical movement remains page or panel scrolling; pinch zoom remains available. A swipe cannot accidentally activate the button under the finger.
+- Device and description have separate fixed slots. Changing text, chapter or disclosure cannot move, stretch or resize the device.
+- Viewport sizing reserves room for heading, controls, descriptions and even the Watch strap. Narrow or short screens get a readable fallback instead of trapped scrolling.
+- Sticky sections are bounded by normal document flow and include direct skip links. There is no wheel interception or forced sequence.
+
+State is memory-only. The parent phone uses clearly fictional samples, not analytics from the visitor’s Watch play. Counts are not learning scores. Reload/reset clears the Watch state. Nothing is sent to a physical Watch. Native code, permissions and release status are unchanged.
 
 ## Deeper pages
 
@@ -88,7 +99,7 @@ System typography; dark natural ink; quiet near-white marketing surfaces. The na
 
 Use real artifacts and purposeful original art before decoration. Keep one explanatory focal point. Put labels near their referents. A still voice mark or connector can carry the relationship without continuous animation.
 
-Curiosity retains its accepted 300ms reveal. Parent panels use a finite 280ms reveal; the reader drives scene progression. Motion-off changes the layout to direct manual selection rather than concealing information. No new runtime dependencies or expensive generation were required.
+Curiosity retains its accepted 300ms reveal. Exhibit descriptions change by direct selection; the device remains stationary. Motion-off changes the layout to direct manual selection rather than concealing information. No new runtime dependencies or expensive generation were required.
 
 ## Research and truth
 
@@ -100,7 +111,7 @@ The learning whitepaper separately distinguishes scaffolding, adult-guided play,
 
 See [VALIDATION.md](VALIDATION.md). Source tests cover interactions, not rendering. No current browser/device screenshot, Safari playback, screen-reader session, measured Web Vitals, conversion, or efficacy result is claimed. The supported browser capability is absent in the managed environment; no substitute browser path was used.
 
-Next valuable visual check: the parent scene at 320/390px and short landscape, desktop 1024/1440px, reverse scroll, each chapter, expanded rationale, motion-off, 200% text zoom, then real demo audio and keyboard use. Ask an unfamiliar parent what is product UI, what is a website annotation, what their choices change, and what is available today.
+Next valuable visual check: both exhibits at 320/390px and short landscape, desktop 1024/1440px, outside swipes versus inside touches, every chapter, expanded rationale, bounded sticky exit, motion-off, 200% text zoom, then real demo audio and keyboard use. Ask an unfamiliar parent what is product UI, what is a website annotation, what their choices change, and what is available today.
 
 ## Ownership, launch, and maintenance
 

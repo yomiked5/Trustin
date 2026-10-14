@@ -1,77 +1,69 @@
-// Execute the actual parent scene with bounded DOM doubles. No rendered QA claim.
+// Execute the shipped Parent Dock controller. DOM doubles are not rendered browser QA.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-import {parentChapters,parentScreen} from '../dist/parent-ui.mjs';
-import {connectorPath,tourProgress} from '../dist/curiosity-tour-core.mjs';
+import {parentChapters,parentScreen,initialParentState} from '../dist/parent-ui.mjs';
+import {mountSwipe} from '../dist/swipe.js';
+import {drawSpotlight} from '../dist/spotlight.js';
 const source=readFileSync(new URL('../dist/parent-tour.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'').replaceAll('export function','function');
-const home=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
-const demo=readFileSync(new URL('../dist/demo/index.html',import.meta.url),'utf8');
-function node(rect={left:0,top:0,width:100,height:100}) {
-  return {dataset:{},attrs:{},events:{},disabled:true,hidden:false,clientWidth:1200,offsetHeight:500,offsetTop:100,
-    style:{values:{},setProperty(k,v){this.values[k]=v;},removeProperty(k){delete this.values[k];}},
-    setAttribute(k,v){this.attrs[k]=String(v);},removeAttribute(k){delete this.attrs[k];},hasAttribute(k){return k in this.attrs;},
-    addEventListener(k,fn){this.events[k]=fn;},getBoundingClientRect(){return {...rect,right:rect.left+rect.width,bottom:rect.top+rect.height};}};
+function node(rect={left:0,top:0,width:100,height:100}){
+ return {dataset:{},attrs:{},events:{},style:{},disabled:false,hidden:false,offsetTop:100,scrollTop:0,innerHTML:'',classList:{add(){}},
+ setAttribute(k,v){this.attrs[k]=String(v);},removeAttribute(k){delete this.attrs[k];},focus(){this.focused=true;},addEventListener(k,fn){this.events[k]=fn;},removeEventListener(k){delete this.events[k];},getBoundingClientRect(){return {...rect,right:rect.left+rect.width,bottom:rect.top+rect.height};},closest(){return null;}};
 }
-function setup({reduced=false,small=false,short=false,staticDemo=false}={}) {
-  const bounds={left:0,top:72,width:1200,height:5760};
-  const root=node(bounds),stage=node({left:0,top:72,width:1200,height:728}),device=node({left:160,top:120,width:260,height:500});
-  if(staticDemo)root.attrs['data-parent-static']='';
-  const scroller=node(),target=node({left:185,top:230,width:200,height:150});
-  const screen=node();screen.querySelector=s=>s==='.ios-scroll'?scroller:target;
-  const panels=parentChapters.map(c=>{const p=node({left:680,top:200,width:430,height:300});p.dataset.parentPanel=c.id;p.detail=node();p.querySelector=()=>p.detail;return p;});
-  const picker=node(),prev=node(),next=node(),path=node(),dot=node(),status=node();
-  const items={'.parent-stage':stage,'.parent-device':device,'[data-parent-screen]':screen,'[data-parent-picker]':picker,'[data-parent-prev]':prev,'[data-parent-next]':next,'[data-parent-line]':path,'[data-parent-dot]':dot,'[data-parent-status]':status};
-  root.querySelector=s=>items[s];root.querySelectorAll=()=>panels;
-  let enabled=!reduced,subscriber;const events={},frames=[],scrolls=[];
-  const policy={enabled:()=>enabled,subscribe:fn=>{subscriber=fn;}};
-  const win={TJMotionPolicy:policy,scrollY:0,getComputedStyle:()=>({top:'72px'}),matchMedia:q=>({matches:q.includes('width')?small:q.includes('height')?short:!enabled}),requestAnimationFrame:fn=>{frames.push(fn);return frames.length;},cancelAnimationFrame:id=>{frames[id-1]=null;},addEventListener:(name,fn)=>{events[name]=fn;},scrollTo:o=>scrolls.push(o)};
-  const context=vm.createContext({window:win,document:{querySelector:()=>root},parentChapters,parentScreen,connectorPath,tourProgress});
-  vm.runInContext(source,context);
-  return {root,screen,device,panels,picker,prev,next,path,dot,status,events,frames,scrolls,context,
-    progress(p){bounds.top=72-p*(5760-728);events.scroll();frames.splice(0).forEach(fn=>fn?.());},
-    choose(i){picker.value=String(i);picker.events.change();},off(){enabled=false;subscriber();},on(){enabled=true;subscriber();}};
+function setup(){
+ const root=node(),stage=node({left:0,top:66,width:390,height:620}),device=node({left:18,top:180,width:130,height:280}),screen=node(),scroll=node(),target=node({left:30,top:240,width:105,height:95});
+ target.closest=()=>device;
+ const panels=parentChapters.map(c=>{const p=node({left:170,top:170,width:200,height:370});p.dataset.parentPanel=c.id;return p;});
+ const picker=node(),prev=node(),next=node(),path=node(),dot=node(),status=node(),connector=node();let box;
+ stage.append=n=>{box=n;};stage.querySelector=s=>({'[data-hud-line]':path,'[data-hud-dot]':dot,'[data-hud-box]':box}[s]);
+ const controls=new Map();
+ screen.querySelector=s=>{
+   if(s==='.ios-scroll')return scroll;
+   const action=s.match(/data-parent-action="([^"]+)"/)?.[1];if(action){if(!screen.innerHTML.includes('data-parent-action="'+action+'"'))return null;if(!controls.has(action)){const b=node();b.dataset.parentAction=action;b.closest=()=>b;controls.set(action,b);}return controls.get(action);}
+   const key=s.match(/data-parent-target="([^"]+)"/)?.[1];return key&&screen.innerHTML.includes('data-parent-target="'+key+'"')?target:null;
+ };
+ root.querySelector=s=>({'.parent-stage':stage,'.parent-device':device,'[data-parent-screen]':screen,'[data-parent-picker]':picker,'[data-parent-prev]':prev,'[data-parent-next]':next,'[data-parent-line]':path,'[data-parent-dot]':dot,'[data-parent-status]':status,'.parent-connector':connector}[s]);
+ root.querySelectorAll=()=>panels;
+ const events={},frames=new Map();let frameID=0,audio;
+ const win={requestAnimationFrame(fn){frames.set(++frameID,fn);return frameID;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(k,fn){events[k]=fn;}};
+ const doc={querySelector:()=>null,createElement:()=>node(),addEventListener(){}};
+ class AudioDouble {constructor(){audio=this;this.paused=true;this.playbackRate=1;}pause(){this.paused=true;}removeAttribute(){this.src='';}load(){}play(){this.paused=false;if(this.defer)return new Promise((resolve,reject)=>{this.reject=reject;});return Promise.resolve();}}
+ const context=vm.createContext({window:win,document:doc,Audio:AudioDouble,parentChapters,parentScreen,initialParentState,mountSwipe,drawSpotlight,root});
+ vm.runInContext(source,context);const controller=vm.runInContext('mountParentTour(root)',context);
+ const flush=()=>{for(const [id,fn] of frames){frames.delete(id);fn();}};
+ flush();
+ return {root,stage,device,screen,panels,picker,prev,next,status,path,dot,controller,events,flush,get audio(){return audio;},choose:i=>controller.navigate(i),click(action){const button=screen.querySelector('[data-parent-action="'+action+'"]');assert.ok(button,'Missing Parent action '+action);screen.events.click({target:button});flush();}};
 }
-test('parent arrival shows only the current iOS product; shrink precedes annotations',()=>{
-  const a=setup();assert.equal(a.root.dataset.parentChapter,'overview');assert.ok(a.panels.every(p=>p.hidden));assert.match(a.screen.innerHTML,/A moment together/);assert.doesNotMatch(a.screen.innerHTML,/Website|Sample|holograph|tooltips/i);
-  a.progress(.14);assert.ok(a.panels.every(p=>p.hidden));assert.ok(Number(a.device.style.values['--phone-scale'])<1);
+test('Parent Dock starts with one explanation and a stable, independent phone slot',()=>{
+ const a=setup();assert.equal(a.root.dataset.parentMode,'docked');assert.equal(a.root.dataset.parentChapter,'today');assert.equal(a.panels.filter(x=>!x.hidden).length,1);assert.equal(a.device.attrs.role,'group');assert.equal(a.screen.attrs['aria-hidden'],undefined);
+ const rect=a.device.getBoundingClientRect();for(const i of [1,6,2,3,4,0]){a.choose(i);a.flush();assert.equal(a.panels.filter(x=>!x.hidden).length,1);assert.equal(a.panels[i].hidden,false);assert.deepEqual(a.device.getBoundingClientRect(),rect);assert.deepEqual(a.device.style,{});assert.match(a.path.attrs.d,/^M/);}
 });
-test('every scroll chapter selects one feature, matching screen and connector in both directions',()=>{
-  const a=setup();
-  for(const i of [0,1,2,3,4,5,6,5,2,0]){
-    a.progress(vm.runInContext(`parentStop(${i})`,a.context));
-    assert.equal(a.root.dataset.parentChapter,parentChapters[i].id);assert.equal(a.panels.filter(p=>!p.hidden).length,1);assert.equal(a.panels[i].hidden,false);assert.equal(a.picker.value,String(i));assert.match(a.screen.innerHTML,new RegExp(`data-parent-target="${parentChapters[i].id}"`));assert.match(a.path.attrs.d,/^M/);
-  }
-  a.progress(0);assert.ok(a.panels.every(p=>p.hidden));assert.equal(a.path.attrs.d,'');assert.equal(a.prev.disabled,true);
+test('chapter controls clamp at each end and swiping outside selects the adjacent description',()=>{
+ const a=setup();a.choose(-50);assert.equal(a.picker.value,'0');assert.equal(a.prev.disabled,true);a.choose(6);assert.equal(a.next.disabled,true);a.next.events.click();assert.equal(a.picker.value,'6');
+ const target={closest:()=>null};a.stage.events.pointerdown({pointerType:'touch',pointerId:1,clientX:20,clientY:10,target});a.stage.events.pointerup({pointerId:1,clientX:100,clientY:12});assert.equal(a.picker.value,'5');
 });
-test('reduction, short screens and demo mode retain all chapters through manual controls',()=>{
-  for(const options of [{reduced:true},{short:true},{staticDemo:true}]){
-    const a=setup(options);assert.equal(a.root.dataset.parentMode,'manual');
-    for(let i=0;i<parentChapters.length;i++){a.choose(i);assert.equal(a.panels[i].hidden,false);assert.equal(a.panels.filter(p=>!p.hidden).length,1);}
-    assert.equal(a.next.disabled,true);assert.equal(a.scrolls.length,0);assert.match(a.status.textContent,/Watch setup/);a.prev.events.click();assert.equal(a.picker.value,'5');
-  }
+test('in-phone tabs select their native page and retain keyboard focus inside the phone',()=>{
+ const a=setup();for(const [action,index] of [['activity',2],['topics',3],['setup',6],['today',0]]){a.click(action);assert.equal(a.picker.value,String(index));assert.equal(a.screen.querySelector('[data-parent-action="'+action+'"]').focused,true);}
 });
-test('manual motion off clears transforms, connectors and open stale explanations',()=>{
-  const a=setup();a.progress(.45);a.panels[2].detail.attrs.open='';a.off();assert.equal(a.root.dataset.parentMode,'manual');assert.equal(a.device.style.values['--phone-scale'],undefined);assert.equal(a.path.attrs.d,'');assert.equal(a.panels[2].detail.hasAttribute('open'),false);a.choose(3);assert.equal(a.panels[3].hidden,false);a.on();assert.equal(a.root.dataset.parentMode,'scroll');
+test('child and date controls update illustrative counts; Together explains its source',()=>{
+ const a=setup();a.click('child');assert.match(a.screen.innerHTML,/Adventurer/);a.click('range');assert.match(a.screen.innerHTML,/This week/);a.click('moment');assert.match(a.screen.innerHTML,/Inspired by their saved question/);a.choose(4);a.choose(0);assert.match(a.screen.innerHTML,/Adventurer/);
 });
-test('native chapter navigation is bounded and no wheel or touch interception is installed',()=>{
-  const a=setup();a.next.events.click();assert.equal(a.scrolls[0].behavior,'smooth');a.choose(6);assert.ok(a.scrolls[1].top>a.scrolls[0].top);assert.doesNotMatch(source,/preventDefault|setInterval|setTimeout|new Audio|fetch\(/);
-  assert.equal(vm.runInContext('parentFrame(NaN).chapter',a.context),-1);assert.equal(vm.runInContext('parentFrame(2).chapter',a.context),6);
+test('activity detail and confirmed deletion affect only the local sample',()=>{
+ const a=setup();a.click('detail');assert.equal(a.picker.value,'2');assert.match(a.screen.innerHTML,/Trustin’s answer/);a.click('confirmDelete');assert.match(a.screen.innerHTML,/Delete this activity\?/);a.click('cancelDelete');assert.equal(a.controller.state.deleted,false);a.click('confirmDelete');a.click('delete');assert.equal(a.controller.state.deleted,true);assert.match(a.status.textContent,/preview only/);a.click('restore');assert.equal(a.controller.state.deleted,false);
 });
-test('mobile layout lifts the phone and coalesces scroll updates; pagehide cancels pending work',()=>{
-  const a=setup({small:true});a.progress(.3);assert.equal(a.device.style.values['--phone-x'],'0px');assert.ok(Number.parseFloat(a.device.style.values['--phone-y'])<0);assert.ok(Number(a.device.style.values['--phone-scale'])<=.68);a.events.scroll();a.events.scroll();assert.equal(a.frames.length,1);a.events.pagehide();assert.equal(a.frames[0],null);a.events.pageshow();assert.equal(a.root.dataset.parentMode,'scroll');
+test('sample safeguards persist across chapters while essential protections have no editable control',()=>{
+ const a=setup();a.choose(3);a.click('topic-0');assert.equal(a.controller.state.topics[0],1);a.click('save');assert.match(a.status.textContent,/No account or Watch was changed/);a.choose(4);a.choose(3);assert.match(a.screen.innerHTML,/Always protected/);assert.equal(a.controller.state.topics[0],1);assert.doesNotMatch(a.screen.innerHTML,/data-parent-action="(?:disable|essential|unprotect)/);
 });
-test('source-based screens keep native speed choices, four tabs, and no fabricated connected Watch',()=>{
-  assert.match(parentScreen('reading'),/>Slower<.*>Calm<.*>Natural</);assert.doesNotMatch(parentScreen('reading'),/Brisk|quicker/);assert.match(parentScreen('setup'),/No Watch connected yet/);assert.match(parentScreen('topics'),/Always protected/);
-  for(const c of parentChapters){const html=parentScreen(c.id);for(const tab of ['Today','Activity','Safeguards','Watch setup'])assert.ok(html.includes(tab));assert.doesNotMatch(html,/<button|<a |<select/);}
+test('reading pace uses native speed options and prerecorded sample audio',async()=>{
+ const a=setup();a.choose(4);a.click('speed-0');a.click('sample');await Promise.resolve();assert.equal(a.audio.playbackRate,.75);assert.equal(a.audio.src,'/assets/pip/seed.m4a');a.click('speed-2');assert.equal(a.audio.playbackRate,1);a.choose(0);assert.equal(a.audio.paused,true);
 });
-test('homepage and demo separate website annotations from product rendering and expose no-JS copy',()=>{
-  for(const html of [home,demo])for(const c of parentChapters){assert.ok(html.includes(`data-parent-panel="${c.id}"`));assert.ok(html.includes(c.why));}
-  assert.match(home,/Their wonder\.<br><span>Your guidance\./);assert.doesNotMatch(home,/id="watch-content"|src="\/app.js"/);assert.match(demo,/data-parent-static/);assert.match(demo,/Moon preference is a website illustration, not a native topic category/);
+test('setup is demonstrable without claiming a real connected Watch',()=>{
+ const a=setup();a.choose(6);a.click('prepare');assert.match(a.screen.innerHTML,/Ready for the paired Watch/);a.click('send');assert.match(a.status.textContent,/sends nothing/);assert.match(a.screen.innerHTML,/No Watch connected yet/);
 });
-test('demo explanation picker reveals one selected website pane without changing product state',()=>{
-  const picker=node();picker.value='experience';const panels=['experience','guidance','pace','together','activity'].map(id=>({dataset:{previewPanel:id}}));
-  vm.runInNewContext(readFileSync(new URL('../dist/demo-exhibit.js',import.meta.url),'utf8'),{document:{querySelector:()=>picker,querySelectorAll:()=>panels}});
-  assert.equal(panels.filter(p=>!p.hidden).length,1);for(const panel of panels){picker.value=panel.dataset.previewPanel;picker.events.change();assert.equal(panels.filter(p=>!p.hidden).length,1);assert.equal(panel.hidden,false);}assert.equal(picker.disabled,false);
+test('all chapter copy remains outside the phone and full rationale is available in fixed panels',()=>{
+ const css=readFileSync(new URL('../dist/parent-tour.css',import.meta.url),'utf8');
+ assert.match(css,/\.parent-panel \{ height:100%; overflow-y:auto/);
+ for(const path of ['index.html','demo/index.html']){const html=readFileSync(new URL('../dist/'+path,import.meta.url),'utf8');for(const c of parentChapters){assert.ok(html.includes('data-parent-panel="'+c.id+'"'));assert.ok(html.includes(c.why));}assert.match(html,/Changes stay in this preview/);}
+ assert.doesNotMatch(source,/scrollTo\(|--phone-scale|--phone-y/);
 });

@@ -1,5 +1,11 @@
 # Deployment and domain handoff
 
+## Compact interactive exhibits — revision 1.7
+
+Public baseline / rollback source: `6d5bfcc55d69564f7a073bc58fc7708de73f8d47`. The GitHub → Cloudflare Pages route remains unchanged. This revision adds touch swiping, the red no-advertising commitment, native-layout Watch Home and scripted microphone, original Pip media, and functional fixed-geometry Parent Dock chapters. Private review remains owner-only/noindex; production retains public indexing, contact, sitemap and preview/404 rules.
+
+The tested source passes 61 behavior tests, syntax validation for 14 scripts, seven-page integrity and media/timing hashes. Exact source/deployment receipts are recorded in the project handoff. Rendered iPhone/Safari acceptance remains outstanding; publication does not establish it. No DNS, hosting plan, account, native source or release pipeline is changed. Prior records below are historical, with their own evidence boundaries.
+
 ## Parent Dock and full-site redesign — revision 1.6
 
 Public baseline: marketing main `83e889c382f2ccbb4861ff55a9197d458a6714aa`. The existing GitHub → Cloudflare Pages deployment remains the production route. Revision 1.6 preserves the first two approved homepage sections, adds the source-based iPhone tour, and redesigns all deeper pages. The private review stays owner-only/noindex; the public export keeps public indexing, sitemap, contact and preview/404 header rules.

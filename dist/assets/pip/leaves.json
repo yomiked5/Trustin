@@ -1,0 +1,32 @@
+{
+  "audioSHA256": "49327c321ee1960eb1ca65669d6cb97630fdbde9587b6549e7dcde24c6661b8a",
+  "text": "Two leaves opened. The end.",
+  "duration": 2.75,
+  "words": [
+    {
+      "word": "Two",
+      "start": 0,
+      "end": 0.2811
+    },
+    {
+      "word": "leaves",
+      "start": 0.6031,
+      "end": 1.0447
+    },
+    {
+      "word": "opened.",
+      "start": 1.1457,
+      "end": 1.5271
+    },
+    {
+      "word": "The",
+      "start": 2.1305,
+      "end": 2.331
+    },
+    {
+      "word": "end.",
+      "start": 2.3716,
+      "end": 2.5922
+    }
+  ]
+}

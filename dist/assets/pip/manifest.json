@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "productionAudio": true,
+  "files": {
+    "book.json": {
+      "bytes": 2094,
+      "sha256": "a9966118304c1b611373c062c518466805c31e9aaa43621c311d35a1f8963ebe"
+    },
+    "cover.jpg": {
+      "bytes": 36268,
+      "sha256": "13e8315b2d17868120a1fd8e48d77ba6484afff27ec6852e0d525a76e93a61cc"
+    },
+    "intro.json": {
+      "bytes": 1884,
+      "sha256": "0333453f699467928d36a111f95a551694dc1df245ecf8d488a977632acb0c9c"
+    },
+    "intro.m4a": {
+      "bytes": 83737,
+      "sha256": "c0be487d3d73e9d0522423c756119c748028b0eb2a41d49d060f29ed7fd7421e"
+    },
+    "leaves.jpg": {
+      "bytes": 36268,
+      "sha256": "13e8315b2d17868120a1fd8e48d77ba6484afff27ec6852e0d525a76e93a61cc"
+    },
+    "leaves.json": {
+      "bytes": 553,
+      "sha256": "618afdcbfee18e6a6917a53ea70b262fae2bdff639cb5cf67deff1ef2aff24ac"
+    },
+    "leaves.m4a": {
+      "bytes": 23307,
+      "sha256": "49327c321ee1960eb1ca65669d6cb97630fdbde9587b6549e7dcde24c6661b8a"
+    },
+    "plant.jpg": {
+      "bytes": 38961,
+      "sha256": "ab922b63127a3779098f919043b054e380bf5fa99c92eb9bf1534298885e1c17"
+    },
+    "plant.json": {
+      "bytes": 718,
+      "sha256": "3fd4aa59d48ba0de9f75de0da64499b8f09fd848fb05dee42f87fc6cf2f2000e"
+    },
+    "plant.m4a": {
+      "bytes": 30361,
+      "sha256": "92609b13727c842eda385fd40d9c9a46545620441f82aa630bf6890c9652f7c1"
+    },
+    "seed.jpg": {
+      "bytes": 39364,
+      "sha256": "c92fee46a585d1217ecb8875c68958a5b2f99c4fe9ac95c0e1b548b3a3bfb88a"
+    },
+    "seed.json": {
+      "bytes": 720,
+      "sha256": "0dc3cfc6d031d07a2e7a961bf74fb5a9f0eac812f7f71232e1f6d16428d778b3"
+    },
+    "seed.m4a": {
+      "bytes": 28608,
+      "sha256": "4f1bac319702b4f822996bb7b029b693ee6bb9b28c4846671df57e2c1d048e38"
+    },
+    "shoot.jpg": {
+      "bytes": 37861,
+      "sha256": "dc21db918a53f09b34943bc19a11d123cdc19c98f62064502af2b2931bdd92ea"
+    },
+    "shoot.json": {
+      "bytes": 636,
+      "sha256": "2b85f8a56de3d62458b81032ea7bdb428cb8c2a88c250a6a5fa77d275cd31077"
+    },
+    "shoot.m4a": {
+      "bytes": 23040,
+      "sha256": "db930362de0d1c38eb6c2c309397e99fc35c75595b765a8220e51e1095c1b611"
+    },
+    "sun.jpg": {
+      "bytes": 37248,
+      "sha256": "518f63a03d0cc14b530850a9bdea1b9ecf4f36d9c063d8ef257725bcdb99e237"
+    },
+    "sun.json": {
+      "bytes": 643,
+      "sha256": "3df323633a9e6c7ff24fe2e949da31a7e6be6db20b9d77511f1402271e45d973"
+    },
+    "sun.m4a": {
+      "bytes": 23236,
+      "sha256": "fdf4a87af9410e4045a7dfb209711f83c9ac10aea1dc9512ea03741f3ff80e1e"
+    },
+    "wait.jpg": {
+      "bytes": 37513,
+      "sha256": "c919c2affb08ebc85ab7bd0dde2d333798dbf8cc5c3747c7f5d0eeee21f03586"
+    },
+    "wait.json": {
+      "bytes": 639,
+      "sha256": "c9750916eb491472acb389b19172515ccae3b18637d2ff3978c29ebf0feda22c"
+    },
+    "wait.m4a": {
+      "bytes": 30017,
+      "sha256": "861284cde9aa666216fd8f3a199999be489d10d6f3c9adb7b8d4813f105fd7d7"
+    }
+  }
+}

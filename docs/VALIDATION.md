@@ -1,37 +1,36 @@
 # Validation evidence
 
-Revision 1.6 · October 13, 2026 (Pacific). Marketing website and scripted demo only.
+Revision 1.7 · October 13, 2026 (Pacific). Marketing website and scripted demo only.
 
-## Executed source checks
+## Executed checks
 
-- `npm test`: **62 Node tests**, syntax validation of **11 shipped JS/MJS files**, static integrity across **7 HTML routes**.
-- Curiosity hero and activity gallery markup compared directly with v1.5: **both unchanged**. Their shared styles and scene modules are unchanged.
-- Parent scene tests execute the shipped controller with small DOM/viewport doubles: annotation-free arrival, shrink before labels, every chapter forward/backward, one visible panel, matching native screen/connector, manual/reduced-motion/short-screen modes, frame coalescing, lifecycle cleanup, native speed choices, and separation of product/UI commentary.
-- Demo tests preserve complete sample flows, related/unrelated parent preferences, activity memory, Math retries, audio pause/resume/replay/retry, stale promises, pace, reset, and honest completed-only logs. The new native-style Home control stops playback and returns to topics. Website explanation selection is independent of product state.
-- Editorial checks cover disclosure deep links, malformed hashes, print expansion, and restoration of the reader’s choices.
-- Seven-page checks validate unique titles/descriptions, one H1, anchors, local files, SVG references, original content/audio references, reserved image dimensions, canonical/social URLs, sitemap, and the correct indexing profile.
-- The established 13 core text-color pairs exceed 4.5:1 by calculation. This is not a complete rendered contrast audit of every new composite surface.
-- All original raster art, audio, and authored content remain unchanged. No new provider, dependency, account, microphone, database, browser storage, or tracking integration.
-- `git diff --check` is the final packaging gate. Private and public indexing profiles are verified separately.
+- `npm test`: **61 Node tests**, syntax validation of **14 shipped JS/MJS files**, static integrity across **7 HTML routes**.
+- The first two approved homepage sections’ HTML remains unchanged. Curiosity’s rail deliberately gains touch swiping and selected-state feedback; its source artwork and composition are preserved.
+- Gesture tests cover left/right intent, click suppression, vertical scrolling, cancellation, taps, mouse input, and exclusion of device/form interactions. The actual homepage and Parent controllers execute swipe handling with DOM doubles.
+- Watch runtime tests execute shipped code for Curiosity, live Home, internal activity selection, the finite microphone/stars sequence, two three-choice rounds and return, cancellation, links, recorded audio retry/pause/resume, stale promises, sample policy, Math retries, Pip completion, reading pace, word timings and reset.
+- Seed/butterfly completion returns to Curiosity without unrelated Moon follow-ups.
+- Parent controller checks cover the single-panel fixed-stage state, bounded chapter navigation, local native tabs/focus, child/date examples, Together rationale, activity detail/confirmed local deletion, essential-protection separation, topic/style preferences, reading pace/sample and illustrative setup.
+- Existing motion, state and editorial checks remain. Seven-page checks validate titles/descriptions, H1s, anchors, local assets, SVGs, image dimensions, social/canonical URLs and sitemap. Private and public indexing profiles are checked separately.
+- Both original story collections have complete referenced media. Audio SHA-256 matches timing metadata and readable text matches the cue text; all seven imported Pip recordings match their native hashes.
+- The 13 established core text-color pairs exceed 4.5:1 by calculation; this does not audit every rendered composite surface.
+- `git diff --check` passes before packaging. No runtime dependency, provider, microphone, account, tracking or persistent browser storage was introduced.
 
 ## Native source grounding
 
-Native main remains `34557847ad424bd0fdac7419b44563737cb499cf`. Parent app, setup, story reading, watch-face source, and reading-speed model were read. The September 28 native setup reference image was inspected. Current source specifies Slower/Calm/Natural; the source review corrected an initial website-only speed-label mismatch before publication. The hero is a web rendering, not a new native screenshot.
+Native main remains `34557847ad424bd0fdac7419b44563737cb499cf`. Watch app, Curiosity, Ask reader, story, Math and motion source were read alongside current Parent/setup/reading/Watch-face source. October 8 native screen contact sheets and the retained Parent setup reference were inspected.
 
-Existing Parent decisions supplied child isolation, honest saved-activity/date/freshness semantics, activity-based conversation rationale, safeguards versus preferences, and precise Watch-access scope. No claim of a new native build, backend rollout, physical-device acceptance, or App Store release.
+The Watch uses compact 184:224 proportions and native layout hierarchy. Its original Pip media is copied unchanged. The Parent phone retains 390:844 proportions, source-based tabs and relevant sample screens. These are functional web recreations with prepared examples, not claims of pixel-identical native runtime, physical-device acceptance, a backend rollout or a release.
 
 ## Verification boundary
 
-**Actual rendered/browser/device acceptance remains incomplete.** The supported control-browser capability is absent in this managed environment. No preview server, alternate browser automation, browser installation, or substitute screenshot renderer was used.
+**Rendered browser/device acceptance remains incomplete.** The supported control-browser capability is absent in the managed environment. No alternate browser automation, preview server, browser installation or substitute screenshot renderer was used.
 
-Not verified: breakpoint fit, sticky behavior, connector alignment, native focus/accessibility tree, real Safari playback, zoom, screen-reader behavior, animation feel, or Core Web Vitals. DOM/Audio/geometry doubles do not prove these. Earlier browser evidence for older revisions does not validate this layout.
+Source/DOM/Audio/geometry checks do not establish actual Safari fit, sticky behavior, connector alignment, touch feel, accessibility tree, screen-reader use, playback or Core Web Vitals. Earlier visual evidence from older revisions does not validate this revision.
 
-Prior unchanged-asset evidence includes 28 original blob matches and 13 successful audio decodes; no new listening session is claimed.
+## Next useful visual pass
 
-## Next useful acceptance pass
+At 320/390px portrait, short landscape and 1024/1440px desktop: confirm the Watch and its explanation fit together; swipe the surrounding stage without affecting in-device controls; switch all Parent chapters and expand rationale without moving the phone; use skip links and reverse scroll. Check motion-off, 200% text zoom, keyboard and screen reader.
 
-At 320/390px portrait, short landscape, and 1024/1440px desktop: inspect the parent phone/panel spacing, chapter jumping and reversal, optional rationale, motion-off, and 200% text zoom. Then exercise Home, every discovery, Story/Math completion, related/unrelated guidance, pace, reset, audio retry/backgrounding, keyboard, and screen reader.
+On real iPhone Safari, test microphone simulation, Home, discoveries, Pip and Math endings, guidance, narration, pace, backgrounding and reset. Ask an unfamiliar adult which elements are product UI versus website explanation and what a sample setting actually changes.
 
-Ask an unfamiliar adult to distinguish product pixels from website guidance and explain what is currently available. Do not infer comprehension from time on page. No child identity is needed.
-
-The public domain is already launched. This revision preserves existing DNS, indexing, contact, and hosting. Deployment receipts are separate from visual acceptance; see the project handoff. Native privacy/consent/provider/retention/deletion and device compatibility remain native-release responsibilities.
+Publication receipts verify deployment, not visual acceptance. Existing public indexing, contact, hosting and DNS remain unchanged. Native privacy, consent, retention, deletion and device compatibility remain separate release responsibilities.

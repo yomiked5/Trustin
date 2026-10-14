@@ -1,0 +1,112 @@
+{
+  "audioSHA256": "c0be487d3d73e9d0522423c756119c748028b0eb2a41d49d060f29ed7fd7421e",
+  "text": "Pip and the Patient Seed. In a sunny room, Pip finds something tiny. What will a little care help it become?",
+  "duration": 9.55,
+  "words": [
+    {
+      "word": "Pip",
+      "start": 0.1003,
+      "end": 0.4407
+    },
+    {
+      "word": "and",
+      "start": 1.042,
+      "end": 1.1921
+    },
+    {
+      "word": "the",
+      "start": 1.1921,
+      "end": 1.3324
+    },
+    {
+      "word": "Patient",
+      "start": 1.3425,
+      "end": 1.8432
+    },
+    {
+      "word": "Seed.",
+      "start": 2.0638,
+      "end": 2.4443
+    },
+    {
+      "word": "In",
+      "start": 3.3862,
+      "end": 3.5064
+    },
+    {
+      "word": "a",
+      "start": 3.5064,
+      "end": 3.6265
+    },
+    {
+      "word": "sunny",
+      "start": 3.7068,
+      "end": 4.0674
+    },
+    {
+      "word": "room,",
+      "start": 4.0675,
+      "end": 4.3678
+    },
+    {
+      "word": "Pip",
+      "start": 4.929,
+      "end": 5.2294
+    },
+    {
+      "word": "finds",
+      "start": 5.2897,
+      "end": 5.6803
+    },
+    {
+      "word": "something",
+      "start": 5.6904,
+      "end": 6.111
+    },
+    {
+      "word": "tiny.",
+      "start": 6.1713,
+      "end": 6.6119
+    },
+    {
+      "word": "What",
+      "start": 7.4737,
+      "end": 7.6739
+    },
+    {
+      "word": "will",
+      "start": 7.6739,
+      "end": 7.8843
+    },
+    {
+      "word": "a",
+      "start": 7.8843,
+      "end": 7.9645
+    },
+    {
+      "word": "little",
+      "start": 7.9645,
+      "end": 8.2149
+    },
+    {
+      "word": "care",
+      "start": 8.2149,
+      "end": 8.5554
+    },
+    {
+      "word": "help",
+      "start": 8.5757,
+      "end": 8.806
+    },
+    {
+      "word": "it",
+      "start": 8.8161,
+      "end": 8.9262
+    },
+    {
+      "word": "become?",
+      "start": 8.9262,
+      "end": 9.437
+    }
+  ]
+}

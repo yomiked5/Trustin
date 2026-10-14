@@ -1,0 +1,37 @@
+{
+  "audioSHA256": "db930362de0d1c38eb6c2c309397e99fc35c75595b765a8220e51e1095c1b611",
+  "text": "A green shoot! It was growing!",
+  "duration": 2.7,
+  "words": [
+    {
+      "word": "A",
+      "start": 0.0202,
+      "end": 0.1403
+    },
+    {
+      "word": "green",
+      "start": 0.1608,
+      "end": 0.6222
+    },
+    {
+      "word": "shoot!",
+      "start": 0.7029,
+      "end": 1.0639
+    },
+    {
+      "word": "It",
+      "start": 1.5864,
+      "end": 1.7368
+    },
+    {
+      "word": "was",
+      "start": 1.747,
+      "end": 1.9677
+    },
+    {
+      "word": "growing!",
+      "start": 1.9679,
+      "end": 2.4895
+    }
+  ]
+}

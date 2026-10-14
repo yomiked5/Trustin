@@ -1,0 +1,37 @@
+{
+  "audioSHA256": "861284cde9aa666216fd8f3a199999be489d10d6f3c9adb7b8d4813f105fd7d7",
+  "text": "Pip wanted to peek. She waited.",
+  "duration": 3.4,
+  "words": [
+    {
+      "word": "Pip",
+      "start": 0.4419,
+      "end": 0.7427
+    },
+    {
+      "word": "wanted",
+      "start": 0.9238,
+      "end": 1.2851
+    },
+    {
+      "word": "to",
+      "start": 1.2852,
+      "end": 1.4356
+    },
+    {
+      "word": "peek.",
+      "start": 1.4356,
+      "end": 1.6864
+    },
+    {
+      "word": "She",
+      "start": 2.4698,
+      "end": 2.6604
+    },
+    {
+      "word": "waited.",
+      "start": 2.6604,
+      "end": 3.0919
+    }
+  ]
+}

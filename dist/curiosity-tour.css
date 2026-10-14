@@ -46,7 +46,8 @@
 .holo-description { font-size:15px; line-height:1.55; color:var(--marketing-muted); margin:18px 0 0; max-width:28ch }
 .tour-bottom { grid-column:1/-1; z-index:4; display:flex; align-items:center; justify-content:center; gap:22px; min-height:52px; position:relative }
 .tour-controls { display:none; background:#ffffffed; border:1px solid #d8e3da; border-radius:28px; padding:4px; gap:3px; box-shadow:0 6px 23px #1f45310b }
-.tour-controls button { font:550 12px/1 system-ui,sans-serif; padding:0 15px; min-height:42px; border:0; border-radius:22px; background:transparent; color:var(--marketing-muted) }
+.tour-controls { touch-action:pan-y pinch-zoom; user-select:none; -webkit-user-select:none }
+.tour-controls button { font:550 12px/1 system-ui,sans-serif; padding:0 15px; min-height:42px; border:0; border-radius:22px; background:transparent; color:var(--marketing-muted); transition:background .18s,color .18s }
 .tour-controls button[aria-pressed=true] { background:#254f43; color:#fff8ef }
 .tour-controls button:hover:not([aria-pressed=true]) { background:#edf3eb }
 .tour-controls button:focus-visible { outline-offset:2px }

@@ -22,10 +22,15 @@ export function record(state, label) {
 }
 
 export function chooseMode(state, mode) {
-  if (!modes.includes(mode) || mode === state.mode) return;
-  state.saved[state.mode] = Object.fromEntries(progressKeys.map(key => [key, state[key]]));
+  if (!modes.includes(mode) || (mode === state.mode && state.view !== 'launcher')) return;
+  if(state.view !== 'launcher') state.saved[state.mode] = Object.fromEntries(progressKeys.map(key => [key, state[key]]));
   Object.assign(state, state.saved[mode] || freshProgress(mode));
   state.mode = mode;
+}
+
+export function openHome(state) {
+  if(state.view !== 'launcher') state.saved[state.mode] = Object.fromEntries(progressKeys.map(key => [key, state[key]]));
+  state.view = 'launcher';
 }
 
 export function chooseTopic(state, topic) {

@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
 import json
+import hashlib
 import re
 import struct
 import xml.etree.ElementTree as ET
@@ -170,11 +171,20 @@ try:
 except ET.ParseError as error:
     errors.append(f'Invalid sitemap XML: {error}')
 
-book = json.loads((root / 'assets/story/book.json').read_text())
-for node in book['nodes']:
-    for filename in [node['audio'], node['cues'], node['art'] + '.jpg']:
-        if not (root / 'assets/story' / filename).exists():
-            errors.append('Missing story asset ' + filename)
+for collection in ['story', 'pip']:
+    folder = root / 'assets' / collection
+    book = json.loads((folder / 'book.json').read_text())
+    for node in book['nodes']:
+        for filename in [node['audio'], node['cues'], node['art'] + '.jpg']:
+            if not (folder / filename).exists():
+                errors.append(f'Missing {collection} asset {filename}')
+        audio, cue_path = folder / node['audio'], folder / node['cues']
+        if audio.exists() and cue_path.exists():
+            cue = json.loads(cue_path.read_text())
+            if cue.get('audioSHA256') and hashlib.sha256(audio.read_bytes()).hexdigest() != cue['audioSHA256']:
+                errors.append(f'{collection}/{node["audio"]}: narration does not match its word timings')
+            if cue.get('text') != node['text']:
+                errors.append(f'{collection}/{node["id"]}: readable text does not match its narration cues')
 for discovery in json.loads((root / 'assets/discoveries.json').read_text()):
     for part in ['answer', 'more']:
         path = root / 'assets/audio' / f"{discovery['id']}.v{discovery['version']}-{part}.m4a"

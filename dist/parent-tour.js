@@ -1,79 +1,75 @@
-import { parentChapters, parentScreen } from './parent-ui.mjs';
-import { connectorPath, tourProgress } from './curiosity-tour-core.mjs';
+import {parentChapters,parentScreen,initialParentState} from './parent-ui.mjs';
+import {mountSwipe} from './swipe.js';
+import {drawSpotlight} from './spotlight.js';
 
-export function parentFrame(progress, count = parentChapters.length) {
-  const p = Math.max(0, Math.min(1, Number.isFinite(progress) ? progress : 0));
-  const t = Math.min(1, p / .13);
-  return { shrink:t*t*(3-2*t), chapter:p < .16 ? -1 : Math.min(count-1, Math.floor((p-.16)/.84*count)) };
-}
-export function parentStop(index, count = parentChapters.length) {
-  return index < 0 ? 0 : .16 + (index + .4) / count * .84;
-}
-
-export function mountParentTour(root, {win = window, policy = win.TJMotionPolicy} = {}) {
-  if (!root) return;
-  const stage=root.querySelector('.parent-stage'), device=root.querySelector('.parent-device');
-  const screen=root.querySelector('[data-parent-screen]'), panels=[...root.querySelectorAll('[data-parent-panel]')];
-  const picker=root.querySelector('[data-parent-picker]'), prev=root.querySelector('[data-parent-prev]'), next=root.querySelector('[data-parent-next]');
-  const path=root.querySelector('[data-parent-line]'), dot=root.querySelector('[data-parent-dot]'), status=root.querySelector('[data-parent-status]');
-  const compact=win.matchMedia('(max-width:760px)'), short=win.matchMedia('(max-height:700px)');
-  let selected=-2, mode='', raf=0, stopped=false;
-  const anchor=()=>Number.parseFloat(win.getComputedStyle(stage).top)||0;
-  function select(index, announce=false) {
-    if (index===selected) return;
-    selected=index;
-    const id=parentChapters[index]?.id || 'overview';
-    root.dataset.parentChapter=id;
-    screen.innerHTML=parentScreen(id);
-    panels.forEach((panel,i)=>{panel.hidden=i!==index; if(i!==index) panel.querySelector('details')?.removeAttribute('open');});
-    picker.value=String(index); prev.disabled=index<0; next.disabled=index>=parentChapters.length-1;
-    const scroller=screen.querySelector('.ios-scroll');
-    const target=screen.querySelector(`[data-parent-target="${id}"]`);
-    if (target && scroller && id==='together') scroller.scrollTop=Math.max(0,target.offsetTop-scroller.offsetTop-38);
-    if (announce && status) status.textContent=index<0?'Parent Dock overview':parentChapters[index].label+'. '+parentChapters[index].summary;
+// All chapters share one fixed stage. Only the phone's internal content changes.
+export function mountParentTour(root,{win=window}={}) {
+  if(!root)return;
+  const stage=root.querySelector('.parent-stage'),device=root.querySelector('.parent-device'),screen=root.querySelector('[data-parent-screen]');
+  const panels=[...root.querySelectorAll('[data-parent-panel]')],picker=root.querySelector('[data-parent-picker]'),prev=root.querySelector('[data-parent-prev]'),next=root.querySelector('[data-parent-next]'),status=root.querySelector('[data-parent-status]');
+  let selected=0,state=initialParentState(),frame=0,player=null,audioIntent=0;
+  device.removeAttribute('role');device.setAttribute('role','group');device.setAttribute('aria-label','Interactive Parent Dock sample');device.setAttribute('data-device-interactive','');
+  screen.removeAttribute('aria-hidden');screen.setAttribute('tabindex','-1');
+  const connector=root.querySelector('.parent-connector');connector.classList.add('hud-connector');
+  root.querySelector('[data-parent-line]').setAttribute('data-hud-line','');root.querySelector('[data-parent-dot]').setAttribute('data-hud-dot','');
+  const box=document.createElement('div');box.className='hud-box';box.setAttribute('data-hud-box','');box.setAttribute('aria-hidden','true');box.hidden=true;stage.append(box);
+  function connect(){frame=0;drawSpotlight(stage,screen.querySelector('[data-parent-target="'+parentChapters[selected].id+'"]'),panels[selected]);}
+  function schedule(){if(!frame)frame=win.requestAnimationFrame(connect);}
+  function stopAudio(){audioIntent++;if(player){player.pause();player.removeAttribute('src');player.load();}}
+  function render({preserveScroll=false}={}){
+    const scrollTop=preserveScroll?(screen.querySelector('.ios-scroll')?.scrollTop||0):0;
+    screen.innerHTML=parentScreen(parentChapters[selected].id,state);
+    const scroll=screen.querySelector('.ios-scroll'),target=screen.querySelector('[data-parent-target="'+parentChapters[selected].id+'"]');
+    if(preserveScroll)scroll.scrollTop=scrollTop;
+    else if(selected===1&&target)scroll.scrollTop=Math.max(0,target.offsetTop-20);
+    schedule();
   }
-  function connect() {
-    const target=selected<0?null:screen.querySelector(`[data-parent-target="${parentChapters[selected].id}"]`);
-    if (!target || mode!=='scroll') {path.setAttribute('d','');dot.setAttribute('r','0');return;}
-    const base=stage.getBoundingClientRect(), a=target.getBoundingClientRect(), b=panels[selected].getBoundingClientRect();
-    const phone=device.getBoundingClientRect();
-    const vertical=compact.matches;
-    const start={x:(vertical?phone.left+phone.width/2:phone.right+3)-base.left,y:(vertical?phone.bottom+3:Math.min(phone.bottom-50,Math.max(phone.top+60,a.top+a.height/2)))-base.top};
-    const end={x:(vertical?b.left+b.width/2:b.left)-base.left,y:(vertical?b.top:b.top+b.height/2)-base.top};
-    path.setAttribute('d',connectorPath(start,end,vertical));dot.setAttribute('cx',start.x);dot.setAttribute('cy',start.y);dot.setAttribute('r','3');
+  function navigate(index,announce=true){
+    selected=Math.max(0,Math.min(parentChapters.length-1,index));stopAudio();state.notice='';state.confirm=false;
+    root.dataset.parentChapter=parentChapters[selected].id;
+    panels.forEach((panel,i)=>{panel.hidden=i!==selected;if(i===selected)panel.scrollTop=0;});
+    picker.value=String(selected);prev.disabled=selected===0;next.disabled=selected===parentChapters.length-1;
+    render();if(announce)status.textContent=parentChapters[selected].label+'. '+parentChapters[selected].summary;
   }
-  function update() {
-    raf=0;if(stopped)return;
-    if(mode==='scroll') {
-      const bounds=root.getBoundingClientRect(), height=stage.getBoundingClientRect().height;
-      const frame=parentFrame(tourProgress(bounds.top,bounds.height,height,anchor()));
-      const scale=compact.matches?Math.max(.46,Math.min(.68,(height*.5-26)/device.offsetHeight)):.83;
-      const x=compact.matches?0:-Math.min(265,stage.clientWidth*.24);
-      const y=compact.matches?height*.235-height*.53:-12;
-      device.style.setProperty('--phone-x',x*frame.shrink+'px');device.style.setProperty('--phone-y',y*frame.shrink+'px');device.style.setProperty('--phone-scale',String(1-(1-scale)*frame.shrink));
-      stage.style.setProperty('--parent-intro',String(1-frame.shrink));select(frame.chapter);
-    }
-    connect();
-  }
-  function navigate(index) {
-    index=Math.max(-1,Math.min(parentChapters.length-1,index));
-    if(mode==='scroll') {
-      const bounds=root.getBoundingClientRect(), height=stage.getBoundingClientRect().height;
-      win.scrollTo({top:win.scrollY+bounds.top-anchor()+parentStop(index)*(bounds.height-height),behavior:'smooth'});
-    } else {select(index,true);connect();}
-  }
-  function configure() {
-    const newMode=!root.hasAttribute('data-parent-static')&&!short.matches&&(policy?.enabled()??!win.matchMedia('(prefers-reduced-motion: reduce)').matches)?'scroll':'manual';
-    if(mode!==newMode){mode=newMode;root.dataset.parentMode=mode;['--phone-x','--phone-y','--phone-scale'].forEach(key=>device.style.removeProperty(key));stage.style.removeProperty('--parent-intro');selected=-2;select(-1);}
-    update();
-  }
+  function notify(text){status.textContent=text;}
   picker.disabled=false;picker.addEventListener('change',()=>navigate(Number(picker.value)));
   prev.addEventListener('click',()=>navigate(selected-1));next.addEventListener('click',()=>navigate(selected+1));
-  root.dataset.parentReady='true';
-  win.addEventListener('scroll',()=>{if(!raf&&!stopped)raf=win.requestAnimationFrame(update);},{passive:true});
-  win.addEventListener('resize',configure,{passive:true});
-  win.addEventListener('pagehide',()=>{stopped=true;if(raf)win.cancelAnimationFrame(raf);raf=0;});
-  win.addEventListener('pageshow',()=>{stopped=false;configure();});policy?.subscribe(configure);configure();
-  return {navigate,update,configure};
+  mountSwipe(stage,direction=>navigate(selected+direction));
+  screen.addEventListener('click',event=>{
+    const button=event.target.closest('[data-parent-action]');if(!button)return;
+    const action=button.dataset.parentAction;
+    const chapter=parentChapters.findIndex(x=>x.id===action);
+    if(chapter>=0){navigate(chapter);screen.querySelector('[data-parent-action="'+action+'"]')?.focus({preventScroll:true});return;}
+    if(action==='detail'){state.detail=true;navigate(2);screen.focus({preventScroll:true});return;}
+    if(action==='child'){state.child=1-state.child;state.detail=false;state.confirm=false;state.deleted=false;}
+    if(action==='range')state.range=1-state.range;
+    if(action==='moment')state.moment=!state.moment;
+    if(action==='back')state.detail=false;
+    if(action==='confirmDelete')state.confirm=true;
+    if(action==='cancelDelete')state.confirm=false;
+    if(action==='delete'){state.deleted=true;state.detail=false;state.confirm=false;notify('Sample activity removed from this preview only.');}
+    if(action==='restore')state.deleted=false;
+    if(action.startsWith('topic-')){const key=Number(action.slice(6));const fallback=key===1?1:key===4||key===6?2:0;state.topics[key]=((state.topics[key]??fallback)+1)%3;notify('Sample topic preference changed. Essential protections are unchanged.');}
+    if(action.startsWith('speed-')){state.speed=Number(action.slice(6));if(player)player.playbackRate=[.75,.85,1][state.speed];}
+    if(action==='style')state.style=(state.style+1)%3;
+    if(action==='save'){state.notice='Saved here.';notify('Saved in this web preview only. No account or Watch was changed.');}
+    if(action==='prepare'){state.prepared=true;notify('Preview connection prepared. No real device connection is created.');}
+    if(action==='send'){state.notice='Waiting for the paired Watch.';notify('This is a connection example. This website sends nothing to a Watch.');}
+    if(action==='sample'){
+      if(!player){player=new Audio();player.preload='auto';}
+      if(!player.paused){audioIntent++;player.pause();notify('Reading sample paused.');return;}
+      player.src='/assets/pip/seed.m4a';player.playbackRate=[.75,.85,1][state.speed];
+      const intent=++audioIntent;
+      player.play().then(()=>{if(intent===audioIntent)notify('Playing the prepared reading sample.');}).catch(()=>{if(intent!==audioIntent)return;state.notice='Sample unavailable. Try again.';render({preserveScroll:true});notify(state.notice);});return;
+    }
+    render({preserveScroll:true});
+    const replacement=screen.querySelector('[data-parent-action="'+action+'"]')||screen;replacement.focus({preventScroll:true});
+  });
+  stage.addEventListener('scroll',schedule,true);win.addEventListener('resize',schedule,{passive:true});
+  win.addEventListener('pagehide',()=>{stopAudio();if(frame)win.cancelAnimationFrame(frame);frame=0;});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});
+  win.addEventListener('pageshow',schedule);
+  root.dataset.parentReady='true';root.dataset.parentMode='docked';panels.forEach(panel=>panel.setAttribute('tabindex','0'));navigate(0,false);
+  return {navigate,connect,state};
 }
 mountParentTour(document.querySelector('[data-parent-tour]'));

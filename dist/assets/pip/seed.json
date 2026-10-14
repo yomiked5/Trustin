@@ -1,0 +1,42 @@
+{
+  "audioSHA256": "4f1bac319702b4f822996bb7b029b693ee6bb9b28c4846671df57e2c1d048e38",
+  "text": "One tiny seed. What could it become?",
+  "duration": 3.4,
+  "words": [
+    {
+      "word": "One",
+      "start": 0.2612,
+      "end": 0.4817
+    },
+    {
+      "word": "tiny",
+      "start": 0.5624,
+      "end": 1.0439
+    },
+    {
+      "word": "seed.",
+      "start": 1.0643,
+      "end": 1.4655
+    },
+    {
+      "word": "What",
+      "start": 2.0883,
+      "end": 2.299
+    },
+    {
+      "word": "could",
+      "start": 2.299,
+      "end": 2.4897
+    },
+    {
+      "word": "it",
+      "start": 2.4897,
+      "end": 2.5801
+    },
+    {
+      "word": "become?",
+      "start": 2.5801,
+      "end": 3.0718
+    }
+  ]
+}

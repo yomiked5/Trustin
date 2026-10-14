@@ -1,0 +1,42 @@
+{
+  "audioSHA256": "92609b13727c842eda385fd40d9c9a46545620441f82aa630bf6890c9652f7c1",
+  "text": "Pip added soil and a little water.",
+  "duration": 3.45,
+  "words": [
+    {
+      "word": "Pip",
+      "start": 0.3619,
+      "end": 0.6427
+    },
+    {
+      "word": "added",
+      "start": 0.9647,
+      "end": 1.2455
+    },
+    {
+      "word": "soil",
+      "start": 1.266,
+      "end": 1.6674
+    },
+    {
+      "word": "and",
+      "start": 1.9894,
+      "end": 2.1399
+    },
+    {
+      "word": "a",
+      "start": 2.1399,
+      "end": 2.2102
+    },
+    {
+      "word": "little",
+      "start": 2.2102,
+      "end": 2.4714
+    },
+    {
+      "word": "water.",
+      "start": 2.4714,
+      "end": 2.8127
+    }
+  ]
+}

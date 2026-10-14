@@ -5,12 +5,13 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 import * as model from '../dist/demo-model.mjs';
+import * as ui from '../dist/watch-ui.mjs';
 
 const root = new URL('../dist/', import.meta.url);
 const markup = readFileSync(new URL('demo/index.html', root), 'utf8');
-const source = readFileSync(new URL('app.js', root), 'utf8').replace(/^import[^\n]+\n/, '');
+const source = readFileSync(new URL('app.js', root), 'utf8').replace(/^import[^\n]+\n/gm, '');
 const discoveries = JSON.parse(readFileSync(new URL('assets/discoveries.json', root)));
-const book = JSON.parse(readFileSync(new URL('assets/story/book.json', root)));
+const book = JSON.parse(readFileSync(new URL('assets/pip/book.json', root)));
 const iconIds = new Set([...readFileSync(new URL('assets/icons.svg', root), 'utf8').matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
@@ -95,13 +96,14 @@ class AudioDouble {
 }
 async function setup({ failsToLoad = false, search = '' } = {}) {
   const document = new DocumentDouble();
-  let audio;
+  let audio,timerId=0;
+  const timers=new Map(),events={};
   const controls = { failsToLoad };
   const context = vm.createContext({
-    ...model, document, URLSearchParams, navigator:{clipboard:{writeText:async()=>{}}},
-    window:{location:{search},addEventListener(){},matchMedia(){return {matches:false};},print(){}},
+    ...model,...ui,esc:ui.escapeHTML,ni:ui.nativeIcon,icon:ui.generalIcon, document, URLSearchParams, CustomEvent:class {constructor(type,options){this.type=type;this.detail=options.detail;}}, setTimeout:(fn,delay)=>{const id=++timerId;timers.set(id,{fn,delay});return id;},clearTimeout:id=>timers.delete(id), navigator:{clipboard:{writeText:async()=>{}}},
+    window:{location:{search},addEventListener(type,fn){events[type]=fn;},dispatchEvent(event){events[event.type]?.(event);},matchMedia(){return {matches:false};},print(){}},
     Audio:class extends AudioDouble { constructor(){ super(); audio = this; } },
-    fetch:async path => ({ ok:!controls.failsToLoad, json:async()=>structuredClone(path.includes('discoveries') ? discoveries : book) })
+    fetch:async path => ({ ok:!controls.failsToLoad, json:async()=>JSON.parse(readFileSync(new URL(path.slice(1),root))) })
   });
   vm.runInContext(source, context);
   await settle();
@@ -119,254 +121,61 @@ async function setup({ failsToLoad = false, search = '' } = {}) {
     const select = query('#narration-pace'); select.value = String(value); select.selectedOptions = [{textContent:label}];
     await select.emit('change'); await settle();
   };
-  return { document, audio, controls, context, query, click, policy, pace, state:()=>vm.runInContext('state', context) };
+  return {document,audio,controls,context,query,click,timers,events,advance(delay){for(const [id,t] of timers)if(t.delay<=delay){timers.delete(id);t.fn();}},command(action,value){events['tj:watch-command']({detail:{action,value}});},state:()=>vm.runInContext('state',context)};
 }
 
-test('runtime opens a prepared Moon answer without autoplay or a real account', async () => {
-  const app = await setup();
-  assert.equal(app.state().topic, 'moon'); assert.equal(app.state().view, 'discovery');
-  assert.equal(app.audio.playCalls, 0); assert.ok(app.query('[data-action="listen"]'));
-  assert.equal(app.query('#watch-content').attrs['aria-busy'], 'false');
-  assert.equal(app.query('#topic-policy').disabled, false);
-});
 
-test('native-style Home returns to Curiosity topics and stops the previous recording', async () => {
-  const app = await setup(); await app.click('[data-action="listen"]');
-  await app.click('[data-shell-home]');
-  assert.equal(app.state().view, 'home'); assert.equal(app.state().mode, 'ask');
-  assert.equal(app.audio.src, undefined); assert.equal(app.audio.playCalls, 1);
-  assert.ok(app.query('[data-topic="seed"]')); assert.ok(app.query('[data-action="questions"]'));
-  assert.equal(app.query('#demo-activity-label').textContent, 'Curiosity');
+test('preview opens genuine Curiosity controls, silently, with activity selection inside Home',async()=>{
+ const a=await setup();assert.equal(a.state().view,'home');assert.equal(a.audio.playCalls,0);assert.ok(a.query('[data-action="microphone"]'));assert.ok(a.query('[data-topic="moon"]'));assert.doesNotMatch(markup,/class="demo-tabs"|<button[^>]*data-mode=/);
+ await a.click('[data-shell-home]');assert.equal(a.state().view,'launcher');
+ for(const mode of ['ask','story','math'])assert.ok(a.query('[data-mode="'+mode+'"]'));
 });
-
-test('homepage activity links open the matching full demo without autoplay', async () => {
-  for (const [activity, view] of [['moon','discovery'], ['seed','discovery'], ['butterfly','discovery'], ['story','story'], ['math','mathIntro']]) {
-    const app = await setup({search:'?activity=' + activity});
-    assert.equal(app.state().view, view);
-    if (view === 'discovery') assert.equal(app.state().topic, activity);
-    else assert.equal(app.state().mode, activity);
-    assert.equal(app.audio.playCalls, 0);
-    assert.equal(app.state().moonPolicy, 'explore');
-  }
+test('Home works from readers and launches Math and Stories immediately without sample waiting timers',async()=>{
+ const a=await setup();await a.click('[data-topic="moon"]');await a.click('[data-action="listen"]');await a.click('[data-shell-home]');assert.equal(a.audio.src,undefined);
+ await a.click('[data-mode="math"]');assert.equal(a.state().view,'mathIntro');assert.equal(a.timers.size,0);await a.click('[data-action="startMath"]');assert.equal(a.state().view,'math');
+ await a.click('[data-shell-home]');await a.click('[data-mode="story"]');assert.equal(a.state().view,'storyEntry');assert.equal(a.timers.size,0);assert.match(a.query('#watch-content').innerHTML,/\/assets\/pip\/cover.jpg/);
 });
-
-test('unknown demo links fall back to Moon and cannot set a family preference', async () => {
-  const app = await setup({search:'?activity=%3Cscript%3E&moonPolicy=together'});
-  assert.equal(app.state().topic, 'moon');
-  assert.equal(app.state().moonPolicy, 'explore');
-  assert.equal(app.audio.playCalls, 0);
+test('microphone sample shows listening and stars, two rounds of three choices, and returns to Curiosity',async()=>{
+ const a=await setup();await a.click('[data-action="microphone"]');assert.equal(a.state().view,'listening');assert.match(a.query('#demo-status').textContent,/No microphone is recorded/);
+ a.advance(1500);assert.equal(a.state().view,'thinking');a.advance(2350);assert.equal(a.state().view,'discovery');
+ for(let round=0;round<2;round++){await a.click('[data-action="choices"]');assert.equal(a.state().view,'choices');assert.equal(a.document.querySelectorAll('[data-branch]').length,3);await a.click('[data-branch="1"]');assert.equal(a.state().view,'discovery');}
+ assert.equal(a.query('[data-action="choices"]'),null);await a.click('[data-action="curiosity"]');assert.equal(a.state().view,'home');assert.equal(a.state().log.length,1);assert.equal(a.timers.size,0);
 });
-
-test('runtime playback has pause, resume, replay, and progress feedback', async () => {
-  const app = await setup();
-  await app.click('[data-action="listen"]');
-  assert.match(app.query('[data-action="listen"]').innerHTML, /Pause/);
-  app.audio.currentTime = 8; app.audio.emit('timeupdate');
-  assert.equal(app.query('#audio-progress').value, 0.4);
-  await app.click('[data-action="listen"]');
-  assert.match(app.query('[data-action="listen"]').innerHTML, /Resume/);
-  await app.click('[data-action="listen"]');
-  app.audio.ended = true; app.audio.currentTime = 20; app.audio.emit('ended');
-  assert.match(app.query('[data-action="listen"]').innerHTML, /Replay/);
-  await app.click('[data-action="listen"]');
-  assert.equal(app.audio.currentTime, 0);
+test('Home, reset and pagehide cancel the finite microphone sequence so no stale result replaces a new screen',async()=>{
+ for(const leave of ['home','reset','pagehide']){const a=await setup();await a.click('[data-action="microphone"]');if(leave==='home')await a.click('[data-shell-home]');else if(leave==='reset')await a.click('#reset-demo');else a.events.pagehide();assert.equal(a.timers.size,0);a.advance(9999);assert.equal(a.state().view,leave==='home'?'launcher':'home');}
 });
-
-test('runtime Moon changes stop affected narration and visibly explain the boundary', async () => {
-  const app = await setup(); await app.click('[data-action="listen"]');
-  const pauses = app.audio.pauseCalls;
-  await app.policy('together');
-  assert.equal(app.state().view, 'boundary');
-  assert.ok(app.audio.pauseCalls > pauses); assert.equal(app.audio.src, undefined);
-  assert.match(app.query('#policy-result').textContent, /grown-up/);
-  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
-  await app.click('[data-inspect-moon]');
-  assert.equal(app.state().view, 'boundary'); assert.equal(app.audio.playCalls, 1);
+test('activity deep links open their sample and unknown links preserve the Curiosity default',async()=>{
+ for(const [entry,view] of [['moon','discovery'],['seed','discovery'],['butterfly','discovery'],['story','storyEntry'],['math','mathIntro'],['<script>','home']]){const a=await setup({search:'?activity='+encodeURIComponent(entry)});assert.equal(a.state().view,view);assert.equal(a.audio.playCalls,0);}
 });
-
-test('Dock inspect action focuses the child example without starting narration', async () => {
-  const app = await setup();
-  await app.click('[data-mode="story"]');
-  await app.click('[data-inspect-moon]');
-  assert.equal(app.state().topic, 'moon');
-  assert.equal(app.state().view, 'discovery');
-  assert.equal(app.audio.playCalls, 0);
-  assert.equal(app.document.activeElement.tag, 'h3');
-  assert.equal(app.document.side.scrolled, true);
+test('narration retains pause, resume, replay and visible retry after playback rejection',async()=>{
+ const a=await setup({search:'?activity=moon'});await a.click('[data-action="listen"]');assert.match(a.query('[data-action="listen"]').attrs['aria-label'],/Pause/);
+ a.audio.currentTime=8;await a.click('[data-action="listen"]');assert.match(a.query('[data-action="listen"]').attrs['aria-label'],/Resume/);
+ a.audio.ended=true;a.audio.emit('ended');assert.match(a.query('[data-action="listen"]').attrs['aria-label'],/Replay/);await a.click('[data-action="listen"]');assert.equal(a.audio.currentTime,0);
+ await a.click('[data-action="listen"]');a.audio.fail=true;await a.click('[data-action="listen"]');assert.match(a.query('#audio-note').textContent,/unavailable/);assert.match(a.query('[data-action="listen"]').attrs['aria-label'],/Retry/);
+ a.audio.fail=false;await a.click('[data-action="listen"]');assert.equal(a.query('#audio-note').hidden,true);
 });
-
-test('runtime unrelated parent changes leave story narration and progress alone', async () => {
-  const app = await setup(); await app.click('[data-mode="story"]');
-  await app.click('[data-action="next"]'); await app.click('[data-action="listen"]');
-  const src = app.audio.src, pauses = app.audio.pauseCalls;
-  await app.policy('together');
-  assert.equal(app.state().view, 'story'); assert.equal(app.state().storyPage, 1);
-  assert.equal(app.audio.src, src); assert.equal(app.audio.pauseCalls, pauses);
-  await app.click('[data-mode="ask"]'); assert.equal(app.state().view, 'boundary');
-  await app.click('[data-mode="story"]'); assert.equal(app.state().storyPage, 1);
+test('late rejected narration does not overwrite a newer activity',async()=>{
+ const a=await setup({search:'?activity=moon'});a.audio.deferred=true;await a.click('[data-action="listen"]');await a.click('[data-shell-home]');await a.click('[data-mode="story"]');const message=a.query('#demo-status').textContent;a.audio.pendingReject(new Error('Old playback'));await settle();assert.equal(a.query('#demo-status').textContent,message);assert.equal(a.state().view,'storyEntry');
 });
-
-test('runtime math feedback retains deliberate keyboard focus', async () => {
-  const app = await setup(); await app.click('[data-mode="math"]'); await app.click('[data-action="startMath"]');
-  await app.click('[data-number="3"]');
-  assert.equal(app.document.activeElement.dataset.number, '3');
-  assert.match(app.query('#demo-status').textContent, /Count each seed/);
-  await app.click('[data-number="4"]');
-  assert.equal(app.document.activeElement.dataset.action, 'nextMath');
-  assert.match(app.query('#demo-status').textContent, /You found it/);
+test('Moon sample control replaces the actual answer, and restoration does not autoplay',async()=>{
+ const a=await setup({search:'?activity=moon'});await a.click('[data-action="listen"]');a.command('policy','together');assert.equal(a.state().view,'boundary');assert.match(a.query('#watch-content').innerHTML,/grown-up/);assert.equal(a.audio.src,undefined);a.command('policy','explore');assert.equal(a.state().view,'discovery');assert.equal(a.audio.playCalls,1);
 });
-
-test('runtime completed story can restart without resetting family preferences or its honest log', async () => {
-  const app = await setup(); await app.policy('together'); await app.click('[data-mode="story"]');
-  for (let i=0; i<book.nodes.length; i++) await app.click('[data-action="next"]');
-  assert.equal(app.state().view, 'done'); assert.equal(app.state().log.length, 1);
-  assert.equal(app.query('#demo-next').hidden, false);
-  await app.click('[data-action="restart"]');
-  assert.equal(app.state().storyPage, 0); assert.equal(app.state().view, 'story');
-  assert.equal(app.state().moonPolicy, 'together'); assert.equal(app.state().log.length, 1);
+test('math feedback helps a wrong choice and focus stays inside the fixed Watch',async()=>{
+ const a=await setup({search:'?activity=math'});await a.click('[data-action="startMath"]');await a.click('[data-number="3"]');assert.equal(a.state().mathSolved,false);assert.equal(a.document.activeElement.dataset.number,'3');await a.click('[data-number="4"]');assert.equal(a.state().mathSolved,true);assert.equal(a.document.activeElement.dataset.action,'nextMath');assert.equal(a.document.side.scrolled,undefined);
 });
-
-test('runtime audio failures are visible and recoverable, not just screen-reader announcements', async () => {
-  const app = await setup(); app.audio.fail = true;
-  await app.click('[data-action="listen"]');
-  assert.match(app.query('#audio-note').textContent, /could not play/);
-  assert.match(app.query('[data-action="listen"]').innerHTML, /Retry/);
-  app.audio.fail = false; await app.click('[data-action="listen"]');
-  assert.match(app.query('[data-action="listen"]').innerHTML, /Pause/);
-  assert.equal(app.query('#audio-note').attrs['data-error'], 'false');
+test('the genuine Pip story can finish and restart while keeping other activity progress',async()=>{
+ const a=await setup({search:'?activity=story'});await a.click('[data-action="resumeStory"]');await a.click('[data-action="listen"]');assert.match(a.audio.src,/\/assets\/pip\/seed.m4a/);
+ for(let i=1;i<book.nodes.length;i++)await a.click('[data-action="next"]');assert.equal(a.state().view,'done');assert.match(a.state().log[0],/Pip/);await a.click('[data-action="restart"]');assert.equal(a.state().view,'storyEntry');
 });
-
-test('runtime canceled audio promises do not report stale errors after navigation', async () => {
-  const app = await setup(); app.audio.deferred = true;
-  await app.click('[data-action="listen"]');
-  await app.click('[data-mode="story"]');
-  const announcement = app.query('#demo-status').textContent;
-  app.audio.pendingReject(new Error('Canceled old audio')); await settle();
-  assert.equal(app.query('#demo-status').textContent, announcement);
-  assert.doesNotMatch(app.query('#audio-note').textContent, /could not/);
+test('a content error is recoverable and reset clears local sample state',async()=>{
+ const a=await setup({failsToLoad:true});assert.ok(a.query('[data-action="retry"]'));a.controls.failsToLoad=false;await a.click('[data-action="retry"]');assert.equal(a.state().view,'home');a.command('policy','together');await a.click('#reset-demo');assert.equal(a.state().view,'home');assert.equal(a.state().moonPolicy,'explore');assert.equal(a.state().log.length,0);
 });
-
-test('runtime content failure offers a retry and reset clears the sample session', async () => {
-  const app = await setup({failsToLoad:true});
-  assert.ok(app.query('[data-action="retry"]')); assert.equal(app.query('#watch-content').attrs['aria-busy'], 'false');
-  app.controls.failsToLoad = false; await app.click('[data-action="retry"]');
-  assert.equal(app.query('#topic-policy').disabled, false);
-  await app.policy('together'); await app.click('#reset-demo');
-  assert.equal(app.state().moonPolicy, 'explore'); assert.equal(app.state().log.length, 0);
-  assert.equal(app.state().view, 'discovery'); assert.equal(app.state().topic, 'moon');
+test('seed and butterfly discoveries finish on Curiosity without unrelated Moon follow-ups',async()=>{
+ for(const topic of ['seed','butterfly']){const a=await setup({search:'?activity='+topic});await a.click('[data-action="next"]');assert.equal(a.query('[data-action="choices"]'),null);await a.click('[data-action="curiosity"]');assert.equal(a.state().view,'home');assert.equal(a.state().log.length,1);}
 });
-
-test('all three discoveries remain selectable and play their own recording', async () => {
-  const app = await setup();
-  for (const topic of ['seed', 'butterfly', 'moon']) {
-    await app.click('[data-action="questions"]');
-    await app.click(`[data-topic="${topic}"]`);
-    const discovery = discoveries.find(item => item.illustration === topic);
-    const calls = app.audio.playCalls;
-    assert.equal(app.state().topic, topic);
-    assert.equal(app.state().view, 'discovery');
-    assert.ok(app.query('#watch-content').innerHTML.includes(discovery.question));
-    await app.click('[data-action="listen"]');
-    assert.equal(app.audio.src, `/assets/audio/${discovery.id}.v${discovery.version}-answer.m4a`);
-    assert.equal(app.audio.playCalls, calls + 1);
-    assert.equal(app.state().moonPolicy, 'explore');
-  }
+test('story reading speed changes only playback rate and keeps the prepared source',async()=>{
+ const a=await setup({search:'?activity=story'});await a.click('[data-action="resumeStory"]');await a.click('[data-action="listen"]');const src=a.audio.src,calls=a.audio.playCalls;a.command('pace',.75);assert.equal(a.audio.playbackRate,.75);assert.equal(a.audio.src,src);assert.equal(a.audio.playCalls,calls);
 });
-
-test('Dock choice synchronizes the child response and restores the answer without autoplay', async () => {
-  const app = await setup();
-  await app.click('[data-action="listen"]');
-  await app.policy('together');
-  assert.equal(app.state().view, 'boundary');
-  assert.equal(app.query('#topic-policy').value, 'together');
-  assert.match(app.query('#watch-content').innerHTML, /Let’s ask your grown-up/);
-  assert.match(app.query('#policy-result').textContent, /grown-up/);
-  assert.equal(app.audio.src, undefined);
-  assert.equal(app.audio.playCalls, 1, 'Changing a preference must not start narration');
-  await app.policy('explore');
-  assert.equal(app.state().view, 'discovery');
-  assert.equal(app.query('#topic-policy').value, 'explore');
-  assert.match(app.query('#policy-result').textContent, /available/);
-  assert.equal(app.audio.playCalls, 1);
-  await app.click('[data-action="listen"]');
-  assert.match(app.audio.src, /discover-moon.*answer\.m4a$/);
-});
-
-test('parent choice preserves unrelated story audio and its conversation prompt', async () => {
-  const app = await setup();
-  await app.click('[data-mode="story"]');
-  await app.click('[data-action="next"]');
-  await app.click('[data-action="listen"]');
-  const src = app.audio.src, pauses = app.audio.pauseCalls;
-  const prompt = app.query('#parent-prompt').textContent;
-  await app.policy('together');
-  assert.equal(app.state().mode, 'story');
-  assert.equal(app.state().storyPage, 1);
-  assert.equal(app.audio.src, src);
-  assert.equal(app.audio.pauseCalls, pauses);
-  assert.equal(app.query('#parent-prompt').textContent, prompt);
-  assert.equal(app.query('#topic-policy').value, 'together');
-});
-
-test('conversation starters follow each discovery, story and Math activity', async () => {
-  const app = await setup();
-  assert.match(app.query('#parent-prompt').textContent, /Moon/);
-  await app.click('[data-action="questions"]');
-  await app.click('[data-topic="butterfly"]');
-  assert.match(app.query('#parent-prompt').textContent, /butterfly/);
-  await app.click('[data-action="questions"]');
-  await app.click('[data-topic="seed"]');
-  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
-  await app.click('[data-mode="story"]');
-  assert.match(app.query('#parent-prompt').textContent, /Trustin notice.*plant/);
-  await app.click('[data-mode="math"]');
-  assert.match(app.query('#parent-prompt').textContent, /four objects.*two groups/);
-  await app.click('[data-mode="ask"]');
-  assert.match(app.query('#parent-prompt').textContent, /seed.*growing/);
-  assert.equal(app.state().log.length, 0, 'Conversation starters are not invented child activity');
-});
-
-test('narration pace changes current playback and carries into another narrated activity', async () => {
-  const app = await setup();
-  await app.click('[data-action="listen"]');
-  const src = app.audio.src, calls = app.audio.playCalls, pauses = app.audio.pauseCalls;
-  await app.pace(1.1, 'A little quicker');
-  assert.equal(app.audio.playbackRate, 1.1);
-  assert.equal(app.state().pace, 1.1);
-  assert.equal(app.audio.src, src);
-  assert.equal(app.audio.playCalls, calls);
-  assert.equal(app.audio.pauseCalls, pauses);
-  assert.match(app.query('#demo-status').textContent, /A little quicker/);
-  await app.click('[data-mode="story"]');
-  await app.click('[data-action="listen"]');
-  assert.equal(app.audio.playbackRate, 1.1);
-  await app.pace(0.85, 'Calm');
-  assert.equal(app.audio.playbackRate, 0.85);
-  assert.match(app.query('#demo-status').textContent, /Calm/);
-});
-
-test('full reset clears progress and restores the Moon, parent prompt and narration defaults', async () => {
-  const app = await setup();
-  await app.click('[data-mode="story"]');
-  for (let page = 0; page < book.nodes.length; page++) await app.click('[data-action="next"]');
-  await app.policy('together');
-  await app.click('[data-mode="ask"]');
-  await app.click('[data-action="home"]');
-  await app.click('[data-topic="seed"]');
-  await app.click('[data-action="listen"]');
-  await app.pace(1.1, 'A little quicker');
-  await app.click('#reset-demo');
-  assert.equal(app.state().view, 'discovery');
-  assert.equal(app.state().topic, 'moon');
-  assert.equal(app.state().moonPolicy, 'explore');
-  assert.equal(app.state().pace, 0.85);
-  assert.equal(app.state().log.length, 0);
-  assert.equal(Object.keys(app.state().saved).length, 0);
-  assert.match(app.query('#watch-content').innerHTML, /Moon stays round/);
-  assert.match(app.query('#parent-prompt').textContent, /Moon/);
-  assert.equal(app.query('#narration-pace').value, '0.85');
-  assert.equal(app.query('#demo-next').hidden, true);
-  assert.equal(app.audio.src, undefined);
-  await app.click('[data-action="listen"]');
-  assert.equal(app.audio.playbackRate, 0.85);
+test('the story follows native word timings without replacing the readable text',async()=>{
+ const a=await setup({search:'?activity=story'});await a.click('[data-action="resumeStory"]');await a.click('[data-action="listen"]');a.audio.currentTime=1.1;a.audio.emit('timeupdate');assert.equal(a.query('[data-story-word="2"]').attrs['data-current'],'true');assert.match(a.query('#watch-content').innerHTML,/seed/);
 });
