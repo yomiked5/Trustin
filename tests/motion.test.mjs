@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
-import { createMotionController, readingProgress } from '../dist/motion-core.mjs';
+import { createMotionController, readingProgress, sceneOffset } from '../dist/motion-core.mjs';
 
 const policySource = readFileSync(new URL('../dist/motion-policy.js', import.meta.url), 'utf8');
 const motionSource = readFileSync(new URL('../dist/motion.js', import.meta.url), 'utf8').replace(/^import[^\n]+\n/, '');
@@ -199,10 +199,11 @@ function experienceHarness({enabled=true, platformAnimations=true} = {}) {
     addEventListener(type, callback){listeners[type] = callback;},
     location:{pathname:'/'}
   };
-  vm.runInNewContext(motionSource, {window, document, createMotionController, readingProgress});
+  vm.runInNewContext(motionSource, {window, document, createMotionController, readingProgress, sceneOffset});
   window.TrustinMotion.reader({querySelector:nodeFor});
   window.TrustinMotion.feedback(nodeFor('.math-message'));
   window.TrustinMotion.boundary();
+  window.TrustinMotion.preview(nodeFor('.response-symbol'));
   return {effects:runs.flat(), api:window.TrustinMotion, listeners};
 }
 
@@ -210,7 +211,7 @@ test('all shipped decorative interactions are finite and leave no persistent ani
   const app = experienceHarness();
   assert.ok(app.effects.length >= 8, 'Exercise introduction, reader, feedback and boundary motion');
   for (const effect of app.effects) {
-    assert.ok(Number.isFinite(effect.options.duration) && effect.options.duration > 0 && effect.options.duration <= 240);
+    assert.ok(Number.isFinite(effect.options.duration) && effect.options.duration > 0 && effect.options.duration <= 700);
     assert.equal(effect.options.iterations, 1);
     assert.equal(effect.options.fill, 'none');
   }
@@ -225,4 +226,55 @@ test('the shipped experience stays functional and static with reduced motion or 
   const unsupported = experienceHarness({platformAnimations:false});
   assert.equal(unsupported.effects.length, 0);
   assert.doesNotThrow(() => unsupported.listeners.pagehide());
+});
+
+test('scroll scene offsets are bounded, reversible and reject invalid geometry', () => {
+  assert.equal(sceneOffset(800,600,800,60), -30);
+  assert.equal(sceneOffset(-600,600,800,60), 30);
+  assert.equal(sceneOffset(100,600,800,60), 0);
+  assert.equal(sceneOffset(-600,600,800,-60), -30);
+  assert.equal(sceneOffset(-99999,600,800,99999), 40);
+  assert.equal(sceneOffset(99999,600,800,-99999), 40);
+  for (const args of [[NaN,600,800,40],[0,0,800,40],[0,600,0,40],[0,600,800,Infinity]]) assert.equal(sceneOffset(...args), 0);
+});
+
+test('scroll enhancement coalesces events, resets on motion-off and reveals art once', () => {
+  const callbacks = {}, subscriptions = [], queued = [], observers = [];
+  let enabled = true, reads = 0;
+  const properties = new Map();
+  const layer = {dataset:{scrollLayer:'60'}, style:{setProperty:(key,value)=>properties.set(key,value), removeProperty:key=>properties.delete(key)}};
+  const scene = {querySelectorAll:()=>[layer], getBoundingClientRect(){reads++; return {top:200,bottom:800,height:600};}};
+  const reveal = animatedNode();
+  class Observer {
+    constructor(callback) {this.callback=callback;this.observed=new Set();observers.push(this);}
+    observe(node){this.observed.add(node);}
+    unobserve(node){this.observed.delete(node);}
+  }
+  const document = {
+    querySelector:()=>null,
+    querySelectorAll(selector){return selector === '[data-reveal]' ? [reveal.node] : selector === '[data-scroll-scene]' ? [scene] : [];}
+  };
+  const window = {
+    innerHeight:800, location:{pathname:'/'}, IntersectionObserver:Observer,
+    TJMotionPolicy:{enabled:()=>enabled, systemReduced:()=>!enabled, subscribe:fn=>subscriptions.push(fn)},
+    addEventListener(type,fn,options){callbacks[type]={fn,options};},
+    requestAnimationFrame(fn){queued.push(fn);}
+  };
+  vm.runInNewContext(motionSource, {window,document,IntersectionObserver:Observer,createMotionController,readingProgress,sceneOffset});
+  assert.equal(properties.get('--scroll-y'), '-4.29px');
+  assert.equal(reads, 1);
+  assert.equal(callbacks.scroll.options.passive, true);
+  callbacks.scroll.fn(); callbacks.scroll.fn(); callbacks.resize.fn();
+  assert.equal(queued.length, 1);
+  queued.shift()(); assert.equal(reads, 2);
+  observers[0].callback([{isIntersecting:true,target:reveal.node}]);
+  assert.equal(reveal.runs.length, 1);
+  assert.equal(observers[0].observed.has(reveal.node), false);
+  enabled = false; subscriptions.forEach(fn=>fn(false));
+  assert.equal(properties.size, 0);
+  assert.ok(reveal.runs[0].cancellations >= 1);
+  callbacks.scroll.fn(); queued.shift()();
+  assert.equal(reads, 2, 'Reduced motion does not read or animate scroll geometry');
+  enabled = true; subscriptions.forEach(fn=>fn(true));
+  assert.equal(properties.get('--scroll-y'), '-4.29px');
 });

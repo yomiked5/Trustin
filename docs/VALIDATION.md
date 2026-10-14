@@ -1,8 +1,23 @@
 # Validation evidence
 
-Revision 1.3 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
+Revision 1.4 · October 13, 2026. These results concern the marketing website and scripted browser demonstration, not a native app release.
 
-## Executed and passed
+## Current revision 1.4 — executed and passed
+
+- `npm test`: **45 Node tests**, all **6 shipped JS/MJS** syntax checks, and static integrity across **7 HTML pages**. Existing 38 tests adapted to the dedicated demo and extended motion timing; seven new tests cover all five activity-entry queries, invalid-entry fallback, bounded scene offsets, scroll event coalescing/motion-off reset/one-shot reveal, homepage preference state/icon/response, missing-enhancement fallback and homepage route/content contracts.
+- The 45 tests comprise 13 model tests, 18 shipped-demo runtime contracts, 11 motion tests and 3 homepage interaction/structure contracts. DOM/Audio/geometry doubles are deliberately not browsers.
+- **13 text color pairings** exceed 4.5:1 by calculation, including the new marketing foreground/background tokens. This is not a complete rendered contrast audit.
+- Seven-page link/anchor/SVG/image dimensions/canonical/social/noindex/sitemap integrity; narrow source privacy scan of every shipped script; `git diff --check`.
+- Same-method main-body source count: **568 → 267 words (53% fewer)**; **179 words outside collapsed FAQs**, including illustrative UI labels. The full demo is preserved on `/demo/`, not removed. Counts exclude dynamic activity text.
+- The homepage code set (HTML, three CSS files and four JS/MJS files) totals about **90 KB raw / 23.6 KB summed gzip**, excluding images. This is a local file calculation, not measured transfer or Web Vitals. No new raster media or service dependency.
+- All original media/content remains unchanged; earlier blob/decode evidence below applies to retained bytes. No new audio listening or rendered image/layout test was performed.
+- Motion is optional: a 680ms finite entrance/reveal, bounded scroll offsets on noninteractive device layers, 280ms response-icon fade/scale and retained short reader/state transitions. Policy changes cancel effects and clear offsets; no autoplay or scroll interception.
+
+### Current verification boundary
+
+Supported `control-browser` remains unavailable in the managed Sites environment. No preview server, substitute browser, screenshot renderer or alternate browser automation was used. **Visual layout, breakpoint fit, Safari narration, native keyboard/screen-reader behavior, animation feel and Core Web Vitals remain unverified.** Private deployment success does not close these acceptance gates. Inspect the new homepage, horizontal highlight rail, response-panel reflow and all deep demo links at 320/390/680/850/1024px before public launch.
+
+## Revision 1.3 — historical executed evidence
 
 - `npm test`: syntax validation of all **5 shipped JS/MJS files**, **38 Node tests**, and static integrity across **6 HTML pages**. No skipped or failing tests at the final integration checkpoint.
 - **13 model tests:** family preference behavior, affected/unrelated activities, independent progress, finite Math completion, required correct answers, per-activity restart, full reset, honest deduplicated logs, invalid actions, playback labels and complete linear story.

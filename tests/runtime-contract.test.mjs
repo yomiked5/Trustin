@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs';
 import * as model from '../dist/demo-model.mjs';
 
 const root = new URL('../dist/', import.meta.url);
-const markup = readFileSync(new URL('index.html', root), 'utf8');
+const markup = readFileSync(new URL('demo/index.html', root), 'utf8');
 const source = readFileSync(new URL('app.js', root), 'utf8').replace(/^import[^\n]+\n/, '');
 const discoveries = JSON.parse(readFileSync(new URL('assets/discoveries.json', root)));
 const book = JSON.parse(readFileSync(new URL('assets/story/book.json', root)));
@@ -93,13 +93,13 @@ class AudioDouble {
   }
   pause() { this.pauseCalls++; this.paused = true; this.emit('pause'); }
 }
-async function setup({ failsToLoad = false } = {}) {
+async function setup({ failsToLoad = false, search = '' } = {}) {
   const document = new DocumentDouble();
   let audio;
   const controls = { failsToLoad };
   const context = vm.createContext({
-    ...model, document, navigator:{clipboard:{writeText:async()=>{}}},
-    window:{addEventListener(){},matchMedia(){return {matches:false};},print(){}},
+    ...model, document, URLSearchParams, navigator:{clipboard:{writeText:async()=>{}}},
+    window:{location:{search},addEventListener(){},matchMedia(){return {matches:false};},print(){}},
     Audio:class extends AudioDouble { constructor(){ super(); audio = this; } },
     fetch:async path => ({ ok:!controls.failsToLoad, json:async()=>structuredClone(path.includes('discoveries') ? discoveries : book) })
   });
@@ -128,6 +128,24 @@ test('runtime opens a prepared Moon answer without autoplay or a real account', 
   assert.equal(app.audio.playCalls, 0); assert.ok(app.query('[data-action="listen"]'));
   assert.equal(app.query('#watch-content').attrs['aria-busy'], 'false');
   assert.equal(app.query('#topic-policy').disabled, false);
+});
+
+test('homepage activity links open the matching full demo without autoplay', async () => {
+  for (const [activity, view] of [['moon','discovery'], ['seed','discovery'], ['butterfly','discovery'], ['story','story'], ['math','mathIntro']]) {
+    const app = await setup({search:'?activity=' + activity});
+    assert.equal(app.state().view, view);
+    if (view === 'discovery') assert.equal(app.state().topic, activity);
+    else assert.equal(app.state().mode, activity);
+    assert.equal(app.audio.playCalls, 0);
+    assert.equal(app.state().moonPolicy, 'explore');
+  }
+});
+
+test('unknown demo links fall back to Moon and cannot set a family preference', async () => {
+  const app = await setup({search:'?activity=%3Cscript%3E&moonPolicy=together'});
+  assert.equal(app.state().topic, 'moon');
+  assert.equal(app.state().moonPolicy, 'explore');
+  assert.equal(app.audio.playCalls, 0);
 });
 
 test('runtime playback has pause, resume, replay, and progress feedback', async () => {

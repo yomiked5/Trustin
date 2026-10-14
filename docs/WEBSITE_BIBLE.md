@@ -1,6 +1,10 @@
 # TrustinJr website bible
 
-Version 1.3 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+Version 1.4 · 13 October 2026 (Pacific) · owner: Mike · implementation brief and editorial source of truth
+
+## Deployment reconciliation
+
+Marketing main `2f33e2bb5253e367e0d3d434659a2f06a3982f2b` includes the completed public Cloudflare launch, public indexing, the owner's inquiry address `jrtrustin@gmail.com` and a desktop-header overflow correction. Those changes were inspected and preserved. The owner-private Site retains noindex. This redesign makes no DNS, sharing or hosting-account changes. Older launch-preparation passages below are historical; consult `DEPLOYMENT.md` for the current record. Browser evidence from the earlier release does not verify this redesigned layout.
 
 ## The job
 
@@ -34,7 +38,7 @@ Headline: **For every little why.** Supporting line: **A world of wonder. Guided
 
 The three promises, in order: **a world of discovery for children; meaningful guidance for parents; a childhood that isn’t for sale**. Lead with aspiration, then demonstrate parental agency and earn trust through concrete, verified behavior. “Every child” is the mission’s ambition, not a present universal-access or device-compatibility claim.
 
-Primary action: **Try the preview** → the prepared Moon discovery in the single child/parent demo, without autoplay. The hero is a simple original-character illustration, category/age, headline, supporting line, device roles and one action. All question selection, listening and parent preferences live in the full demo. The introduction no longer duplicates those controls.
+Primary action: **Try the preview** → `/demo/`, opening Moon without autoplay. The homepage leads with category/age, the original headline, development status and a large illustrative Watch/iPhone pairing. Visual highlight links open a matching activity through a whitelisted `activity` query. A small independent homepage example demonstrates a parent's choice; all narration, story/math progression and full Dock controls stay in the complete demo. The homepage control explicitly changes only its prepared example; it is not synchronized or persisted across navigation.
 
 Parent guidance means participation as well as preferences. The Dock includes context-specific conversation starters; the child sample ends with an optional real-world activity. The harmless Moon setting is explicitly an example of choosing to discuss a topic together, not a claim that astronomy requires restriction.
 
@@ -60,15 +64,15 @@ Research first accessed 12 October and refreshed 13 October 2026. [Research deci
 
 ## Visual system
 
-Warm editorial design for adults surrounding a playful, accurate product vocabulary. Main field is cream `#FFF8EF`; ink `#293C38`; muted copy `#59675E`; action teal `#285C57`; lines `#D9D5C9`; supporting pale sage `#E4EADC`, peach `#F2D6C4`, lavender `#E8DFF0`, clay `#A44732` and ochre `#E0B647`. Richer colors remain in original illustrations. Large color fields are quiet, not competing. Text uses dark ink on pale surfaces or cream on deep teal.
+Crisp product-led presentation with warm original app artwork. Marketing field `#FBFCFA`, ink `#172C28`, muted `#53635D`, surface `#F0F4EF`, action teal `#285C57`. The original app's cream `#FFF8EF`, sage, peach, lavender and ochre stay inside product illustrations and the demo. The dark discovery highlight uses pale text on deep teal. Large quiet surfaces, image-led activity panels and whitespace replace explanatory copy.
 
-Marketing display type may use a warm editorial serif; product surfaces use a rounded system sans consistent with native Nunito intent. All fonts are local system fonts: no third-party font requests. Type scales responsively rather than shrinking the complete desktop layout.
+Marketing headings now use a compact medium-heavy system sans with tight tracking; the serif-led landing-page direction is superseded. All fonts remain local system fonts. Illustration-only device compositions scale at explicit breakpoints; actual controls and readable copy reflow independently. The original character and recordings are unchanged.
 
 Keep the original matte Trustin portrait. Native October 8 color correction governs controls: cream microphone/lens/play interiors, dark definition, peach/sage/lavender button surfaces, cream-on-teal forward action. Math uses +, − and 1 blocks, never dice. No talking mouth, gloss, harsh gradients or rapid motion. No mandatory animation or moving hit targets.
 
-Layout: 1200px maximum canvas. Five homepage sections: quiet illustrated introduction, paired demo, three concise principles, four collapsed FAQs, compact availability close. Use cream and one pale-sage demo field; remove the repeated promise strip, learning trail, mission bridge, separate parent manifesto, trust grid, dark philosophy band and guide promotion. Philosophy and guide remain linked and complete on their own pages. At 850px and below, stack the demo and Dock; on phones the hero artwork becomes a compact horizontal vignette. Navigation remains visible.
+Layout: 1200px text canvas and up to 1320px visual gallery. Five homepage sections: centered introduction/device pairing; three visual activities; one parent-choice scene; one no-advertising commitment; demo close and two collapsed FAQs. The full paired demo moves to `/demo/`, removing dashboard density without removing functionality. Highlights become a native, keyboard-focusable horizontal scroll rail below 850px. Phones retain a compact brand/CTA header and footer access to deeper pages. The full demo stacks below 850px.
 
-Motion is brief and purposeful: 160ms native cross-page fades and CSS state transitions; 220ms introduction/reader fades with at most 4px displacement; 240ms feedback. No scroll-reveal choreography, drawn paths, underline animation, topic carousel or moving buttons. System/manual reduced motion always wins. Animation is never required to read content, use a control or navigate. These are implementation values, not a browser performance result.
+Motion: optional 680ms one-shot headline/artwork reveals on intersection; bounded reversible scroll offsets on decorative Watch/phone layers; a 280ms parent-response icon transition; retained 160–240ms page/reader/control feedback. No scroll hijacking, autoplay gallery, continuous animation loop, moving hit target or audio autoplay. Passive scroll events are coalesced with requestAnimationFrame, with reads before writes. System/manual reduced motion cancels effects and clears offsets. Content is visible without enhancement APIs or JavaScript. These are source contracts, not verified browser performance results.
 
 ## Visitor journey
 
@@ -77,7 +81,7 @@ Motion is brief and purposeful: 160ms native cross-page fades and CSS state tran
 3. Inspect: change a sample topic boundary and narration speed; see the demo activity log update.
 4. Understand: the learning approach, parent role and no-advertising commitment.
 5. Evaluate: read the whitepaper, privacy notice, availability and honest FAQs.
-6. Act: inspect the availability page and optionally open an explicitly labeled email inquiry to `hello@trustinjr.com`. Do not fake a working waitlist. Mail delivery and ownership still need an owner test before public launch.
+6. Act: inspect the availability page and optionally open an explicitly labeled email inquiry to `jrtrustin@gmail.com`. Do not fake a working waitlist. Mail delivery and ownership still need an owner test before public launch.
 
 ## Demo contract
 
@@ -89,7 +93,7 @@ Story: *Trustin and the Curled Leaf*, complete source introduction and seven pag
 
 Math: a short, deterministic three-question garden project, useful incorrect-answer hints, visible +/− blocks, no punitive response or streak. This is a web sample, not a representation of backend adaptive placement.
 
-Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. The Moon select in the Dock is the single preference control. Context-specific conversation starters connect all three activity types to parent participation.
+Parent Dock: controls change sample Moon topic availability and playback pace. Essential protections are explained as a design principle, not a falsely functioning security control. Setting a topic to Together cancels currently playing related audio and shows a parent handoff; changing that setting during a story or unrelated discovery must not stop its audio or replace its content. The Dock shows the child's resulting response immediately and offers a direct link to inspect it. The Moon select in the Dock governs the complete demo; the separately labeled homepage illustration is independent. Context-specific conversation starters connect all three activity types to parent participation.
 
 Switching activities preserves each activity's independent place while the page is open. Completed Story/Math samples have an explicit restart action that retains family settings and the completed-only activity log. Reset clears all settings, saved progress and log entries, then opens the default Moon example. Log only completed demo activities, no fabricated starting metrics or implied assessment. Finish with a real-world prompt, not another automatically queued activity. Math feedback is announced through a persistent live region; focus returns to the chosen answer for an incorrect attempt or the next control for a correct answer.
 
@@ -126,7 +130,18 @@ The bounded source critique was useful for defects and hierarchy, not a visual a
 
 Acceptance: see `VALIDATION.md`. No conversion lift, browser rendering result, Lighthouse score, screen-reader result or product efficacy result is claimed. Next useful design validation is a real-device parent walkthrough: ask what the product is, have the parent hear an answer and change a boundary, then ask what they believe is available today. Do not collect child identities or sensitive child information for this test.
 
-## Owner-directed simplification — revision 1.3
+## Visual-first product presentation — revision 1.4
+
+The owner's October 13, 19:15 PDT request explicitly identifies Apple's iPhone Duo product page, excessive captions/explanations and a need for eye-guiding scroll animation. This supersedes v1.3's no-scroll-reveal rule without undoing its preference for reduction.
+
+- [Apple reference](https://www.apple.com/iphone-duo/) reviewed for short headline hierarchy, image-led highlights, device-led storytelling and on-demand detail. The public page and hero start/end image resources were retrieved. No Apple art, text, code, product claims or endorsement was imported. This is reference analysis, not a measured browser animation audit.
+- Full demo moved intact to a dedicated route; links open Moon, Storytime or Math without autoplay. The main page no longer loads demo content/audio code.
+- Source main-body count fell from 568 to 267 words (53%); 179 words remain outside collapsed FAQ content, including illustrative UI labels. Counts strip tags and split whitespace, exclude dynamically rendered demo content and do not measure reading time.
+- Illustrative product cases are native HTML/CSS, not fictional screenshots. The character, story image, icon symbols and recorded media remain original.
+- Optional one-shot reveals and scroll offsets follow [W3C motion guidance](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html). Standard scrolling/navigation remain intact. No new dependencies, services or data collection.
+- Seven HTML routes, six scripts and 45 automated tests. Browser/device visual and motion acceptance remains outstanding; no screenshot or conversion claim.
+
+## Owner-directed simplification — revision 1.3 (historical)
 
 The owner found v1.2 too much and requested clean, crisp transitions and a reduction. This supersedes the earlier emphasis on a second interactive hero and repeated editorial sections.
 

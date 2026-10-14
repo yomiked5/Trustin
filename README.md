@@ -20,7 +20,7 @@ No build, paid SaaS, API keys, database or runtime dependency is required. Run `
 
 Three discoveries (Moon, seeds, butterflies), a complete narrated story (*Trustin and the Curled Leaf*), a three-question garden math sample, and a sample Parent Dock. Topic policy changes affect the sample immediately; narration speed changes recorded playback. State is memory-only. The demo does not record a microphone or call an AI provider. No fabricated analytics, waitlist, pricing or App Store release claims.
 
-Revision 1.3 keeps **parent-guided AI discovery**, **For every little why.** and **A world of wonder. Guided by you.**, with a substantially simpler introduction. The homepage now has five sections and one complete child/parent demo. Original art/recordings and all activities remain; motion uses brief 160–240ms fades/state changes. Deeper philosophy, parent guide, privacy and honest availability remain on their dedicated pages.
+Revision 1.4 is a visual-first product presentation following the owner's Apple product-page reference: crisp system typography, a large illustrative Watch/iPhone pairing, three visual highlights, a small parent-choice example and optional scroll reveals. The complete child/parent demo now lives at **`/demo/`**, with direct activity links. Original art, recordings, authored activities, philosophy and product-truth boundaries remain intact. Homepage main-body copy is 267 words, or 179 outside collapsed FAQs, including illustrative UI labels.
 
 - `docs/MESSAGING.md`: approved mission, copy/CTA hierarchy and claim rules.
 - `docs/RESEARCH_DECISIONS.md`: current evidence, populations/limits and ten specialist perspectives.
@@ -31,9 +31,9 @@ Current validation is source/model/event-contract based. Actual browser layout, 
 
 Original Trustin art and existing Cedar recordings are reused from the owner's native application, source revision `34557847ad424bd0fdac7419b44563737cb499cf`. Source bytes were verified with Git blob hashes before copying. The native code and release pipeline are separate and unchanged.
 
-## Current release boundary
+## Deployment boundary
 
-Source and private preview are deliverables. Cloudflare account sign-in, custom-domain configuration, DNS/email preservation, adult contact delivery, public app policies and real-browser acceptance must be completed before a public `trustinjr.com` launch. Preview pages deliberately use `noindex` and `robots.txt: Disallow: /`; see the deployment guide for the explicit launch change.
+The existing public site uses the owner's Cloudflare Pages project, connected to marketing `main`. The earlier public launch also changed contact to `jrtrustin@gmail.com`, enabled public indexing and fixed header overflow. This redesign preserves those changes in its production-source export; it does not change DNS or hosting settings. The managed review Site remains owner-private with noindex. Real-browser acceptance of **this redesign** remains outstanding. See the current launch record in `docs/DEPLOYMENT.md`; do not treat its older preparation notes as current blockers.
 
 ## Ownership
 

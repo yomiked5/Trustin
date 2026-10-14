@@ -1,5 +1,11 @@
 # Deployment and domain handoff
 
+## Visual-first redesign — revision 1.4
+
+The public baseline was inspected at marketing main `2f33e2bb5253e367e0d3d434659a2f06a3982f2b`. Its contact, desktop-overflow correction, public index/follow metadata, robots and Pages-preview/404 noindex rules are preserved in the redesign's GitHub export. The full demo moves to `/demo/`. No DNS, hosting account, paid plan or sharing settings change.
+
+The managed owner-private review Site keeps all-page noindex and Disallow; the production repository keeps its existing public indexing profile. These are intentional environment-specific differences, not a launch rollback. Source and event-contract tests cover the new design, but earlier Chrome verification below does not verify the new layout/motion. Real-browser and device acceptance remains outstanding for v1.4.
+
 ## Current launch record — 13 October 2026
 
 This section supersedes the historical preparation notes below.

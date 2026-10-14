@@ -1,6 +1,6 @@
 # TrustinJr messaging guidelines
 
-Version 1.3 · October 13, 2026 · Mission-led direction with owner-requested reduction.
+Version 1.4 · October 13, 2026 · Visual-first, parent-guided product presentation.
 
 ## The center
 
@@ -47,7 +47,7 @@ Trustin is a recognizable learning character in a computer tool. Avoid AI-friend
 
 | Placement | Label | Result |
 |---|---|---|
-| Main navigation / hero | Try the preview | Open the single scripted dual experience; hero opens Moon without autoplay |
+| Main navigation / hero | Try the preview | Navigate to `/demo/`; default Moon opens without autoplay |
 | Parent Dock | Moon questions: With a grown-up | Immediately show the sample preference’s consequence |
 | After evaluation | Current availability | Read current status and device limits |
 | Approach | Read Curiosity, with care | Open readable, printable evidence and principles |
@@ -58,7 +58,7 @@ No fabricated waitlist, App Store download, price, trial, scarcity, testimonials
 
 ## Editorial discipline
 
-The owner prefers a concise homepage: one introduction, one full demo, three short principles, four FAQs and availability. Keep evidence and the full mission on the deeper pages. Avoid multiple slogan sections, duplicated controls and ornamental animation.
+The owner now requests an Apple-inspired visual product page: large device/artwork scenes, short headlines and scroll-led reveals, not captions upon subcaptions. Homepage copy must earn its space. The full interactive demo, philosophy, evidence, guide and policy details are reached intentionally, rather than displayed at once. Keep category/age, illustrative status, development stage and no-advertising commitment legible; do not bury product truth in pursuit of minimalism.
 
 Use plain verbs: ask, notice, think, try, listen, count, explore, together. Explain scaffolding with an actual example. Keep evidence populations visible: studies of adolescents or broad 0–8 parent reports do not establish preschool AI benefits. Never turn a framework into an endorsement.
 

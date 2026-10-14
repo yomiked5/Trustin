@@ -43,3 +43,11 @@ Existing foundational learning references and comparable-product observations ar
 - **Brevity and evidence:** homepage introduces the product; parent guide offers practical questions; whitepaper holds deeper principles and source limitations.
 
 The post-implementation critique and material fixes are in [INDEPENDENT_REVIEW.md](INDEPENDENT_REVIEW.md). Executed checks and unresolved acceptance work are in [VALIDATION.md](VALIDATION.md).
+
+## October 13 visual-first refinement (revision 1.4)
+
+Owner reference: [Apple iPhone Duo](https://www.apple.com/iphone-duo/), accessed October 14 UTC / October 13 Pacific. Public structure and hero start/end image resources show a terse product introduction, image-led highlights, device-detail sections and deeper optional explanations. Adopt that hierarchy, not Apple's copyrighted assets, copy, code or product claims. No conversion superiority or full rendered animation inspection is established by this research.
+
+Implementation: a large original-art Watch/iPhone composition; three visual activity panels; one parent-choice consequence; sparse no-advertising commitment; full scripted demo moved to `/demo/`. Homepage main-body text drops from 568 to 267 words by same-method source count. Two collapsed FAQs retain release/AI limitations. Detailed whitepaper and parent guide remain available without a form gate.
+
+[W3C animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html) informs system/manual reduced motion, content-visible fallback and cancellation. [MDN animation timelines](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline) was reviewed; this build uses guarded IntersectionObserver and passive, requestAnimationFrame-coalesced scroll updates rather than making newer CSS timeline support a dependency. Reversible offsets affect decorative layers, never hit areas or scroll position. Browser acceptance remains pending.

@@ -170,7 +170,7 @@ function render() {
   lastReaderKey = key;
 }
 function scrollBehavior() {
-  return window.TrustinMotion?.behavior() || (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+  return window.TrustinMotion?.behavior() || (window.TJMotionPolicy?.enabled() === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
 }
 function focusContent(scroll = false) {
   const target = content.querySelector('h3') || content;
@@ -275,7 +275,9 @@ async function loadDemo() {
     const [discoveries, book] = await Promise.all(responses.map(response => response.json()));
     if (!['moon','seed','butterfly'].every(topic => discoveries.some(item => item.illustration === topic)) || !book.nodes?.length) throw Error('Content incomplete');
     data = discoveries; story = book;
-    chooseTopic(state, 'moon');
+    const entry = new URLSearchParams(window.location?.search || '').get('activity');
+    if (entry === 'story' || entry === 'math') chooseMode(state, entry);
+    else chooseTopic(state, ['moon','seed','butterfly'].includes(entry) ? entry : 'moon');
     render();
     document.querySelectorAll('[data-mode],[data-inspect-moon],#topic-policy,#narration-pace,#reset-demo').forEach(button => button.disabled = false);
   } catch {

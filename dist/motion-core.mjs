@@ -27,3 +27,11 @@ export function readingProgress(top, height, viewport) {
   const range = Math.max(1, height - viewport * 0.65);
   return Math.max(0, Math.min(1, -top / range));
 }
+
+// A bounded, reversible offset for decorative artwork only. Never alters scrolling.
+export function sceneOffset(top, height, viewport, travel) {
+  if (![top, height, viewport, travel].every(Number.isFinite) || height <= 0 || viewport <= 0) return 0;
+  const progress = Math.max(0, Math.min(1, (viewport - top) / (height + viewport)));
+  const distance = Math.max(-80, Math.min(80, travel));
+  return (progress - 0.5) * distance;
+}

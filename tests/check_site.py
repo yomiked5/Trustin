@@ -191,8 +191,8 @@ for path in scripts:
         if match[2] not in svg_ids.get(root / 'assets/icons.svg', set()):
             errors.append(f'{path.relative_to(root)}: missing dynamic SVG symbol {match[2]}')
 
-css = (root / 'styles.css').read_text()
-palette = dict(re.findall(r'--([a-z]+):\s*(#[0-9a-fA-F]{6})', css))
+css = (root / 'styles.css').read_text() + (root / 'showcase.css').read_text()
+palette = dict(re.findall(r'--([a-z-]+):\s*(#[0-9a-fA-F]{6})', css))
 
 
 def luminance(color):
@@ -201,7 +201,7 @@ def luminance(color):
     return sum(value * weight for value, weight in zip(rgb, [0.2126, 0.7152, 0.0722]))
 
 
-contrast_pairs = [('ink', 'cream'), ('ink', 'paper'), ('muted', 'cream'), ('muted', 'sage'), ('teal', 'cream'), ('teal', 'sage'), ('ink', 'lavender'), ('ink', 'peach'), ('clay', 'cream')]
+contrast_pairs = [('ink', 'cream'), ('ink', 'paper'), ('muted', 'cream'), ('muted', 'sage'), ('teal', 'cream'), ('teal', 'sage'), ('ink', 'lavender'), ('ink', 'peach'), ('clay', 'cream'), ('marketing-ink', 'marketing-bg'), ('marketing-muted', 'marketing-bg'), ('marketing-muted', 'marketing-surface'), ('teal', 'marketing-bg')]
 for foreground, background in contrast_pairs:
     light, dark = sorted([luminance(palette[foreground]), luminance(palette[background])], reverse=True)
     ratio = (light + 0.05) / (dark + 0.05)

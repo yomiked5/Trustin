@@ -1,4 +1,4 @@
-import { createMotionController, readingProgress } from './motion-core.mjs';
+import { createMotionController, readingProgress, sceneOffset } from './motion-core.mjs';
 
 const policy = window.TJMotionPolicy;
 const allowed = () => policy?.enabled() ?? !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -29,14 +29,27 @@ window.TrustinMotion = {
     motion.run(container.querySelector('.ending'), fade, { duration: 220 });
   },
   feedback(node) { motion.run(node, [{ backgroundColor: '#e4eadc' }, { backgroundColor: 'transparent' }], { duration: 240 }); },
-  boundary() { motion.run(document.querySelector('.policy-preview'), [{ backgroundColor: '#d1dfc9' }, { backgroundColor: '#edf0e7' }], { duration: 240 }); }
+  boundary() { motion.run(document.querySelector('.policy-preview'), [{ backgroundColor: '#d1dfc9' }, { backgroundColor: '#edf0e7' }], { duration: 240 }); },
+  preview(node) { motion.run(node, [{ opacity:0.45, transform:'scale(.94)' }, { opacity:1, transform:'scale(1)' }], { duration:280 }); }
 };
 
-motion.run(document.querySelector('.hero-copy'), fade, { duration: 220 });
-motion.run(document.querySelector('.hero-portrait'), fade, { duration: 220 });
+motion.run(document.querySelector('.product-intro h1'), [
+  { opacity:0.4, transform:'translateY(14px)' }, { opacity:1, transform:'translateY(0)' }
+], { duration:680 });
 motion.run(document.querySelector('.paper-art'), fade, { duration: 220 });
 
 if ('IntersectionObserver' in window) {
+  // Unenhanced content is visible. Only start a one-shot effect when it enters view.
+  const reveals = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      reveals.unobserve(entry.target);
+      motion.run(entry.target, [
+        { opacity:0.35, transform:'translateY(24px)' }, { opacity:1, transform:'translateY(0)' }
+      ], { duration:680 });
+    }
+  }, { threshold:0.14 });
+  document.querySelectorAll('[data-reveal]').forEach(node => reveals.observe(node));
   const links = [...document.querySelectorAll('.nav a')].filter(link => link.pathname === window.location.pathname && link.hash);
   const sections = links.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
   const locations = new IntersectionObserver(entries => {
@@ -49,6 +62,35 @@ if ('IntersectionObserver' in window) {
     }
   }, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
   sections.forEach(node => locations.observe(node));
+}
+
+const scenes = [...document.querySelectorAll('[data-scroll-scene]')].map(node => ({
+  node, layers:[...node.querySelectorAll('[data-scroll-layer]')]
+}));
+if (scenes.length && typeof window.requestAnimationFrame === 'function') {
+  let queued = false;
+  function updateScenes() {
+    queued = false;
+    if (!allowed()) {
+      scenes.forEach(scene => scene.layers.forEach(layer => layer.style.removeProperty('--scroll-y')));
+      return;
+    }
+    // Read first, then write. No continuously running animation loop or wheel interception.
+    const frames = scenes.map(scene => ({...scene, bounds:scene.node.getBoundingClientRect()}));
+    frames.forEach(({layers, bounds}) => {
+      if (bounds.bottom < 0 || bounds.top > window.innerHeight) return;
+      layers.forEach(layer => {
+        const offset = sceneOffset(bounds.top, bounds.height, window.innerHeight, Number(layer.dataset.scrollLayer));
+        layer.style.setProperty('--scroll-y', offset.toFixed(2) + 'px');
+      });
+    });
+  }
+  const scheduleScene = () => { if (!queued) { queued = true; window.requestAnimationFrame(updateScenes); } };
+  window.addEventListener('scroll', scheduleScene, {passive:true});
+  window.addEventListener('resize', scheduleScene, {passive:true});
+  window.addEventListener('pageshow', scheduleScene);
+  policy?.subscribe(updateScenes);
+  updateScenes();
 }
 document.querySelectorAll('.nav a').forEach(link => {
   if (!link.hash && link.pathname === window.location.pathname) link.setAttribute('aria-current', 'page');
