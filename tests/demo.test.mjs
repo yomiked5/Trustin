@@ -49,7 +49,7 @@ test('choosing the same activity does not reset its place', () => {
   chooseMode(s, 'story'); assert.equal(s.storyPage, 3);
 });
 
-test('math needs all three correct answers and cannot advance after completion', () => {
+test('math needs all five correct answers and cannot advance after completion', () => {
   const s = initialState(); chooseMode(s, 'math'); s.view = 'math';
   solveMath(s, 99); nextMath(s); assert.equal(s.mathPage, 0); assert.equal(s.log.length, 0);
   for (const q of mathQuestions) { assert.equal(solveMath(s, q.answer), true); nextMath(s); }
@@ -97,4 +97,17 @@ test('the story has an explicit introduction, a complete linear path, and an end
   assert.equal(book.nodes[0].kind, 'intro'); assert.equal(book.nodes.at(-1).kind, 'ending'); assert.equal(book.nodes.at(-1).next, null);
   for (let i=0; i<book.nodes.length-1; i++) assert.equal(book.nodes[i].next, book.nodes[i+1].id);
   assert.match(book.nodes.at(-1).text, /The end\./);
+});
+
+test('early bands retain three choices and five jobs without division or sharing',async()=>{
+ const {currentMath}=await import('../dist/demo-model.mjs');
+ for(let step=0;step<6;step++)for(let page=0;page<5;page++){
+  const q=currentMath({mathStep:step,mathPage:page});assert.equal(q.options.length,3);assert.ok(q.options.includes(q.answer));assert.doesNotMatch(q.prompt,/divid|shar|÷/i);
+ }
+});
+test('reward state rejects duplicate or unaffordable purchases and unknown/unowned clothing',async()=>{
+ const {purchaseTreasure,wearTreasure}=await import('../dist/demo-model.mjs');const s=initialState();
+ assert.equal(wearTreasure(s,'moon-cap'),false);assert.equal(purchaseTreasure(s,'cozy-scarf'),true);assert.equal(purchaseTreasure(s,'cozy-scarf'),false);assert.equal(s.stars,12);
+ s.stars=0;assert.equal(purchaseTreasure(s,'moon-cap'),false);assert.equal(purchaseTreasure(s,'unknown'),false);
+ s.rewardsEnabled=false;assert.equal(wearTreasure(s,'cozy-scarf'),false);assert.equal(s.stars,0);
 });

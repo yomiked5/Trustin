@@ -1,6 +1,6 @@
 # TrustinJr website bible
 
-Version 1.8 · October 14, 2026 (Pacific)
+Version 1.10 · November 11, 2026 (Pacific) · owner-approved for public publication
 
 ## Accepted direction
 
@@ -34,7 +34,7 @@ The working browser demo remains an adaptation. Its harmless Moon preference is 
 |---|---|---|
 | Curiosity | The real native screen, without surrounding labels | Same Watch shrinks; Packs, Ask, Continue appear one at a time |
 | Activities | Three distinct visual worlds | Direct links to the corresponding prepared samples |
-| Their wonder. Your guidance. | A compact, stationary iOS Today dashboard | One connected explanation at a time; the phone changes screens within its fixed slot |
+| Their wonder. Your guidance. | A compact, stationary iOS Overview dashboard | One connected explanation at a time; the phone changes screens within its fixed slot |
 | Childhood | A prominent red shield and “We do not advertise to children.” | No sponsored answers, purchase pressure or exceptions; commitment link |
 | Next step | One useful preview action | Availability, product-rendering, and AI questions in disclosures |
 
@@ -42,21 +42,23 @@ No timed carousel, looping background animation, automatic sound, scroll interce
 
 ## Parent Dock tour: current source and reasons
 
-Native main was rechecked at `34557847ad424bd0fdac7419b44563737cb499cf`. Sources: `Apps/Parent/TrustinParentApp.swift`, `NativeFamilySetup.swift`, `ParentStoryReadingSettings.swift`, `WatchFaceSetup.swift`, and `Packages/TrustinCore/Sources/TrustinCore/LocalStoryBook.swift`. The retained September 28 setup reference and October 8 native Watch contact sheets were inspected for source layouts, palette, navigation and proportions; they are not screenshots of this website. Watch references include TrustinWatchApp.swift, DiscoveryHome.swift, AskReader.swift, LocalStoryScreen.swift, ProjectMathScreen.swift and TrustinMotionView.swift.
+The current source reference is native `bccac84beb343a9f410af376669a9b316652aaae` (November 11). The refreshed Overview, Safeguards, Activity, Rewards, Learning & reading and Watch source were read alongside simulator evidence. The implementation map and evidence limits are in [Native demo parity](NATIVE_DEMO_PARITY.md). These are functional web recreations, not native screenshots or a release announcement.
 
 Earlier Parent/safeguard decisions were reconciled with current source. The later Master Guardian direction supersedes historical peer-admin proposals. Suspended Review Gates and daily book-renewal proposals are not reintroduced. No native code, backend, policy activation, or release changed.
 
 | Chapter | Current component | Design rationale / honest limit |
 |---|---|---|
-| Today | Child, date range, last update, saved activity counts | Whose information, over what period, and how fresh; not a score or continuous monitoring |
-| Together | Activity-based conversation starter and its reason | Bring discovery back into a human relationship; not inferred ability or personality |
-| Activity | Saved question/answer details and individual deletion | Context behind a summary; reports omit some offline activity; notices are not emergency alerts |
-| Topics | Seven supported topic categories and explicit outcomes | Family readiness/values alongside essential protections; expanded settings are capability-gated |
-| Reading | Slower, Calm, Natural; Hear sample; Send to Watch | Listen before choosing; distinguish saved from applied; downloaded books remain offline |
-| Guidance | Age, starting Math level, bounded explanation style | A useful starting point, preserve practice, understandable support; fixed books retain their wording |
-| Watch setup | Child selection, prepare/send connection, Watch list, optional face customization | Distinguish account/profile/device; expiry is not online status; disconnect has a precise scope |
+| Overview | White child/date group, unboxed activity metrics, Math practice, latest activity | Counts open records; independent and supported practice stay distinct |
+| Activity | Search, filters, readable question/Math/story details, confirmed deletion | Context behind a summary; fictional local records |
+| Learning pace | Seven Math bands, three steps per band, explicit save | New starting point applies to the next new project; unfinished work survives |
+| Reading | Slower, Calm, Natural, Hear sample; compact Watch word help | Listen before choosing; preserve the story page |
+| Safeguards | Native root groups and seven topic preferences | Family choices remain separate from essential protections |
+| Explanation style | Bounded choices and save | Understandable support; fixed books retain their wording |
+| Stars & appearance | Optional rewards, earned Stars, belongings | No real-money purchase, no streak penalty; 25-Star native daily cap |
+| Watch setup | Profile, connected sample, confirmed disconnect/reconnect | Access remains until revoked; no physical device connection |
 
-Each panel begins with a short explanation. “Why it’s designed this way” opens the full rationale and relevant limits. Only one feature and one connector are active. The phone’s screen changes with the selected chapter; the physical phone and its grid slot remain stable. The panel occupies its own fixed-height, internally scrollable slot. Expanding the full rationale never changes the phone’s position or stage height. On mobile, the smaller phone sits beside the higher-priority description. Today/Activity/Safeguards/Watch setup tabs, child/date samples, activity detail and confirmed local deletion, reading pace, topic/style choices, and illustrative preparation/send controls work without connecting an account. Detailed reasoning stays outside the app.
+
+Each panel begins with a short explanation. “Why it’s designed this way” opens the full rationale and relevant limits. Only one feature and one connector are active. The phone’s screen changes with the selected chapter; the physical phone and its grid slot remain stable. The panel occupies its own fixed-height, internally scrollable slot. Expanding the full rationale never changes the phone’s position or stage height. On mobile, the smaller phone sits beside the higher-priority description. Overview/Activity/Safeguards/Watch setup tabs, child/date samples, activity detail and confirmed local deletion, reading pace, topic/style choices, and illustrative preparation/send controls work without connecting an account. Detailed reasoning stays outside the app.
 
 The current beta requires normal Watch/iPhone pairing; Apple Family Setup is not supported. Master Guardian sharing remains a separate unfinished direction and is not advertised as a working control.
 
@@ -66,9 +68,9 @@ The demo opens Curiosity: original mascot, picture shelf, Continue and microphon
 
 The microphone plays a finite demonstration: a visible sample child’s question outside the Watch, a listening state, then thinking stars, then a prepared Moon answer. Parents can explore three choices, another round of three, and return to Curiosity. Reduced motion shortens the simulation and removes animated effects. Leaving/resetting cancels pending work. No microphone is accessed and no live AI is called. Ordinary knowledge packs retain their complete prepared text; unrelated discoveries never lead into Moon follow-ups.
 
-Storytime uses the original *Pip and the Patient Seed* images, seven native recordings and word timing files. Cover, shelf, Continue, page turns, narration and read-along are based on the native layouts. Math retains three finite authored garden questions with hints and retries in the native screen hierarchy. These modes have no artificial loading delays; ordinary asset transfer still depends on the visitor’s connection. All audio is user-initiated and supports pause/resume/replay/retry.
+Storytime uses the original *Pip and the Patient Seed* images, seven native recordings and word timing files. Cover, shelf, Continue, page turns, narration and read-along are based on the native layouts. Math has five prepared garden jobs, three-choice beginner input and later-band number entry with plus/minus and keypad controls. A saved parent starting point takes effect on the next new set. Story words open the compact Hear / Sounds / Meaning bubble; its Hear example clips the original recorded page, while explanations are prepared text. The backpack opens a nine-item sample catalogue with try-on, separate Star confirmation and explicit Wear. These modes have no artificial loading delays; ordinary asset transfer still depends on the visitor’s connection. All audio is user-initiated and supports pause/resume/replay/retry.
 
-Four external Watch chapters—Experience, Packs, Ask, Guidance—use arrows, a selector and horizontal swipes. A connector and non-intercepting highlight mark the actual current control. Guidance changes a harmless sample Moon preference and shows its effect; it never weakens essential protections. Full reasoning belongs in the external panel.
+Seven external Watch chapters—Experience, Packs, Ask, Guidance, Word help, Math, Stars & appearance—use arrows, a selector and horizontal swipes. A connector and non-intercepting highlight mark the actual current control. Guidance changes a harmless sample Moon preference and shows its effect; it never weakens essential protections. Full reasoning belongs in the external panel.
 
 ### Gesture and geometry contract
 
@@ -79,7 +81,7 @@ Four external Watch chapters—Experience, Packs, Ask, Guidance—use arrows, a 
 - Viewport sizing reserves room for heading, controls, descriptions and even the Watch strap. Narrow or short screens get a readable fallback instead of trapped scrolling.
 - Sticky sections are bounded by normal document flow and include direct skip links. There is no wheel interception or forced sequence.
 
-State is memory-only. The parent phone uses clearly fictional samples, not analytics from the visitor’s Watch play. Counts are not learning scores. Reload/reset clears the Watch state. Nothing is sent to a physical Watch. Native code, permissions and release status are unchanged.
+State is memory-only. The parent phone uses clearly fictional activity records, not visitor analytics. Within the demo page, reading pace, the next Math starting point and rewards enablement affect the prepared Watch; the sample wallet and outfit update the Parent rewards view. This local connection does not imply a real account or synced device. Counts are not learning scores. Reload/reset clears the Watch state. Nothing is sent to a physical Watch. Native code, permissions and release status are unchanged.
 
 ## Deeper pages
 

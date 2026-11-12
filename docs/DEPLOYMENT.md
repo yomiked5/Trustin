@@ -1,5 +1,11 @@
 # Deployment and domain handoff
 
+## Approved native demo publication — revision 1.10
+
+November 11, 2026 (Pacific). The owner reviewed Sites source `122daaa680414d5db74a4b3e56071263a74fe52f` and explicitly approved publishing it to trustinjr.com (“Looks great, publish”). This export preserves release `4fd8dbb039c0c144` and the existing production indexing, preview/404 noindex, canonical and cache policies. It uses the existing GitHub → Cloudflare Pages pipeline with no DNS, backend or native release changes.
+
+The source matches native reference `bccac84beb343a9f410af376669a9b316652aaae` with the documented scripted-demo limits in `NATIVE_DEMO_PARITY.md`. The 73 functional tests and original desktop/mobile viewport review are retained. Verify production bytes, MIME and cache headers after deployment; the exact deployment receipt is recorded in the project handoff.
+
 ## Returning-visitor repair — revision 1.8
 
 Baseline: marketing `4c96cd503e83012d09803cc9c08024a7de014aab`, private source `4a2ff9945d4e786fa10571481e274e83218c7536`. The owner reported a broken Watch demo and oversized Parent Dock with absent guidance. Live headers confirmed four-hour caching of mutable script/style URLs. Current source bytes alone were insufficient for a returning browser.

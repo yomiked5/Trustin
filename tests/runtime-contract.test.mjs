@@ -179,3 +179,28 @@ test('story reading speed changes only playback rate and keeps the prepared sour
 test('the story follows native word timings without replacing the readable text',async()=>{
  const a=await setup({search:'?activity=story'});await a.click('[data-action="resumeStory"]');await a.click('[data-action="listen"]');a.audio.currentTime=1.1;a.audio.emit('timeupdate');assert.equal(a.query('[data-story-word="2"]').attrs['data-current'],'true');assert.match(a.query('#watch-content').innerHTML,/seed/);
 });
+
+test('word help stays on the story, moves between words and closes without changing the page',async()=>{
+ const a=await setup({search:'?activity=story'});await a.click('[data-action="resumeStory"]');
+ await a.click('[data-story-word="2"]');assert.match(a.query('#watch-content').innerHTML,/role="dialog"/);assert.equal(a.state().storyPage,1);
+ await a.click('[data-word-kind="meaning"]');assert.match(a.query('#watch-content').innerHTML,/can grow into a new plant/);
+ await a.click('[data-action="nextWord"]');assert.match(a.query('#watch-content').innerHTML,/4 \/ 7/);
+ await a.click('[data-action="closeWord"]');assert.doesNotMatch(a.query('#watch-content').innerHTML,/role="dialog"/);assert.equal(a.state().storyPage,1);assert.equal(a.document.activeElement.dataset.storyWord,'3');
+});
+test('Stars try-on never spends; confirmation spends once and wearing survives Home navigation',async()=>{
+ const a=await setup();await a.click('[data-shell-home]');await a.click('[data-shell-home]');assert.equal(a.state().view,'rewards');
+ await a.click('[data-action="shop"]');await a.click('[data-treasure="cozy-scarf"]');assert.equal(a.state().stars,18);
+ await a.click('[data-action="confirmBuy"]');await a.click('[data-action="cancelBuy"]');assert.equal(a.state().stars,18);
+ await a.click('[data-action="confirmBuy"]');await a.click('[data-action="buy"]');assert.equal(a.state().stars,12);
+ await a.click('[data-action="wear"]');assert.equal(a.state().outfit.scarf,'cozy-scarf');
+ await a.click('[data-shell-home]');await a.click('[data-shell-home]');assert.equal(a.state().view,'launcher');assert.match(a.query('#watch-content').innerHTML,/wj-dressed/);
+ await a.click('[data-mode="math"]');assert.equal(a.state().view,'mathIntro');
+});
+test('a new Math level waits for the next set; number entry keeps the equation and supports a keypad',async()=>{
+ const a=await setup({search:'?activity=math'});await a.click('[data-action="startMath"]');
+ a.command('mathLevel',6);assert.equal(a.state().mathStep,0);assert.equal(a.state().nextMathStep,6);
+ for(const q of model.mathQuestions){await a.click('[data-number="'+q.answer+'"]');await a.click('[data-action="nextMath"]');}
+ await a.click('[data-action="restart"]');await a.click('[data-action="startMath"]');await a.click('[data-action="enterNumber"]');
+ assert.match(a.query('#demo-activity-label').textContent,/3 \+ \? = 5/);
+ await a.click('[data-action="numberKeypad"]');await a.click('[data-math-key="2"]');await a.click('[data-math-key="✓"]');await a.click('[data-action="checkNumber"]');assert.equal(a.state().mathSolved,true);
+});

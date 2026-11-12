@@ -1,0 +1,92 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> trustinjr-website@1.0.0 test
+> node scripts/release-assets.mjs --check && node scripts/check-syntax.mjs && node --test tests/*.test.mjs && python3 tests/check_site.py
+
+Passed: coherent release { id: '4fd8dbb039c0c144', files: 22, pages: 7 }
+Passed: JavaScript syntax for all 14 shipped JS/MJS files.
+✔ arrival is annotation-free; the same Watch shrinks before any chapter appears (7.584462ms)
+✔ forward and reverse scroll each expose exactly one correct feature (2.946188ms)
+✔ rapid scroll events coalesce; leaving the page cancels queued work (3.515042ms)
+✔ chapter buttons use native scroll, and reduced motion switches to manual selection (7.609879ms)
+✔ system/manual reduction and short landscapes are informative without scroll animation (5.368253ms)
+✔ small screens reserve room below the Watch and route connectors vertically (3.646234ms)
+✔ geometry is clamped and all chapter stops reveal their named state (0.50559ms)
+✔ the homepage rail and explanation card share swipe navigation and selected-state feedback (5.091334ms)
+✔ unenhanced markup preserves feature copy and uses matching native artwork hotspots (0.835978ms)
+✔ a parent boundary replaces an active Moon discovery and cannot be bypassed by reopening (3.24141ms)
+✔ Moon policy cannot hijack story or math completion with a stale topic (0.773919ms)
+✔ unrelated topic preferences report no visible change and preserve seed content (0.478609ms)
+✔ an unchanged policy does not restart a related discovery (0.631129ms)
+✔ activity switching preserves each activity independently (0.925074ms)
+✔ choosing the same activity does not reset its place (0.450134ms)
+✔ math needs all five correct answers and cannot advance after completion (0.791501ms)
+✔ math actions are guarded outside the math activity (0.4606ms)
+✔ explicit activity restart preserves family settings, log, and other activities (0.740433ms)
+✔ fresh state clears preferences and progress; activity logs are never invented or duplicated (2.387874ms)
+✔ invalid activity and topic choices leave the state alone (1.123237ms)
+✔ playback labels distinguish Listen, Pause, Resume and Replay (0.321867ms)
+✔ the story has an explicit introduction, a complete linear path, and an ending (1.197323ms)
+✔ early bands retain three choices and five jobs without division or sharing (1.833624ms)
+✔ reward state rejects duplicate or unaffordable purchases and unknown/unowned clothing (0.571287ms)
+✔ a deep link exposes a principle inside a disclosure and malformed hashes are harmless (6.055304ms)
+✔ printing includes every principle and restores the reader’s disclosure choices afterwards (3.520587ms)
+✔ motion is optional when disabled, unsupported or rejected by the platform (2.311723ms)
+✔ new motion cancels only the replaced target and stale completion cannot forget its successor (9.42639ms)
+✔ finished effects release themselves and defaults are finite with no persistent fill (1.485918ms)
+✔ reading progress stays bounded for before, within and beyond a short or long article (0.671292ms)
+✔ system reduced motion wins over manual enabling and responds to device changes (5.756799ms)
+✔ manual motion choice uses the URL, preserves other state and follows ordinary internal links (4.78409ms)
+✔ motion choice still applies without history and skips cross-page animation while off (2.663866ms)
+✔ all shipped decorative interactions are finite and leave no persistent animation fill (3.97589ms)
+✔ the shipped experience stays functional and static with reduced motion or no animation API (5.147561ms)
+✔ scroll scene offsets are bounded, reversible and reject invalid geometry (1.00866ms)
+✔ scroll enhancement coalesces events, resets on motion-off and reveals art once (3.351218ms)
+✔ Parent Dock starts with one explanation and a stable, independent phone slot (18.657402ms)
+✔ chapter controls clamp at each end and swiping outside selects the adjacent description (6.316173ms)
+✔ in-phone tabs select their native page and retain keyboard focus inside the phone (5.3493ms)
+✔ child and date controls update samples; overview explains report scope (3.711017ms)
+✔ activity detail and confirmed deletion affect only the local sample (4.143115ms)
+✔ sample safeguards persist across chapters while essential protections have no editable control (3.931285ms)
+✔ reading pace uses native speed options and prerecorded sample audio (4.485849ms)
+✔ setup is demonstrable without claiming a real connected Watch (5.651463ms)
+✔ all chapter copy remains outside the phone and full rationale is available in fixed panels (1.722671ms)
+✔ child switching isolates topic choices, learning pace and deleted sample records (3.216929ms)
+✔ Math starting point changes stay draft until explicitly saved (2.365737ms)
+✔ rewards can be switched off without hiding the learning tabs (1.679328ms)
+✔ new documents cannot combine their markup with the old cached app or styles (13.367517ms)
+✔ a CSS change creates a new coherent release and preserves an open old document’s files (4.353776ms)
+✔ release validation rejects a missing imported module and legacy page dependency (4.650407ms)
+✔ the shipped pages start the Parent Dock in its fixed slot with a visible explanation (26.03409ms)
+✔ preview opens genuine Curiosity controls, silently, with activity selection inside Home (55.441391ms)
+✔ Home works from readers and launches Math and Stories immediately without sample waiting timers (18.695695ms)
+✔ microphone sample shows listening and stars, two rounds of three choices, and returns to Curiosity (21.316905ms)
+✔ Home, reset and pagehide cancel the finite microphone sequence so no stale result replaces a new screen (35.992782ms)
+✔ activity deep links open their sample and unknown links preserve the Curiosity default (85.66006ms)
+✔ narration retains pause, resume, replay and visible retry after playback rejection (29.808406ms)
+✔ late rejected narration does not overwrite a newer activity (8.874283ms)
+✔ Moon sample control replaces the actual answer, and restoration does not autoplay (10.666516ms)
+✔ math feedback helps a wrong choice and focus stays inside the fixed Watch (24.08427ms)
+✔ the genuine Pip story can finish and restart while keeping other activity progress (17.325755ms)
+✔ a content error is recoverable and reset clears local sample state (8.453553ms)
+✔ seed and butterfly discoveries finish on Curiosity without unrelated Moon follow-ups (31.016368ms)
+✔ story reading speed changes only playback rate and keeps the prepared source (25.389233ms)
+✔ the story follows native word timings without replacing the readable text (22.947111ms)
+✔ word help stays on the story, moves between words and closes without changing the page (19.190327ms)
+✔ Stars try-on never spends; confirmation spends once and wearing survives Home navigation (59.361391ms)
+✔ a new Math level waits for the next set; number entry keeps the equation and supports a keypad (32.28197ms)
+✔ left/right swipes select adjacent chapters and suppress the trailing accidental click (1.777711ms)
+✔ vertical scrolling, taps, mouse drags, and canceled gestures do not change chapters (0.235524ms)
+✔ gestures beginning inside a device or form stay within that surface (0.347129ms)
+ℹ tests 73
+ℹ suites 0
+ℹ pass 73
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 762.755779
+Passed: 7 pages; links, anchors, SVG symbols, reserved image dimensions and content/audio references.
+Passed: preview noindex metadata/headers/robots, canonical routes, staged sitemap and 1200×630 social metadata/image.
+Passed: narrow privacy/narration API scan across 14 source scripts; release copies are byte-verified separately.
+Passed: 13 core text color pairings exceed 4.5:1 (not a rendered accessibility audit).

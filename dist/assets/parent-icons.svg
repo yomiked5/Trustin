@@ -4,4 +4,7 @@
 <symbol id="watch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="5" width="14" height="14" rx="4" fill="#d0dfe0"/><path d="m8 5 1-3h6l1 3M8 19l1 3h6l1-3m3-9h2v4"/></symbol>
 <symbol id="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 2 8 3v6c0 5-4 9-8 11-4-2-8-6-8-11V5Z"/><path d="M12 2v20"/></symbol>
 <symbol id="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 21 3 12C-3 5 6-1 12 6c6-7 15-1 9 6Z"/></symbol>
-</svg>
+<symbol id="grid" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+<symbol id="messages" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 3h12v12H8l-4 4V3Zm12 4h5v13l-4-4"/></symbol>
+<symbol id="sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h8M7 3v8M14 17h8M6 21 18 3"/></symbol>
+<symbol id="book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5Q7 1 2 4v16q5-3 10 1 5-4 10-1V4q-5-3-10 1v16"/></symbol></svg>

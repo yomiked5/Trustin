@@ -1,15 +1,24 @@
-import { initialState, chooseMode, openHome, chooseTopic, changePolicy, restartMode, solveMath, nextMath, mathQuestions, record, playbackLabel } from './demo-model.mjs';
-import { escapeHTML as esc, nativeIcon as ni, generalIcon as icon, avatar, action, sampleQuestion, branches, curiosityMarkup, homeMarkup, listeningMarkup, askMarkup, choicesMarkup } from './watch-ui.mjs';
+import { initialState, chooseMode, openHome, chooseTopic, changePolicy, restartMode, solveMath, nextMath, mathQuestions, record, playbackLabel, currentMath, setMathStartingPoint, purchaseTreasure, wearTreasure } from './demo-model.mjs';
+import { escapeHTML as esc, nativeIcon as ni, generalIcon as icon, avatar, action, sampleQuestion, branches, curiosityMarkup, homeMarkup, listeningMarkup, askMarkup, choicesMarkup, rewardIcon, rewardsMarkup, wordBubble } from './watch-ui.mjs';
 
 const content=document.querySelector('#watch-content'), status=document.querySelector('#demo-status');
-let state=initialState(),data,story,cues={},lastWord=-1,playing=false,playIntent=0,audioError='',timers=[],scripted=false,round=0,reply=null,resume='seed';
+let state=initialState(),data,story,cues={},lastWord=-1,playing=false,playIntent=0,audioError='',timers=[],scripted=false,round=0,reply=null,resume='seed',wordIndex=null,wordKind='hear',wordEnd=null,wordStart=null,wordSwipedUntil=0;
 const player=content?new Audio():null;
 if(player)player.preload='auto';
 const announce=text=>{if(status)status.textContent=text;};
-const signal=()=>window.dispatchEvent(new CustomEvent('tj:watch',{detail:{view:state.view,mode:state.mode,topic:state.topic,question:sampleQuestion}}));
+const signal=()=>window.dispatchEvent(new CustomEvent('tj:watch',{detail:{view:state.view,mode:state.mode,topic:state.topic,question:sampleQuestion,rewards:{stars:state.stars,owned:[...state.owned],outfit:{...state.outfit}}}}));
 function cancelSequence(){timers.forEach(clearTimeout);timers=[];}
 function stopAudio(){if(!player)return;playIntent++;playing=false;audioError='';player.pause();player.removeAttribute('src');player.load();updateAudio();}
-function stop(){cancelSequence();stopAudio();}
+function stop(){cancelSequence();stopAudio();wordEnd=null;}
+function closeWord(){wordIndex=null;wordEnd=null;wordKind='hear';}
+function showRewards(){stop();closeWord();if(state.view!=='rewards')openHome(state);state.view='rewards';state.rewardView='home';render();}
+function rewardsBack(){state.rewardView=['shop','wardrobe'].includes(state.rewardView)?'home':state.rewardView==='confirm'?'item':'shop';render();}
+async function hearWord(){
+ const node=story.nodes[state.storyPage],cue=cues[node.id]?.words[wordIndex];if(!cue)return;
+ stopAudio();player.src='/assets/pip/'+node.audio;player.currentTime=cue.start;player.playbackRate=state.pace;wordEnd=cue.end;const intent=++playIntent;
+ try{await player.play();}catch{if(intent===playIntent){wordEnd=null;announce('Word audio is unavailable. The explanation remains readable.');}}
+}
+function moveWord(delta){stop();wordIndex=Math.max(0,Math.min(story.nodes[state.storyPage].text.split(/\s+/).length-1,wordIndex+delta));wordKind='hear';render();content.querySelector('[data-action="hearWord"]')?.focus({preventScroll:true});hearWord();}
 function audioSource(){
   if(state.view==='discovery'&&!reply){const item=data.find(x=>x.illustration===state.topic);return '/assets/audio/'+item.id+'.v'+item.version+'-'+(state.page?'more':'answer')+'.m4a';}
   if(state.view==='story')return '/assets/pip/'+story.nodes[state.storyPage].audio;
@@ -36,6 +45,7 @@ if(player){
   player.addEventListener('error',()=>{playing=false;if(player.getAttribute('src')){audioError='Recording unavailable. Retry, or read the answer.';announce(audioError);}updateAudio();});
   player.addEventListener('timeupdate',()=>{
     if(state.view!=='story')return;
+    if(wordEnd!==null){if(player.currentTime>=wordEnd){player.pause();wordEnd=null;}return;}
     const words=cues[story.nodes[state.storyPage].id]?.words;if(!words)return;
     const index=words.findIndex(word=>player.currentTime>=word.start&&player.currentTime<=word.end);
     if(index===lastWord)return;lastWord=index;
@@ -45,9 +55,9 @@ if(player){
   });
 }
 function resetAsk(){scripted=false;round=0;reply=null;}
-function curiosity(){stop();resetAsk();chooseMode(state,'ask');state.view='home';state.topic=null;state.page=0;render();}
+function curiosity(){stop();closeWord();resetAsk();chooseMode(state,'ask');state.view='home';state.topic=null;state.page=0;render();}
 function openTopic(topic){stop();resetAsk();chooseTopic(state,topic);resume=topic;render();}
-function launch(mode){stop();resetAsk();chooseMode(state,mode);if(mode==='ask'){state.view='home';state.topic=null;}else if(mode==='story'&&state.storyPage===0)state.view='storyEntry';render();}
+function launch(mode){stop();closeWord();resetAsk();chooseMode(state,mode);if(mode==='ask'){state.view='home';state.topic=null;}else if(mode==='story'&&state.storyPage===0)state.view='storyEntry';if(mode==='math'&&state.view==='mathIntro')state.mathStep=state.nextMathStep;render();}
 function beginSample(){
   stop();resetAsk();chooseMode(state,'ask');scripted=true;resume='moon';state.topic='moon';state.view='listening';render();
   announce('Scripted question: '+sampleQuestion+' No microphone is recorded.');
@@ -59,13 +69,15 @@ function focusContent(){const target=content.querySelector('h3')||content;target
 function render(){
   if(!data||!story||!content)return;
   const label=document.querySelector('#demo-activity-label'),screen=content.closest('[data-device-interactive]');
-  const title=state.view==='launcher'?'Trustin Jr.':state.mode==='ask'?'Curiosity':state.mode==='story'?'Storytime':'Garden math';
+  const title=state.view==='rewards'?({home:'Your things',shop:'Shop',wardrobe:'Dress up',item:'Try on',confirm:'Use Stars?',owned:'It’s yours!'}[state.rewardView]):state.mathEntry?currentMath(state).idea:state.view==='launcher'?'Trustin Jr.':state.mode==='ask'?'Curiosity':state.mode==='story'?'Storytime':'Garden math';
   if(label)label.textContent=title;
-  if(screen){screen.dataset.mode=state.view==='launcher'?'home':state.mode;screen.dataset.view=state.view;}
+  if(screen){screen.dataset.mode=['launcher','rewards'].includes(state.view)?'home':state.mode;screen.dataset.view=state.view;}
   const context=document.querySelector('[data-watch-context]');
-  if(context){context.innerHTML=state.view==='launcher'?ni('gear'):state.mode==='ask'?ni('bulb'):icon(state.mode==='math'?'math':'book');context.setAttribute('aria-label',state.view==='launcher'?'See the Parent Dock':state.mode==='story'?'Story library':'Return to Curiosity');}
+  const home=document.querySelector('[data-shell-home]');if(home){home.innerHTML=state.view==='launcher'?rewardIcon('backpack'):state.view==='rewards'&&state.rewardView!=='home'?ni('back'):ni('home');home.setAttribute('aria-label',state.view==='launcher'?'Your things: Stars, shop and dress up':state.view==='rewards'&&state.rewardView!=='home'?'Back in your things':'Home: Ask Trustin, Math and Stories');}
+  if(context){context.innerHTML=state.view==='rewards'?rewardIcon('backpack'):state.view==='launcher'?ni('gear'):state.mode==='ask'?ni('bulb'):icon(state.mode==='math'?'math':'book');context.setAttribute('aria-label',state.view==='launcher'?'See the Parent Dock':state.mode==='story'?'Story library':'Return to Curiosity');}
   lastWord=-1;let html='';
-  if(state.view==='launcher')html=homeMarkup();
+  if(state.view==='launcher')html=homeMarkup(state);
+  if(state.view==='rewards')html=rewardsMarkup(state);
   if(state.view==='home')html=curiosityMarkup(resume);
   if(['listening','thinking'].includes(state.view))html=listeningMarkup(state.view==='thinking');
   if(state.view==='discovery'){
@@ -80,27 +92,51 @@ function render(){
   if(state.view==='storyCover')html='<div class="wj-story-cover"><img src="/assets/pip/cover.jpg" width="480" height="320" alt="Pip and the Patient Seed"><div class="wj-cover-controls">'+action('storyShelf','back','Back to the story library','wj-repeat')+'<strong>Pip and the<br>Patient Seed</strong>'+action('resumeStory','next','Start the story','wj-forward')+'</div></div>';
   if(state.view==='story'){
     const node=story.nodes[state.storyPage];
-    html='<div class="wj-story-reader" data-watch-target="reader"><img class="wj-story-art" src="/assets/pip/'+node.art+'.jpg" width="480" height="320" alt="Illustration from Pip and the Patient Seed"><div class="wj-story-text" tabindex="0">'+node.text.split(/\s+/).map((word,i)=>'<span data-story-word="'+i+'">'+esc(word)+'</span>').join(' ')+'</div><div class="wj-controls">'+action('back','back','Previous story page','wj-repeat')+action('listen','play','Listen to story narration','wj-play')+action('next','next',state.storyPage===story.nodes.length-1?'Finish story':'Next story page','wj-forward')+'</div><p id="audio-note" class="wj-audio-note" role="status"></p></div>';
+    html='<div class="wj-story-reader" '+(wordIndex!==null?'inert aria-hidden="true"':'')+' data-watch-target="reader"><img class="wj-story-art" src="/assets/pip/'+node.art+'.jpg" width="480" height="320" alt="Illustration from Pip and the Patient Seed"><div class="wj-story-text" tabindex="0">'+node.text.split(/\s+/).map((word,i)=>'<button data-story-word="'+i+'" aria-label="Word help: '+esc(word)+'">'+esc(word)+'</button>').join(' ')+'</div><div class="wj-controls">'+action('back','back','Previous story page','wj-repeat')+action('listen','play','Listen to story narration','wj-play')+action('next','next',state.storyPage===story.nodes.length-1?'Finish story':'Next story page','wj-forward')+'</div><p id="audio-note" class="wj-audio-note" role="status"></p></div>'+(wordIndex!==null?wordBubble(node.text,wordIndex,wordKind):'');
   }
-  if(state.view==='mathIntro')html='<div class="wj-math-intro">'+icon('seed')+'<div class="wj-reading" tabindex="0">Help Trustin get the garden ready. Three little counting jobs.</div><button class="wj-native-wide" data-action="startMath" aria-label="Start the math project">'+ni('next')+'</button></div>';
+  if(state.view==='mathIntro')html='<div class="wj-math-intro">'+icon('seed')+'<div class="wj-reading" tabindex="0">Help Trustin get the garden ready. Five little garden jobs.</div><button class="wj-native-wide" data-action="startMath" aria-label="Start the math project">'+ni('next')+'</button></div>';
   if(state.view==='math'){
-    const q=mathQuestions[state.mathPage];
-    html='<div class="wj-math" data-watch-target="reader"><button class="wj-count-art" data-action="mathHint" aria-label="See a counting hint">'+Array.from({length:q.count},()=>'<i></i>').join('')+'</button><div class="wj-math-text" tabindex="0">'+esc(state.mathFeedback||q.prompt)+'</div><div class="wj-math-options">'+(state.mathSolved?'<span class="wj-correct">'+icon('check')+'</span><button data-action="nextMath" aria-label="Next counting job">'+ni('next')+'</button>':q.options.map((n,i)=>'<button data-number="'+n+'" class="wj-option-'+i+'" aria-label="'+n+' seeds">'+n+'</button>').join(''))+'</div><div class="wj-job-dots" aria-label="Job '+(state.mathPage+1)+' of 3">'+[0,1,2].map(i=>'<i class="'+(i<=state.mathPage?'wj-dot-active':'')+'"></i>').join('')+'</div></div>';
+    const q=currentMath(state);
+    html='<div class="wj-math" data-watch-target="reader"><button class="wj-count-art" data-action="mathHint" aria-label="See a counting hint">'+Array.from({length:q.count},()=>'<i></i>').join('')+'</button><div class="wj-math-text" tabindex="0">'+esc(state.mathFeedback||q.prompt)+'</div><div class="wj-math-options">'+(state.mathSolved?'<span class="wj-correct">'+icon('check')+'</span><button data-action="nextMath" aria-label="Next counting job">'+ni('next')+'</button>':q.entry?'<button data-action="enterNumber">123</button>':(q.options||[]).map((n,i)=>'<button data-number="'+n+'" class="wj-option-'+i+'" aria-label="'+n+' seeds">'+n+'</button>').join(''))+'</div><div class="wj-job-dots" aria-label="Job '+(state.mathPage+1)+' of 5">'+[0,1,2,3,4].map(i=>'<i class="'+(i<=state.mathPage?'wj-dot-active':'')+'"></i>').join('')+'</div></div>';
+  }
+
+  if(state.view==='math'&&state.mathEntry&&!state.mathSolved){
+    const q=currentMath(state);
+    html='<div class="wj-number-entry" data-watch-target="reader">'+(state.mathEntry==='keypad'?'<div class="wj-key-value">'+state.mathValue+'</div><div class="wj-keypad">'+[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(key=>'<button data-math-key="'+key+'" aria-label="'+(key==='⌫'?'Erase last digit':key==='✓'?'Use number':key)+'">'+key+'</button>').join('')+'</div>':'<div class="wj-stepper"><button data-action="numberMinus" aria-label="Decrease number">−</button><strong>'+state.mathValue+'</strong><button data-action="numberPlus" aria-label="Increase number">+</button></div><p>Tap + / − or use the keypad</p><div class="wj-entry-actions"><button data-action="numberKeypad">123</button><button data-action="checkNumber">Check</button></div>')+'<p class="wj-entry-feedback" role="status">'+esc(state.mathFeedback)+'</p></div>';
   }
   if(state.view==='done')html='<div class="wj-ending">'+icon(state.mode==='story'?'leaf':'check')+'<h3>'+(state.mode==='story'?'The end.':'We did it!')+'</h3><button class="wj-native-wide" data-action="restart">'+ni('repeat')+' '+(state.mode==='story'?'Read again':'Try again')+'</button></div>';
   content.innerHTML=html;content.setAttribute('aria-busy','false');updateAudio();signal();
 }
 content?.addEventListener('click',event=>{
+  if(Date.now()<wordSwipedUntil){event.preventDefault();return;}wordSwipedUntil=0;
   const button=event.target.closest('button');if(!button||button.disabled)return;
+  if(button.dataset.storyWord!==undefined){stop();wordIndex=Number(button.dataset.storyWord);wordKind='hear';render();content.querySelector('[data-action="hearWord"]')?.focus({preventScroll:true});hearWord();return;}
+  if(button.dataset.wordKind){stop();wordKind=button.dataset.wordKind;render();content.querySelector('[data-word-kind="'+wordKind+'"]')?.focus({preventScroll:true});if(wordKind==='hear')hearWord();return;}
+  if(button.dataset.action==='hearWord'){hearWord();return;}
+  if(button.dataset.action==='nextWord'||button.dataset.action==='previousWord'){moveWord(button.dataset.action==='nextWord'?1:-1);return;}
   if(button.dataset.action==='retry'){loadDemo();return;}
   if(button.dataset.action==='listen'){toggleAudio();return;}
   if(button.dataset.action==='microphone'){beginSample();return;}
   if(button.dataset.mode){launch(button.dataset.mode);focusContent();return;}
   if(button.dataset.topic){openTopic(button.dataset.topic);focusContent();return;}
   stop();
+  if(button.dataset.treasure){state.rewardItem=button.dataset.treasure;state.rewardView='item';render();focusContent();return;}
+  if(button.dataset.mathKey!==undefined){const key=button.dataset.mathKey;state.mathValue=key==='⌫'?Math.floor(state.mathValue/10):key==='✓'?state.mathValue:Math.min(999,Number(String(state.mathValue===0?'':state.mathValue)+key));if(key==='✓')state.mathEntry=true;render();return;}
   if(button.dataset.branch!==undefined){reply=branches[round][Number(button.dataset.branch)];state.view='discovery';render();focusContent();return;}
   if(button.dataset.number!==undefined){solveMath(state,button.dataset.number);render();announce(state.mathFeedback);content.querySelector(state.mathSolved?'[data-action="nextMath"]':'[data-number="'+button.dataset.number+'"]')?.focus({preventScroll:true});return;}
   switch(button.dataset.action){
+    case 'closeWord':{const prior=wordIndex;closeWord();render();content.querySelector('[data-story-word="'+prior+'"]')?.focus({preventScroll:true});return;}
+    case 'shop':state.rewardView='shop';break;
+    case 'wardrobe':state.rewardView='wardrobe';break;
+    case 'confirmBuy':state.rewardView='confirm';break;
+    case 'cancelBuy':state.rewardView='item';break;
+    case 'buy':if(purchaseTreasure(state,state.rewardItem))state.rewardView='owned';break;
+    case 'wear':wearTreasure(state,state.rewardItem);state.rewardView='wardrobe';break;
+    case 'enterNumber':state.mathEntry=true;break;
+    case 'numberKeypad':state.mathEntry='keypad';break;
+    case 'numberMinus':state.mathValue=Math.max(0,state.mathValue-1);break;
+    case 'numberPlus':state.mathValue=Math.min(999,state.mathValue+1);break;
+    case 'checkNumber':if(solveMath(state,state.mathValue))state.mathEntry=false;break;
     case 'curiosity':if(scripted)record(state,'Explored the Moon sample');else if(state.view==='discovery'&&state.page===1)record(state,'Explored '+state.topic);curiosity();return;
     case 'choices':if(reply&&round===0)round=1;state.view='choices';break;
     case 'answer':state.view='discovery';break;
@@ -108,26 +144,40 @@ content?.addEventListener('click',event=>{
     case 'resumeStory':state.storyPage=Math.max(1,state.storyPage);state.view='story';break;
     case 'storyShelf':state.view='storyShelf';break;
     case 'startMath':state.view='math';break;
-    case 'mathHint':state.mathFeedback=mathQuestions[state.mathPage].hint;break;
+    case 'mathHint':state.mathFeedback=currentMath(state).hint;break;
     case 'nextMath':nextMath(state);break;
     case 'restart':restartMode(state);if(state.mode==='story')state.view='storyEntry';break;
-    case 'back':if(state.storyPage>1)state.storyPage--;else state.view='storyCover';break;
-    case 'next':
+    case 'back':closeWord();if(state.storyPage>1)state.storyPage--;else state.view='storyCover';break;
+    case 'next':closeWord();
       if(state.view==='story'){if(state.storyPage<story.nodes.length-1)state.storyPage++;else{state.view='done';record(state,'Finished Pip and the Patient Seed');}}
       else if(state.view==='discovery'){if(state.page===0)state.page=1;else{scripted=true;round=0;state.view='choices';}}
       break;
   }
   render();focusContent();
 });
-document.querySelector('[data-shell-home]')?.addEventListener('click',()=>{if(!data)return;stop();resetAsk();openHome(state);render();focusContent();announce('Home. Choose Ask Trustin, Math, or Stories.');});
+document.querySelector('[data-shell-home]')?.addEventListener('click',()=>{if(!data)return;if(state.view==='launcher'){showRewards();return;}if(state.view==='rewards'&&state.rewardView!=='home'){rewardsBack();return;}stop();closeWord();resetAsk();openHome(state);render();focusContent();announce('Home. Choose Ask Trustin, Math, or Stories.');});
 document.querySelector('[data-watch-context]')?.addEventListener('click',()=>{if(!data)return;if(state.view==='launcher'){document.querySelector('#parent-dock')?.scrollIntoView({behavior:window.TJMotionPolicy?.enabled()===false?'auto':'smooth'});}else if(state.mode==='story'){stop();state.view='storyShelf';render();}else curiosity();});
-document.querySelector('#reset-demo')?.addEventListener('click',()=>{stop();state=initialState();resume='seed';resetAsk();render();announce('The preview has been reset.');});
+document.querySelector('#reset-demo')?.addEventListener('click',()=>{stop();state=initialState();resume='seed';closeWord();resetAsk();render();announce('The preview has been reset.');});
 function setPolicy(value){const changed=changePolicy(state,value);if(changed){stop();reply=null;render();}announce(value==='together'?'The Moon sample now invites a grown-up conversation.':'The Moon sample is available again.');}
 window.addEventListener('tj:watch-command',event=>{
   if(!data)return;const {action:command,value}=event.detail;
   if(command==='curiosity')curiosity();
   if(command==='policy'){setPolicy(value);openTopic('moon');}
+  if(command==='activity'){launch(value);}
+  if(command==='wordHelp'){launch('story');state.storyPage=1;state.view='story';render();}
+  if(command==='rewards')showRewards();
+  if(command==='mathLevel')setMathStartingPoint(state,Number(value));
+  if(command==='rewardsEnabled'){state.rewardsEnabled=Boolean(value);render();}
   if(command==='pace'){state.pace=Number(value);if(player)player.playbackRate=state.pace;}
+});
+content?.addEventListener('pointerdown',event=>{if(wordIndex!==null&&event.target.closest('.wj-word-bubble'))wordStart={x:event.clientX,y:event.clientY,id:event.pointerId};});
+content?.addEventListener('pointerup',event=>{if(!wordStart||event.pointerId!==wordStart.id)return;const dx=event.clientX-wordStart.x,dy=event.clientY-wordStart.y;wordStart=null;if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy)*1.5){wordSwipedUntil=Date.now()+350;moveWord(dx<0?1:-1);}});
+content?.addEventListener('pointercancel',()=>{wordStart=null;});
+content?.addEventListener('keydown',event=>{
+ if(wordIndex===null)return;
+ if(event.key==='Escape'){event.preventDefault();const index=wordIndex;stop();closeWord();render();content.querySelector('[data-story-word="'+index+'"]')?.focus({preventScroll:true});}
+ if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();moveWord(event.key==='ArrowRight'?1:-1);}
+ if(event.key==='Tab'){const items=[...document.querySelectorAll('.wj-word-bubble button:not(:disabled)')],first=items[0],last=items.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
 });
 function suspend(){cancelSequence();if(['listening','thinking'].includes(state.view)){state.view='home';render();}if(player){playIntent++;playing=false;player.pause();}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)suspend();});window.addEventListener('pagehide',suspend);

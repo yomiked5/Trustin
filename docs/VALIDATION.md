@@ -1,6 +1,21 @@
 # Validation evidence
 
-Revision 1.9 · October 14, 2026 (Pacific). Marketing website and scripted demo only.
+Revision 1.10 · November 11, 2026 (Pacific), verification continued November 12 UTC. Owner-private review, subsequently approved for public publication on November 11.
+
+## Current revision
+
+- Native reference: `bccac84beb343a9f410af376669a9b316652aaae`; source and simulator screenshots inspected. See [Native demo parity](NATIVE_DEMO_PARITY.md).
+- `npm test`: 73 automated tests, 14 source scripts, 22 coherent release dependencies, seven-page integrity and privacy API scan pass.
+- New functional coverage: five-job beginner Math, pending starting-point changes, number entry/keypad, in-page word help/return, duplicate and unaffordable Star purchases, try-on versus explicit spend/wear, child-isolated parent settings, draft/save and optional rewards.
+- Rendered in the supported Chromium preview at desktop and 390×780 mobile viewport frames. Observed working Home navigation, original Curiosity, compact word help/meaning, Stars try-on/confirmation/wearing, Parent search/story detail, and a fixed Parent device before/after chapter changes and disclosure expansion.
+- Mobile Parent device bounds remained exactly `{x:16,y:262.75,width:132.390625,height:286.5}` during the verified switch/disclosure. The Watch uses `overflow:clip` at its shell: a browser focus scroll cannot move the clock. The meaning body fit its measured viewport after this fix.
+- Screenshots in `docs/evidence/2026-11-11/` are actual browser captures of this web preview. The mobile capture uses viewport-sized iframes, not a physical iPhone or Safari.
+- Physical iPhone/Safari touch feel, VoiceOver and device audio listening remain owner acceptance. Pointer intent and inside/outside isolation have automated contracts; browser checks are not a claim of hardware testing.
+- Native app/backend/release are unchanged. The owner subsequently approved this reviewed version for `trustinjr.com` with “Looks great, publish.” This export retains the public indexing profile; live delivery evidence is recorded separately from browser QA.
+
+## Historical October 14 evidence
+
+The following records describe the earlier revision and its then-current verification boundary, not the current native source or review status.
 
 ## Observed regression
 

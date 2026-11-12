@@ -165,3 +165,25 @@
  .parent-story[data-parent-mode=docked] .parent-panels { max-height:none!important; height:auto!important }
  .parent-story .hud-box { display:none!important }
 }
+/* Nov 11 Parent Dock: calm white groups and unboxed activity metrics. */
+.ios-title h3 { margin:0; font-size:9cqw }.ios-title>div { min-width:0 }
+.ios-subtitle { color:#6a6e73; font-size:3.7cqw; line-height:1.4; margin:1.5cqw 0 0 }
+.ios-profile { display:flex; flex-wrap:wrap; justify-content:space-between; gap:1cqw 3cqw; background:#ffffffcf; border-radius:5cqw; padding:3cqw 4cqw; margin:4cqw 0 }
+.ios-profile .ios-caption { width:100%; margin:1cqw 0 0 }
+.parent-story .ios-metrics { margin:3cqw 0 1cqw; gap:3cqw }
+.parent-story .ios-metrics>button { min-width:0; display:flex; flex-direction:column; gap:1cqw; padding:1cqw 0; min-height:28px }
+.ios-metrics svg { width:5cqw;height:5cqw;color:#526e4d }.ios-metrics>button:nth-child(2) svg { color:#9c6445 }.ios-metrics>button:nth-child(3) svg { color:#796194 }
+.ios-metrics strong { font-size:6.5cqw }.ios-metrics span { font-size:3.4cqw;color:#6a6e73 }
+.parent-story button.ios-activity { margin:2cqw 0 }
+.ios-scroll h4.ios-section-label { margin:4cqw 0 2cqw;color:#2a2b2e;font-size:4.5cqw }
+.parent-story .ios-inset { padding:2cqw 4cqw }.ios-inset .ios-native-action { display:block; width:100% }
+.ios-select-label { display:block;font-size:3cqw;color:#6a6e73;margin:2cqw 0 }
+.ios-screen select { font:600 3.8cqw/1.4 ui-rounded,system-ui,sans-serif;color:#406d70; border:0; border-bottom:1px solid #ddd; background:transparent; border-radius:0; display:block; width:100%; min-height:28px; padding:2cqw 0 }
+.ios-search input { width:100%;font:inherit;background:#eeece6;border:0;border-radius:3cqw;padding:3cqw;color:#2a2b2e;min-height:28px }
+.ios-filters { display:flex;gap:1cqw;margin:3cqw 0 }.parent-story .ios-filters button { font-size:3cqw;padding:2cqw 1cqw;flex:1;border-radius:3cqw;min-height:25px;text-align:center }
+.parent-story .ios-filters button[aria-pressed=true] { color:#fff8ef;background:#406d70 }
+.parent-story .ios-switch-row { width:100%;display:flex;justify-content:space-between;align-items:center;gap:2cqw;min-height:30px;font-size:4cqw }
+.ios-switch { width:11cqw;height:7cqw;min-width:22px;min-height:14px;border-radius:10cqw;background:#b4b9b2;position:relative }
+.ios-switch:after { content:'';position:absolute;left:5%;top:8%;height:84%;aspect-ratio:1;background:white;border-radius:50% }
+.ios-switch.is-on { background:#406d70 }.ios-switch.is-on:after { left:auto;right:5% }
+.ios-stars { color:#9b6f18;font-size:10cqw;font-weight:700;padding:2cqw 0 }

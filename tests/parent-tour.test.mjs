@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-import {parentChapters,parentScreen,initialParentState} from '../dist/parent-ui.mjs';
+import {parentChapters,parentScreen,initialParentState,switchParentChild} from '../dist/parent-ui.mjs';
 import {mountSwipe} from '../dist/swipe.js';
 import {drawSpotlight} from '../dist/spotlight.js';
 const source=readFileSync(new URL('../dist/parent-tour.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'').replaceAll('export function','function');
@@ -29,41 +29,56 @@ function setup(){
  const win={requestAnimationFrame(fn){frames.set(++frameID,fn);return frameID;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(k,fn){events[k]=fn;}};
  const doc={querySelector:()=>null,createElement:()=>node(),addEventListener(){}};
  class AudioDouble {constructor(){audio=this;this.paused=true;this.playbackRate=1;}pause(){this.paused=true;}removeAttribute(){this.src='';}load(){}play(){this.paused=false;if(this.defer)return new Promise((resolve,reject)=>{this.reject=reject;});return Promise.resolve();}}
- const context=vm.createContext({window:win,document:doc,Audio:AudioDouble,parentChapters,parentScreen,initialParentState,mountSwipe,drawSpotlight,root});
+ const context=vm.createContext({window:win,document:doc,Audio:AudioDouble,parentChapters,parentScreen,initialParentState,switchParentChild,mountSwipe,drawSpotlight,root});
  vm.runInContext(source,context);const controller=vm.runInContext('mountParentTour(root)',context);
  const flush=()=>{for(const [id,fn] of frames){frames.delete(id);fn();}};
  flush();
  return {root,stage,device,screen,panels,picker,prev,next,status,path,dot,controller,events,flush,get audio(){return audio;},choose:i=>controller.navigate(i),click(action){const button=screen.querySelector('[data-parent-action="'+action+'"]');assert.ok(button,'Missing Parent action '+action);screen.events.click({target:button});flush();}};
 }
 test('Parent Dock starts with one explanation and a stable, independent phone slot',()=>{
- const a=setup();assert.equal(a.root.dataset.parentMode,'docked');assert.equal(a.root.dataset.parentChapter,'today');assert.equal(a.panels.filter(x=>!x.hidden).length,1);assert.equal(a.device.attrs.role,'group');assert.equal(a.screen.attrs['aria-hidden'],undefined);
+ const a=setup();assert.equal(a.root.dataset.parentMode,'docked');assert.equal(a.root.dataset.parentChapter,'overview');assert.equal(a.panels.filter(x=>!x.hidden).length,1);assert.equal(a.device.attrs.role,'group');assert.equal(a.screen.attrs['aria-hidden'],undefined);
  const rect=a.device.getBoundingClientRect();for(const i of [1,6,2,3,4,0]){a.choose(i);a.flush();assert.equal(a.panels.filter(x=>!x.hidden).length,1);assert.equal(a.panels[i].hidden,false);assert.deepEqual(a.device.getBoundingClientRect(),rect);assert.deepEqual(a.device.style,{});assert.match(a.path.attrs.d,/^M/);}
 });
 test('chapter controls clamp at each end and swiping outside selects the adjacent description',()=>{
- const a=setup();a.choose(-50);assert.equal(a.picker.value,'0');assert.equal(a.prev.disabled,true);a.choose(6);assert.equal(a.next.disabled,true);a.next.events.click();assert.equal(a.picker.value,'6');
- const target={closest:()=>null};a.stage.events.pointerdown({pointerType:'touch',pointerId:1,clientX:20,clientY:10,target});a.stage.events.pointerup({pointerId:1,clientX:100,clientY:12});assert.equal(a.picker.value,'5');
+ const a=setup();a.choose(-50);assert.equal(a.picker.value,'0');assert.equal(a.prev.disabled,true);a.choose(7);assert.equal(a.next.disabled,true);a.next.events.click();assert.equal(a.picker.value,'7');
+ const target={closest:()=>null};a.stage.events.pointerdown({pointerType:'touch',pointerId:1,clientX:20,clientY:10,target});a.stage.events.pointerup({pointerId:1,clientX:100,clientY:12});assert.equal(a.picker.value,'6');
 });
 test('in-phone tabs select their native page and retain keyboard focus inside the phone',()=>{
- const a=setup();for(const [action,index] of [['activity',2],['topics',3],['setup',6],['today',0]]){a.click(action);assert.equal(a.picker.value,String(index));assert.equal(a.screen.querySelector('[data-parent-action="'+action+'"]').focused,true);}
+ const a=setup();for(const [action,index] of [['activity',1],['topics',4],['setup',7],['overview',0]]){a.click(action);assert.equal(a.picker.value,String(index));assert.equal(a.screen.querySelector('[data-parent-action="'+action+'"]').focused,true);}
 });
-test('child and date controls update illustrative counts; Together explains its source',()=>{
- const a=setup();a.click('child');assert.match(a.screen.innerHTML,/Adventurer/);a.click('range');assert.match(a.screen.innerHTML,/This week/);a.click('moment');assert.match(a.screen.innerHTML,/Inspired by their saved question/);a.choose(4);a.choose(0);assert.match(a.screen.innerHTML,/Adventurer/);
+test('child and date controls update samples; overview explains report scope',()=>{
+ const a=setup();a.click('child');assert.match(a.screen.innerHTML,/Adventurer/);a.click('range');assert.match(a.screen.innerHTML,/This week/);a.click('reportGuide');assert.match(a.screen.innerHTML,/Offline discovery listening/);a.choose(4);a.choose(0);assert.match(a.screen.innerHTML,/Adventurer/);
 });
 test('activity detail and confirmed deletion affect only the local sample',()=>{
- const a=setup();a.click('detail');assert.equal(a.picker.value,'2');assert.match(a.screen.innerHTML,/Trustin’s answer/);a.click('confirmDelete');assert.match(a.screen.innerHTML,/Delete this activity\?/);a.click('cancelDelete');assert.equal(a.controller.state.deleted,false);a.click('confirmDelete');a.click('delete');assert.equal(a.controller.state.deleted,true);assert.match(a.status.textContent,/preview only/);a.click('restore');assert.equal(a.controller.state.deleted,false);
+ const a=setup();a.click('detail-question');assert.equal(a.picker.value,'1');assert.match(a.screen.innerHTML,/Trustin’s answer/);a.click('confirmDelete');assert.match(a.screen.innerHTML,/Delete this activity\?/);a.click('cancelDelete');assert.equal(a.controller.state.deleted.length,0);a.click('confirmDelete');a.click('delete');assert.equal(a.controller.state.deleted.includes('question'),true);assert.match(a.status.textContent,/preview only/);a.click('restore');assert.equal(a.controller.state.deleted.length,0);
 });
 test('sample safeguards persist across chapters while essential protections have no editable control',()=>{
- const a=setup();a.choose(3);a.click('topic-0');assert.equal(a.controller.state.topics[0],1);a.click('save');assert.match(a.status.textContent,/No account or Watch was changed/);a.choose(4);a.choose(3);assert.match(a.screen.innerHTML,/Always protected/);assert.equal(a.controller.state.topics[0],1);assert.doesNotMatch(a.screen.innerHTML,/data-parent-action="(?:disable|essential|unprotect)/);
+ const a=setup();a.choose(4);a.click('topicList');a.click('topic-0');assert.equal(a.controller.state.topics[0],1);a.click('save');assert.match(a.status.textContent,/No account or Watch was changed/);a.choose(3);a.choose(4);a.click('topicList');assert.match(a.screen.innerHTML,/Always protected/);assert.equal(a.controller.state.topics[0],1);assert.doesNotMatch(a.screen.innerHTML,/data-parent-action="(?:disable|essential|unprotect)/);
 });
 test('reading pace uses native speed options and prerecorded sample audio',async()=>{
- const a=setup();a.choose(4);a.click('speed-0');a.click('sample');await Promise.resolve();assert.equal(a.audio.playbackRate,.75);assert.equal(a.audio.src,'/assets/pip/seed.m4a');a.click('speed-2');assert.equal(a.audio.playbackRate,1);a.choose(0);assert.equal(a.audio.paused,true);
+ const a=setup();a.choose(3);a.click('speed-0');a.click('sample');await Promise.resolve();assert.equal(a.audio.playbackRate,.75);assert.equal(a.audio.src,'/assets/pip/seed.m4a');a.click('speed-2');assert.equal(a.audio.playbackRate,1);a.choose(0);assert.equal(a.audio.paused,true);
 });
 test('setup is demonstrable without claiming a real connected Watch',()=>{
- const a=setup();a.choose(6);a.click('prepare');assert.match(a.screen.innerHTML,/Ready for the paired Watch/);a.click('send');assert.match(a.status.textContent,/sends nothing/);assert.match(a.screen.innerHTML,/No Watch connected yet/);
+ const a=setup();a.choose(7);a.click('confirmDisconnect');a.click('disconnect');a.click('prepare');assert.match(a.screen.innerHTML,/Ready for the paired Watch/);a.click('send');assert.match(a.status.textContent,/sends nothing/);assert.match(a.screen.innerHTML,/Sample connection complete/);
 });
 test('all chapter copy remains outside the phone and full rationale is available in fixed panels',()=>{
  const css=readFileSync(new URL('../dist/parent-tour.css',import.meta.url),'utf8');
  assert.match(css,/\.parent-panel \{ height:100%; overflow-y:auto/);
  for(const path of ['index.html','demo/index.html']){const html=readFileSync(new URL('../dist/'+path,import.meta.url),'utf8');for(const c of parentChapters){assert.ok(html.includes('data-parent-panel="'+c.id+'"'));assert.ok(html.includes(c.why));}assert.match(html,/Changes stay in this preview/);}
  assert.doesNotMatch(source,/scrollTo\(|--phone-scale|--phone-y/);
+});
+
+test('child switching isolates topic choices, learning pace and deleted sample records',()=>{
+ const a=setup();a.choose(4);a.click('topicList');a.click('topic-0');a.choose(2);a.controller.state.band=3;a.click('saveMath');
+ a.choose(0);a.click('child');assert.equal(a.controller.state.band,0);assert.equal(a.controller.state.topics[0],undefined);
+ a.click('child');assert.equal(a.controller.state.band,3);assert.equal(a.controller.state.topics[0],1);
+});
+test('Math starting point changes stay draft until explicitly saved',()=>{
+ const a=setup();a.choose(2);a.screen.events.change({target:{dataset:{parentSetting:'band'},value:'3'}});
+ assert.equal(a.controller.state.band,3);assert.equal(a.controller.state.appliedBand,0);assert.match(a.screen.innerHTML,/Unsaved changes/);
+ a.click('saveMath');assert.equal(a.controller.state.appliedBand,3);assert.match(a.screen.innerHTML,/next new Math project/);
+});
+test('rewards can be switched off without hiding the learning tabs',()=>{
+ const a=setup();a.choose(6);a.click('rewardsToggle');assert.equal(a.controller.state.rewards,false);assert.match(a.screen.innerHTML,/Learning stays available/);
+ a.click('overview');assert.match(a.screen.innerHTML,/Math practice/);a.choose(6);assert.equal(a.controller.state.rewards,false);
 });

@@ -49,7 +49,7 @@ test('the shipped pages start the Parent Dock in its fixed slot with a visible e
   const html=readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
   assert.match(html,/<section[^>]*data-parent-tour[^>]*data-parent-mode="docked"/);
   const panels=[...html.matchAll(/<article[^>]*data-parent-panel="([^"]+)"([^>]*)>/g)];
-  assert.equal(panels.length,7);assert.deepEqual(panels.filter(x=>!x[2].includes('hidden')).map(x=>x[1]),['today']);
+  assert.equal(panels.length,8);assert.deepEqual(panels.filter(x=>!x[2].includes('hidden')).map(x=>x[1]),['overview']);
   assert.match(html,/<noscript><link[^>]*no-script\.css/);
  }
  checkRelease(fileURLToPath(new URL('../dist/',import.meta.url)));
